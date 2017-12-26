@@ -15,12 +15,12 @@ Simple Code connect with sqlsrv
 
 	-	to " <path>\common\config\main-local.php "
 		๏ code : 'db' => [ 
-											'class' => 'yii\db\Connection',
-											'dsn' => 'sqlsrv:Server=<yourServer>;Database=<yourDB>	,
-											'username' => '<yourUsername>',
-											'password' => '<yourPass>',
-											'charset' => 'utf8>,
-									]
+					'class' => 'yii\db\Connection',
+					'dsn' => 'sqlsrv:Server=<yourServer>;Database=<yourDB>	,
+					'username' => '<yourUsername>',
+					'password' => '<yourPass>',
+					'charset' => 'utf8>,
+				 ]
 									
 Code reset auto login
 	
