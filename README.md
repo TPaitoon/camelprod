@@ -26,3 +26,5 @@ Code reset auto login
 	
 	- to "<path>\backend\config\main.php" under line 'user'
 		๏ code :	'authTimeout' => 43200,
+
+Edit -		
