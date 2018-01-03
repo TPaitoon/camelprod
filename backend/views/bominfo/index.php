@@ -11,8 +11,39 @@ use yii\grid\GridView;
 
 $js = <<<JS
     
-    function chkdelete() {
-      return confirm('ต้องการลบข้อมูล ?');
+    function chkdelete(e) {
+        if (confirm('ต้องการลบข้อมูล ?')) {
+            if ($(".role").val() !== '1') {
+                var status = e.closest('tr').attr('id');
+                if (status !== 'Created') {
+                    alert('ไม่สามารถลบข้อมูลได้เนื่องจากไม่มีสิทธิ์');
+                } else {
+                    var link = e.closest().attr('id');
+                    $.ajax({
+                        type: 'post',
+                        url: link,
+                        async: false,
+                        cache: false,
+                        success: function() {
+                            alert('ลบเรียบร้อยแล้ว');
+                            location.reload();
+                        }
+                    });
+                }
+            } else {
+                var link = e.closest().attr('id');
+                $.ajax({
+                    type: 'post',
+                    url: link,
+                    async: false,
+                    cache: false,
+                    success: function() {
+                        alert('ลบเรียบร้อยแล้ว');
+                        location.reload();
+                    }
+                });
+            }
+        }
     }
     
     $("#binfo").on('click',function(e) {
@@ -55,10 +86,11 @@ if ($Role == 'ITIT' || $Role == 'PSPS') {
 
 //echo Yii::$app->formatter->asDate(str_replace('/','-','20/10/2017'),'yyyy-MM-dd');
 ?>
+<input hidden class="role" value="<?php $sys ?>">
 <div class="bominfo-index">
     <div class="box box-primary box-solid">
         <div class="box-body">
-            <?php echo $this->render('_search', ['model' => $searchModel, 'Role' => $sys]); ?>
+            <?php echo $this->render('_search', ['model' => $searchModel]); ?>
             <hr>
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
@@ -70,6 +102,9 @@ if ($Role == 'ITIT' || $Role == 'PSPS') {
                 'options' => [
                     'id' => 'grid',
                 ],
+                'rowOptions' => function ($model) {
+                    return ['id' => ArrayHelper::getValue($model, 'check')];
+                },
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     [
@@ -83,7 +118,7 @@ if ($Role == 'ITIT' || $Role == 'PSPS') {
                         'checkboxOptions' => function ($model) {
                             $data = ArrayHelper::getValue($model, 'empid') . "," . ArrayHelper::getValue($model, 'date') . "," . ArrayHelper::getValue($model, 'stoveid');
                             return ['value' => $data];
-                        }
+                        },
                     ],
                     'empid:text:รหัสพนักงาน',
                     'empname:text:ชื่อ - นามสกุล',
@@ -97,7 +132,25 @@ if ($Role == 'ITIT' || $Role == 'PSPS') {
                     'priceperpcs:text:ราคา : เส้น',
                     'deduct:integer:หักเงิน',
                     'rate:text:ค่าพิเศษ : วัน',
-                    'check:raw:สถานะ',
+//                    'check:raw:สถานะ',
+                    [
+                        'attribute' => 'check',
+                        'format' => 'raw',
+                        'headerOptions' => [
+                            'class' => 'text-center'
+                        ],
+                        'contentOptions' => [
+                            'class' => 'text-center status'
+                        ],
+                        'value' => function ($model) {
+                            if (ArrayHelper::getValue($model, 'check') === 'Created') {
+                                return '<label class="label label-info">' . ArrayHelper::getValue($model, 'check') . '</label>';
+                            } else {
+                                return '<label class="label label-success">' . ArrayHelper::getValue($model, 'check') . '</label>';
+                            }
+                        },
+                        'label' => 'สถานะ',
+                    ],
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'headerOptions' => [
@@ -112,7 +165,9 @@ if ($Role == 'ITIT' || $Role == 'PSPS') {
                                 return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, []);
                             },
                             'delete' => function ($url) {
-                                return Html::a('<span class="glyphicon glyphicon-trash" onclick="return chkdelete()"></span>', $url, []);
+                                return Html::a('<span class="glyphicon glyphicon-trash" onclick="return chkdelete($(this))"></span>', 'javascript:void(0)', [
+                                    'data-url' => $url,
+                                ]);
                             }
                         ],
                         'urlCreator' => function ($action, $model) {

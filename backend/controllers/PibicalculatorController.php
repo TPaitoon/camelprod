@@ -11,6 +11,7 @@ use common\models\User;
 use Yii;
 use backend\models\PIBICalculator;
 use backend\models\PibicalculatorSearch;
+use yii\base\ErrorException;
 use yii\db\Exception;
 use yii\helpers\Json;
 use yii\web\Controller;
@@ -112,11 +113,13 @@ class PibicalculatorController extends Controller
                             $pibidata->Itemid = $model->Itemid;
                             $pibidata->Deduct = $model->Deduct;
                             $pibidata->Totaltire = $model->Totaltire;
+                            $pibidata->refid = $master->id;
                             $pibidata->save(false);
                         }
                     }
                 }
-                return $this->actionIndex();
+//                return $this->actionIndex();
+                return $this->redirect(['index']);
             } catch (Exception $exception) {
                 throw new ErrorException('ไม่สามารถบันทึกข้อมูลได้ ...');
             }
@@ -137,7 +140,7 @@ class PibicalculatorController extends Controller
     {
         $master = $this->findModel($id);
 //        return print_r($master);
-        $loop = PibiDetail::find()->where(['Shiftid' => $master->shift, 'Groupid' => $master->group, 'Date' => date('Y-m-d', strtotime($master->date))])->all();
+        $loop = PibiDetail::find()->where(['Shiftid' => $master->shift, 'Groupid' => $master->group, 'Date' => date('Y-m-d', strtotime($master->date)), 'refid' => $master->id])->all();
         $model = new PibiDetail();
         $c = 0;
         $recid = '';
@@ -204,6 +207,7 @@ class PibicalculatorController extends Controller
                             $pibidata->Itemid = $model->Itemid;
                             $pibidata->Deduct = $model->Deduct;
                             $pibidata->Totaltire = $model->Totaltire;
+                            $pibidata->refid = $master->id;
                             $pibidata->save(false);
                         }
                     }

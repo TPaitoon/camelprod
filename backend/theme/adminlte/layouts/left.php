@@ -13,6 +13,7 @@
         $bce = false;
         $sbw = false;
         $edi = false;
+        $pibi = false;
 
         if (count($usr) > 0) {
             if ($usr === 'ITIT' || $usr === 'PSPS') {
@@ -20,6 +21,7 @@
                 $bce = true;
                 $sbw = true;
                 $edi = true;
+                $pibi = true;
             } elseif ($usr === 'PTBT') {
                 $bce = true;
             } elseif ($usr === 'PTVT') {
@@ -27,6 +29,8 @@
                 $sbw = true;
             } elseif ($usr === 'ITIT') {
                 $edi = true;
+            } elseif ($usr === 'PIBI') {
+                $pibi = true;
             }
         }
         ?>
@@ -69,7 +73,7 @@
                                 ['label' => 'ค่าพิเศษ', 'icon' => 'fa fa-address-card-o', 'url' => ['/bicycletireinfo']],
                             ],
                     ],
-                    ['label' => 'ประกอบยางในจักรยาน', 'url' => '#', 'visible' => $edi,
+                    ['label' => 'ประกอบยางในจักรยาน', 'url' => '#', 'visible' => $pibi,
                         'items' =>
                             [
                                 ['label' => 'ค่ามาตรฐาน', 'icon' => 'fa fa-address-card-o', 'url' => ['/pibistandard']],

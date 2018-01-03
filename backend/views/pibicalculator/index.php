@@ -26,7 +26,7 @@ $js1 = <<<JS
                     $.ajax({
                         type: 'post',
                         url: link,
-                        asnyc: false,
+                        async: false,
                         cache: false,
                         success: function() {
                             alert('ลบเรียบร้อยแล้ว');
@@ -35,13 +35,16 @@ $js1 = <<<JS
                     })
                 }
             } else {
-                var status = e.closest('tr').attr('id');
                 var link = e.parent().attr('data-url');
                 $.ajax({
                     type: 'post',
                     url: link,
                     asnyc: false,
-                    cache: false
+                    cache: false,
+                    success: function() {
+                            alert('ลบเรียบร้อยแล้ว');
+                            location.reload();
+                        }
                 })
             }
         }
@@ -61,7 +64,7 @@ if ($Role == 'ITIT' || $Role == 'PSPS') {
     <div class="box box-primary box-solid">
         <div class="box-header"></div>
         <div class="box-body">
-            <?php echo $this->render('_search', ['model' => $searchModel, 'Role' => $sys]); ?>
+            <?php echo $this->render('_search', ['model' => $searchModel]); ?>
             <hr>
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,

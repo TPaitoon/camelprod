@@ -13,33 +13,33 @@ use yii\widgets\ActiveForm;
 /* @var $model backend\models\PibicalculatorSearch */
 /* @var $form yii\widgets\ActiveForm */
 
-$JS = <<<JS
-    var x = document.getElementById('search');
-    var y = document.getElementById('create');
-    var z = document.getElementById('check');
-    var a = document.getElementById('shift');
-    // var emp = document.getElementById('empids');
-    var st = document.getElementById('starts');
-    var ed = document.getElementById('ends');
-    if ($Role === 1) {
-        x.style.display = 'display';
-        y.style.display = 'display';
-        z.style.display = 'display';
-        // emp.style.display = '';
-        st.style.display = 'display';
-        a.style.display = 'display';
-        ed.style.display = 'display';
-    } else {
-        x.style.display = 'none';   
-        //y.style.display = '';   
-        z.style.display = 'none';   
-        a.style.display = 'none';   
-        // emp.style.display = 'none';   
-        st.style.display = 'none';   
-        ed.style.display = 'none';   
-    }
-JS;
-$this->registerJs($JS, static::POS_END);
+//$JS = <<<JS
+//    var x = document.getElementById('search');
+//    var y = document.getElementById('create');
+//    var z = document.getElementById('check');
+//    var a = document.getElementById('shift');
+//    // var emp = document.getElementById('empids');
+//    var st = document.getElementById('starts');
+//    var ed = document.getElementById('ends');
+//    if ($Role === 1) {
+//        x.style.display = 'display';
+//        y.style.display = 'display';
+//        z.style.display = 'display';
+//        // emp.style.display = '';
+//        st.style.display = 'display';
+//        a.style.display = 'display';
+//        ed.style.display = 'display';
+//    } else {
+//        x.style.display = 'none';
+//        //y.style.display = '';
+//        z.style.display = 'none';
+//        a.style.display = 'none';   
+//        // emp.style.display = 'none';
+//        st.style.display = 'none';
+//        ed.style.display = 'none';
+//    }
+//JS;
+//$this->registerJs($JS, static::POS_END);
 
 $emplist = EmpInfo::find()->where(['Dept' => 'ฝ่ายผลิต'])->andFilterWhere(['like', 'Sec', 'ประกอบยางใน'])->all();
 ?>

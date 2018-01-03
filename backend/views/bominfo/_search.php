@@ -11,30 +11,30 @@ use yii\helpers\ArrayHelper;
 /* @var $model backend\models\BominfoSearch */
 /* @var $form yii\widgets\ActiveForm */
 
-$JS = <<<JS
-    var x = document.getElementById('search');
-    var y = document.getElementById('create');
-    var z = document.getElementById('check');
-    var emp = document.getElementById('empids');
-    var st = document.getElementById('starts');
-    var ed = document.getElementById('ends');
-    if ($Role === 1) {
-        x.style.display = '';
-        y.style.display = '';
-        z.style.display = '';
-        emp.style.display = '';
-        st.style.display = '';
-        ed.style.display = '';
-    } else {
-        x.style.display = 'none';   
-        y.style.display = '';   
-        z.style.display = 'none';   
-        emp.style.display = 'none';   
-        st.style.display = 'none';   
-        ed.style.display = 'none';   
-    }
-JS;
-$this->registerJs($JS, static::POS_END);
+//$JS = <<<JS
+//    var x = document.getElementById('search');
+//    var y = document.getElementById('create');
+//    var z = document.getElementById('check');
+//    var emp = document.getElementById('empids');
+//    var st = document.getElementById('starts');
+//    var ed = document.getElementById('ends');
+//    if ($Role === 1) {
+//        x.style.display = '';
+//        y.style.display = '';
+//        z.style.display = '';
+//        emp.style.display = '';
+//        st.style.display = '';
+//        ed.style.display = '';
+//    } else {
+//        x.style.display = 'none';   
+//        y.style.display = '';   
+//        z.style.display = 'none';   
+//        emp.style.display = 'none';   
+//        st.style.display = 'none';   
+//        ed.style.display = 'none';   
+//    }
+//JS;
+//$this->registerJs($JS, static::POS_END);
 
 $empmodel = EmpInfo::find()->where(['Dept' => 'ฝ่ายผลิต'])->andFilterWhere(['like', 'Sec', 'นึ่ง'])->all();
 ?>

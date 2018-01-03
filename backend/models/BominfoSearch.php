@@ -78,14 +78,14 @@ class BominfoSearch extends BOMInfo
             $z++;
             if ($z == 4) {
                 $status = CheckStatusInfo::find()->select(['name'])->where(['statusid' => $item->checkconfirm])->one();
-                switch ($item->checkconfirm) {
-                    case 0:
-                        $text = '<span class="label label-info">' . $status->name . '</span>';
-                        break;
-                    case  1:
-                        $text = '<span class="label label-success">' . $status->name . '</span>';
-                        break;
-                }
+//                switch ($item->checkconfirm) {
+//                    case 0:
+//                        $text = '<span class="label label-info">' . $status->name . '</span>';
+//                        break;
+//                    case  1:
+//                        $text = '<span class="label label-success">' . $status->name . '</span>';
+//                        break;
+//                }
                 array_push($array, [
                     'empid' => $item->empid,
                     'empname' => $item->empName,
@@ -99,7 +99,8 @@ class BominfoSearch extends BOMInfo
                     'priceperpcs' => $this->perpcs,
                     'rate' => $this->rate,
                     'deduct' => $item->deduct,
-                    'check' => $text,
+//                    'check' => $text,
+                    'check' => $status->name,
                 ]);
                 $z = 0;
             }
@@ -150,14 +151,14 @@ class BominfoSearch extends BOMInfo
             $z++;
             if ($z == 4) {
                 $status = CheckStatusInfo::find()->select(['name'])->where(['statusid' => $item->checkconfirm])->one();
-                switch ($item->checkconfirm) {
-                    case 0:
-                        $text = '<span class="label label-info">' . $status->name . '</span>';
-                        break;
-                    case  1:
-                        $text = '<span class="label label-success">' . $status->name . '</span>';
-                        break;
-                }
+//                switch ($item->checkconfirm) {
+//                    case 0:
+//                        $text = '<span class="label label-info">' . $status->name . '</span>';
+//                        break;
+//                    case  1:
+//                        $text = '<span class="label label-success">' . $status->name . '</span>';
+//                        break;
+//                }
                 array_push($array, [
                     'empid' => $item->empid,
                     'empname' => $item->empName,
@@ -171,7 +172,8 @@ class BominfoSearch extends BOMInfo
                     'priceperpcs' => $this->perpcs,
                     'rate' => $this->rate,
                     'deduct' => $item->deduct,
-                    'check' => $text,
+//                    'check' => $text,
+                    'check' => $status->name
                 ]);
                 $z = 0;
             }

@@ -18,6 +18,7 @@ use Yii;
  * @property integer $Itemid
  * @property double $Deduct
  * @property integer $Totaltire
+ * @property integer $refid
  */
 class PIBIDetail extends \yii\db\ActiveRecord
 {
@@ -35,8 +36,8 @@ class PIBIDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['Groupid', 'Shiftid', 'Empid', 'Date', 'Hour', 'Typeid', 'Qty', 'Itemid', 'Deduct', 'Totaltire'], 'required'],
-            [['Groupid', 'Shiftid', 'Hour', 'Typeid', 'Itemid', 'Totaltire'], 'integer'],
+            [['Groupid', 'Shiftid', 'Empid', 'Date', 'Hour', 'Typeid', 'Qty', 'Itemid', 'Deduct', 'Totaltire','refid'], 'required'],
+            [['Groupid', 'Shiftid', 'Hour', 'Typeid', 'Itemid', 'Totaltire','refid'], 'integer'],
             [['Empid'], 'string'],
             [['Date'], 'safe'],
             [['Qty', 'Deduct'], 'number'],
