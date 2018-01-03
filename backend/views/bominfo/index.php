@@ -47,28 +47,32 @@ $js = <<<JS
     }
     
     $("#binfo").on('click',function(e) {
-      e.preventDefault();
-      var dataar = $('input[type=checkbox]:checked').map(function() {
-                return $(this).val();
-            }).get();
+        e.preventDefault();
+        var dataar = $('input[type=checkbox]:checked').map(function() {
+            return $(this).val();
+        }).get();
       
-      if (confirm('ต้องการยืนยันข้อมูล ?')){
-        $.ajax({
-            type: 'post',
-            url: '?r=bominfo/setapproved',
-            data: {dataar:dataar},
-            dataType: 'json',
-            success: function(data) {
-                if (data === 0) {
-                    alert("บันทึกถูกยกเลิก");
-                } else if (data === 1){
-                    alert("บันทึกเรียบร้อยแล้ว");
-                    location.reload();
-                }
+        if (confirm('ต้องการยืนยันข้อมูล ?')){
+            if ($(".role").val() !== '1') {
+                alert('ไม่สามารถยืนยันรายการได้เนื่องจากไม่มีสิทธิ์');
+            } else {
+                $.ajax({
+                    type: 'post',
+                    url: '?r=bominfo/setapproved',
+                    data: {dataar:dataar},
+                    dataType: 'json',
+                    success: function(data) {
+                        if (data === 0) {
+                            alert("บันทึกถูกยกเลิก");
+                        } else if (data === 1)  {
+                            alert("บันทึกเรียบร้อยแล้ว");
+                            location.reload();
+                        }
+                    }
+                });
             }
-        });
-      }
-    })    
+        }
+    })            
 JS;
 $this->registerJs($js, static::POS_END);
 $this->title = 'Calculator BOM';
@@ -159,10 +163,14 @@ if ($Role == 'ITIT' || $Role == 'PSPS') {
                         'contentOptions' => [
                             'class' => 'text-center',
                         ],
-                        'template' => '{update}{delete}',
+                        'template' => '{update} {delete}',
                         'buttons' => [
-                            'update' => function ($url) {
-                                return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, []);
+                            'update' => function ($url,$model) {
+                                if (ArrayHelper::getValue($model,'check') == 'Created') {
+                                    return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, []);
+                                } else {
+                                    return '';
+                                }
                             },
                             'delete' => function ($url) {
                                 return Html::a('<span class="glyphicon glyphicon-trash" onclick="return chkdelete($(this))"></span>', 'javascript:void(0)', [
