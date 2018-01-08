@@ -2,7 +2,6 @@
 
 namespace backend\models;
 
-use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\BicyclesteamworkInfo;
@@ -13,7 +12,7 @@ use yii\data\ArrayDataProvider;
  */
 class BicyclesteamworkinfoSearch extends BicyclesteamworkInfo
 {
-    public $startdate, $enddate;
+    public $startdate, $enddate, $role;
 
     /**
      * @inheritdoc
@@ -54,9 +53,42 @@ class BicyclesteamworkinfoSearch extends BicyclesteamworkInfo
 
         $query = BicyclesteamworkInfo::find()->andFilterWhere(['and', ['like', 'empid', $this->empid], ['>=', 'date', $this->startdate], ['<=', 'date', $this->enddate]])->orderBy(['date' => SORT_ASC]);
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query
+        $array = [];
+
+        foreach ($query->all() as $item) {
+            $chk = new UserDirect();
+            $usr = $chk->ChkusrForBicycletire();
+            if ($usr == 'ITIT' || $usr == 'PSPS') {
+                $sys = 1;
+            } else {
+                $sys = 0;
+            }
+
+            array_push($array,[
+                'id' => $item->idsteamwork,
+                'empid' => $item->empid,
+                'empName' => $item->empName,
+                'rank' => $item->rank,
+                'Extra' => $item->Extra,
+                'date' => $item->date,
+                'role' => $sys,
+                'confirms' => $item->confirms
+            ]);
+        }
+
+        $dataProvider = new ArrayDataProvider([
+            'allModels' => $array,
+            'sort' => [
+                'attributes' => ['empid','empName','date','confirms'],
+                'defaultOrder' => SORT_ASC,
+            ],
+            'pagination' => [
+                'pageSize' => 20
+            ]
         ]);
+//        $dataProvider = new ActiveDataProvider([
+//            'query' => $query
+//        ]);
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
@@ -72,8 +104,41 @@ class BicyclesteamworkinfoSearch extends BicyclesteamworkInfo
 
         $query = BicyclesteamworkInfo::find()->where(['confirms' => 0])->orderBy(['date' => SORT_ASC]);
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query
+//        $dataProvider = new ActiveDataProvider([
+//            'query' => $query
+//        ]);
+        $array = [];
+
+        foreach ($query->all() as $item) {
+            $chk = new UserDirect();
+            $usr = $chk->ChkusrForBicycletire();
+            if ($usr == 'ITIT' || $usr == 'PSPS') {
+                $sys = 1;
+            } else {
+                $sys = 0;
+            }
+
+            array_push($array,[
+                'id' => $item->idsteamwork,
+                'empid' => $item->empid,
+                'empName' => $item->empName,
+                'rank' => $item->rank,
+                'Extra' => $item->Extra,
+                'date' => $item->date,
+                'role' => $sys,
+                'confirms' => $item->confirms
+            ]);
+        }
+
+        $dataProvider = new ArrayDataProvider([
+            'allModels' => $array,
+            'sort' => [
+                'attributes' => ['empid','empName','date','confirms'],
+                'defaultOrder' => SORT_ASC,
+            ],
+            'pagination' => [
+                'pageSize' => 20
+            ]
         ]);
 
         if (!$this->validate()) {

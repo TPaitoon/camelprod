@@ -14,7 +14,7 @@ use yii\data\ArrayDataProvider;
  */
 class BicycletireinfoSearch extends BicycletireInfo
 {
-    public $startdate, $enddate;
+    public $startdate, $enddate, $role;
 
     /**
      * @inheritdoc
@@ -60,6 +60,13 @@ class BicycletireinfoSearch extends BicycletireInfo
         $z = 0;
 
         foreach ($query->all() as $value) {
+            $chk = new UserDirect();
+            $usr = $chk->ChkusrForBicycletire();
+            if ($usr == 'ITIT' || $usr == 'PSPS') {
+                $sys = 1;
+            } else {
+                $sys = 0;
+            }
             switch ($value->typeID) {
                 case 1:
                     $this->losttime = $value->qty;
@@ -160,6 +167,13 @@ class BicycletireinfoSearch extends BicycletireInfo
         $z = 0;
 
         foreach ($query->all() as $value) {
+            $chk = new UserDirect();
+            $usr = $chk->ChkusrForBicycletire();
+            if ($usr == 'ITIT' || $usr == 'PSPS') {
+                $sys = 1;
+            } else {
+                $sys = 0;
+            }
             switch ($value->typeID) {
                 case 1:
                     $this->losttime = $value->qty;

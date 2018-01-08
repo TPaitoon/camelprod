@@ -14,7 +14,7 @@ use yii\data\ArrayDataProvider;
  */
 class BominfoSearch extends BOMInfo
 {
-    public $startdate, $enddate;
+    public $startdate, $enddate, $role;
 
     /**
      * @inheritdoc
@@ -86,6 +86,13 @@ class BominfoSearch extends BOMInfo
 //                        $text = '<span class="label label-success">' . $status->name . '</span>';
 //                        break;
 //                }
+                $chk = new UserDirect();
+                $usr = $chk->ChkusrForBOM();
+                if ($usr == 'ITIT' || $usr == 'PSPS') {
+                    $sys = 1;
+                } else {
+                    $sys = 0;
+                }
                 array_push($array, [
                     'empid' => $item->empid,
                     'empname' => $item->empName,
@@ -101,6 +108,7 @@ class BominfoSearch extends BOMInfo
                     'deduct' => $item->deduct,
 //                    'check' => $text,
                     'check' => $status->name,
+                    'role' => $sys
                 ]);
                 $z = 0;
             }
@@ -159,6 +167,13 @@ class BominfoSearch extends BOMInfo
 //                        $text = '<span class="label label-success">' . $status->name . '</span>';
 //                        break;
 //                }
+                $chk = new UserDirect();
+                $usr = $chk->ChkusrForBOM();
+                if ($usr == 'ITIT' || $usr == 'PSPS') {
+                    $sys = 1;
+                } else {
+                    $sys = 0;
+                }
                 array_push($array, [
                     'empid' => $item->empid,
                     'empname' => $item->empName,
@@ -173,7 +188,8 @@ class BominfoSearch extends BOMInfo
                     'rate' => $this->rate,
                     'deduct' => $item->deduct,
 //                    'check' => $text,
-                    'check' => $status->name
+                    'check' => $status->name,
+                    'role' => $sys
                 ]);
                 $z = 0;
             }

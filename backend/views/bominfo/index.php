@@ -18,7 +18,7 @@ $js = <<<JS
                 if (status !== 'Created') {
                     alert('ไม่สามารถลบข้อมูลได้เนื่องจากไม่มีสิทธิ์');
                 } else {
-                    var link = e.closest().attr('id');
+                    var link = e.parent().attr('data-url');
                     $.ajax({
                         type: 'post',
                         url: link,
@@ -31,7 +31,7 @@ $js = <<<JS
                     });
                 }
             } else {
-                var link = e.closest().attr('id');
+                var link = e.parent().attr('data-url');
                 $.ajax({
                     type: 'post',
                     url: link,
@@ -48,6 +48,7 @@ $js = <<<JS
     
     $("#binfo").on('click',function(e) {
         e.preventDefault();
+        // alert($(".role").val());
         var dataar = $('input[type=checkbox]:checked').map(function() {
             return $(this).val();
         }).get();
@@ -90,7 +91,7 @@ if ($Role == 'ITIT' || $Role == 'PSPS') {
 
 //echo Yii::$app->formatter->asDate(str_replace('/','-','20/10/2017'),'yyyy-MM-dd');
 ?>
-<input hidden class="role" value="<?php $sys ?>">
+<input hidden class="role" value="<?php echo $sys ?>">
 <div class="bominfo-index">
     <div class="box box-primary box-solid">
         <div class="box-body">
@@ -136,6 +137,7 @@ if ($Role == 'ITIT' || $Role == 'PSPS') {
                     'priceperpcs:text:ราคา : เส้น',
                     'deduct:integer:หักเงิน',
                     'rate:text:ค่าพิเศษ : วัน',
+//                    'role:text:sssss',
 //                    'check:raw:สถานะ',
                     [
                         'attribute' => 'check',
@@ -168,8 +170,13 @@ if ($Role == 'ITIT' || $Role == 'PSPS') {
                             'update' => function ($url,$model) {
                                 if (ArrayHelper::getValue($model,'check') == 'Created') {
                                     return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, []);
+
                                 } else {
-                                    return '';
+                                    if (ArrayHelper::getValue($model,'role') == '1') {
+                                        return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, []);
+                                    } else {
+                                        return '';
+                                    }
                                 }
                             },
                             'delete' => function ($url) {
