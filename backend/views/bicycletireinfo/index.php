@@ -8,31 +8,65 @@ use yii\grid\GridView;
 /* @var $searchModel backend\models\BicycletireinfoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 $js = <<<JS
-    function chkdelete() {
-      return confirm('ต้องการลบข้อมูล ?');
+    function chkdelete(e) {
+      if (('ต้องการลบข้อมูล ?')) {
+          if ($(".role").val() !== '1') {
+              var status = e.closest('tr').attr('id');
+              if (status !== '0') {
+                  alert('ไม่สามารถลบข้อมูลได้เนื่องจากไม่มีสิทธิ์');
+              } else {
+                  var link = e.parent().attr('data-url');
+                  $.ajax({
+                    type: 'post',
+                    url: link,
+                    async: false,
+                    cache: false,
+                    success: function() {
+                        alert('ลบเรียบร้อยแล้ว');
+                        location.reload();
+                    }
+                  })
+              }
+          } else {
+              var link = e.parent().attr('data-url');
+              $.ajax({
+                  type: 'post',
+                  url: link,
+                  async: false,
+                  cache: false,
+                  success: function() {
+                      alert('ลบเรียบร้อยแล้ว');
+                      location.reload();
+                  }
+              })
+          }
+      }
     }
     
     $("#binfo").on('click',function(e) {
         e.preventDefault();
-            if (confirm('ต้องการยืนยันข้อมูล ?')) {
-                var dataar = $('input[type=checkbox]:checked').map(function() {
+        var dataar = $('input[type=checkbox]:checked').map(function() {
                 return $(this).val();
             }).get();
-          
-            $.ajax({
-                type: 'post',
-                url: '?r=bicycletireinfo/setapproved',
-                data: {dataar:dataar},
-                dataType: 'json',
-                success: function(data) {
-                    if (data === 0){
-                        alert("บันทึกถูกยกเลิก");
-                    } else if (data === 1){
-                        alert("บันทึกเรียบร้อยแล้ว");
-                        location.reload();
-                    }
+            if (confirm('ต้องการยืนยันข้อมูล ?')) {
+                if ($(".role").val() !== '1') {
+                    alert('ไม่สามารถยืนยันรายการได้เนื่องจากไม่มีสิทธิ์');
+                } else {
+                    $.ajax({
+                        type: 'post',
+                        url: '?r=bicycletireinfo/setapproved',
+                        data: {dataar:dataar},
+                        dataType: 'json',
+                        success: function(data) {
+                            if (data === 0){
+                                alert("บันทึกถูกยกเลิก");
+                            } else if (data === 1){
+                                alert("บันทึกเรียบร้อยแล้ว");
+                                location.reload();
+                            }
+                        }
+                    });
                 }
-            });
         }
     });
 JS;
@@ -47,6 +81,7 @@ if ($Role == 'ITIT' || $Role == 'PSPS') {
 }
 
 ?>
+<input hidden class="role" value="<?php echo $sys ?>">
 <div class="bicycletire-info-index">
     <div class="box box-primary box-solid">
         <div class="box-body">
@@ -59,6 +94,9 @@ if ($Role == 'ITIT' || $Role == 'PSPS') {
                     'firstPageLabel' => 'First',
                     'lastPageLabel' => 'Last'
                 ],
+                'rowOptions' => function ($model) {
+                    return ['id' => ArrayHelper::getValue($model, 'check')];
+                },
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     [
@@ -95,7 +133,12 @@ if ($Role == 'ITIT' || $Role == 'PSPS') {
                     [
                         'attribute' => 'check',
                         'format' => 'raw',
-                        'label' => 'สถานะ'
+                        'label' => 'สถานะ',
+                        'headerOptions' => ['class' => 'text-center'],
+                        'contentOptions' => ['class' => 'text-center'],
+                        'value' => function ($model) {
+                            return ArrayHelper::getValue($model, 'check') == 0 ? '<label class="label label-info">Created</label>' : '<label class="label label-success">Approved</label>';
+                        }
                     ],
                     [
                         'class' => 'yii\grid\ActionColumn',
@@ -105,33 +148,34 @@ if ($Role == 'ITIT' || $Role == 'PSPS') {
                         'contentOptions' => [
                             'class' => 'text-center'
                         ],
+                        'template' => '{view} {update} {delete}',
                         'buttons' => [
                             'view' => function ($url) {
                                 return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', $url, []);
                             },
-                            'update' => function ($url) {
-                                return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, []);
+                            'update' => function ($url, $model) {
+                                if (ArrayHelper::getValue($model, 'check') == '0') {
+                                    return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, []);
+                                } else {
+                                    if (ArrayHelper::getValue($model, 'role') == '1') {
+                                        return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, []);
+                                    } else {
+                                        return '';
+                                    }
+                                }
+
                             },
                             'delete' => function ($url) {
-                                return Html::a('<span class="glyphicon glyphicon-trash" onclick="return chkdelete()"></span>', $url, []);
+                                return Html::a('<span class="glyphicon glyphicon-trash" onclick="return chkdelete($(this))"></span>', 'javascript:void(0)', [
+                                    'data-url' => $url,
+                                ]);
                             }
                         ],
                         'urlCreator' => function ($action, $model) {
                             $empid = ArrayHelper::getValue($model, 'empid');
                             $date = ArrayHelper::getValue($model, 'date');
-
-                            if ($action == 'view') {
-                                $url = 'index.php?r=bicycletireinfo/view&empid=' . $empid . '&date=' . $date;
-                                return $url;
-                            }
-                            if ($action == 'update') {
-                                $url = 'index.php?r=bicycletireinfo/update&empid=' . $empid . '&date=' . $date;
-                                return $url;
-                            }
-                            if ($action == 'delete') {
-                                $url = 'index.php?r=bicycletireinfo/delete&empid=' . $empid . '&date=' . $date;
-                                return $url;
-                            }
+                            $url = 'index.php?r=bicycletireinfo/' . $action . '&empid=' . $empid . '&date=' . $date;
+                            return $url;
                         }
                     ],
                 ],

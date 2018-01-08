@@ -104,15 +104,6 @@ class BicycletireinfoSearch extends BicycletireInfo
             }
             $z++;
             if ($z == 11) {
-                $status = CheckStatusInfo::find()->select(['name'])->where(['statusid' => $value->checkconfirm])->one();
-                switch ($value->checkconfirm) {
-                    case 0:
-                        $text = '<span class="label label-info">' . $status->name . '</span>';
-                        break;
-                    case 1:
-                        $text = '<span class="label label-success">' . $status->name . '</span>';
-                        break;
-                }
                 array_push($array, [
                     'empid' => $value->empid,
                     'empname' => $value->empName,
@@ -132,7 +123,8 @@ class BicycletireinfoSearch extends BicycletireInfo
                     'stickerrate' => $this->stickerrate,
                     'deduct' => $this->deduct,
                     'totalrate' => $this->totalrate,
-                    'check' => $text
+                    'check' => $value->checkconfirm,
+                    'role' => $sys
                 ]);
                 $z = 0;
             }
@@ -211,15 +203,6 @@ class BicycletireinfoSearch extends BicycletireInfo
             }
             $z++;
             if ($z == 11) {
-                $status = CheckStatusInfo::find()->select(['name'])->where(['statusid' => $value->checkconfirm])->one();
-                switch ($value->checkconfirm) {
-                    case 0:
-                        $text = '<span class="label label-info">' . $status->name . '</span>';
-                        break;
-                    case 1:
-                        $text = '<span class="label label-success">' . $status->name . '</span>';
-                        break;
-                }
                 array_push($array, [
                     'empid' => $value->empid,
                     'empname' => $value->empName,
@@ -239,7 +222,8 @@ class BicycletireinfoSearch extends BicycletireInfo
                     'stickerrate' => $this->stickerrate,
                     'deduct' => $this->deduct,
                     'totalrate' => $this->totalrate,
-                    'check' => $text
+                    'check' => $value->checkconfirm,
+                    'role' => $sys
                 ]);
                 $z = 0;
             }

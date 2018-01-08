@@ -153,7 +153,7 @@ if ($Role == 'ITIT' || $Role == 'PSPS') {
                                     }
                                 }
                             },
-                            'delete' => function ($url, $model) {
+                            'delete' => function ($url) {
                                 return Html::a('<span class="glyphicon glyphicon-trash" onclick="return chkdelete($(this))"></span>', 'javascript:void(0)', [
                                     'data-url' => $url,
                                 ]);
