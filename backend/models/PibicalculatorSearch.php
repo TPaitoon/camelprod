@@ -16,7 +16,7 @@ use yii\helpers\ArrayHelper;
  */
 class PibicalculatorSearch extends PIBICalculator
 {
-    public $startdate, $enddate;
+    public $startdate, $enddate, $role;
 
     /**
      * @inheritdoc
@@ -63,9 +63,17 @@ class PibicalculatorSearch extends PIBICalculator
         // add conditions that should always apply here
         $array = [];
         foreach ($query->all() as $item) {
+            $chk = new UserDirect();
+            $usr = $chk->ChkusrForPIBIMaster();
+            if ($usr == 'ITIT' || $usr == 'PSPS') {
+                $sys = 1;
+            } else {
+                $sys = 0;
+            }
+            
             $mdate = '<i class="fa fa-calendar text-success"></i>' . '<span style="padding-left: 10px"></span>' . date('d-m-Y', strtotime($item->date));
             $mshift = ShiftList::find()->where(['id' => $item->shift])->one();
-            $mstatus = CheckStatusInfo::find()->where(['statusid' => $item->status])->one();
+//            $mstatus = CheckStatusInfo::find()->where(['statusid' => $item->status])->one();
 
             if ($item->status == 0) {
 //                $status = '<label class="label label-info">' . $mstatus->name . '</label>';
@@ -88,8 +96,9 @@ class PibicalculatorSearch extends PIBICalculator
                 'shift' => $shift,
                 'cnt' => $cnt / 2,
                 'hour' => $text->Hour,
-//                'status' => $status,
-                'status' => $mstatus->name,
+                'status' => $item->status,
+//                'status' => $mstatus->name,
+                'role' => $sys
             ]);
         }
 
@@ -109,9 +118,17 @@ class PibicalculatorSearch extends PIBICalculator
 
         $array = [];
         foreach ($query->all() as $item) {
+            $chk = new UserDirect();
+            $usr = $chk->ChkusrForPIBIMaster();
+            if ($usr == 'ITIT' || $usr == 'PSPS') {
+                $sys = 1;
+            } else {
+                $sys = 0;
+            }
+
             $mdate = '<i class="fa fa-calendar text-success"></i>' . '<span style="padding-left: 10px"></span>' . date('d-m-Y', strtotime($item->date));
             $mshift = ShiftList::find()->where(['id' => $item->shift])->one();
-            $mstatus = CheckStatusInfo::find()->where(['statusid' => $item->status])->one();
+//            $mstatus = CheckStatusInfo::find()->where(['statusid' => $item->status])->one();
 
             if ($item->status == 0) {
 //                $status = '<label class="label label-info">' . $mstatus->name . '</label>';
@@ -134,8 +151,9 @@ class PibicalculatorSearch extends PIBICalculator
                 'shift' => $shift,
                 'cnt' => $cnt / 2,
                 'hour' => $text->Hour,
-//                'status' => $status,
-                'status' => $mstatus->name,
+                'status' => $item->status,
+//                'status' => $mstatus->name,
+                'role' => $sys
             ]);
         }
 

@@ -9,7 +9,7 @@ use yii\grid\GridView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 $js = <<<JS
     function chkdelete(e) {
-      if (('ต้องการลบข้อมูล ?')) {
+      if (confirm('ต้องการลบข้อมูล ?')) {
           if ($(".role").val() !== '1') {
               var status = e.closest('tr').attr('id');
               if (status !== '0') {
@@ -48,25 +48,25 @@ $js = <<<JS
         var dataar = $('input[type=checkbox]:checked').map(function() {
                 return $(this).val();
             }).get();
-            if (confirm('ต้องการยืนยันข้อมูล ?')) {
-                if ($(".role").val() !== '1') {
-                    alert('ไม่สามารถยืนยันรายการได้เนื่องจากไม่มีสิทธิ์');
-                } else {
-                    $.ajax({
-                        type: 'post',
-                        url: '?r=bicycletireinfo/setapproved',
-                        data: {dataar:dataar},
-                        dataType: 'json',
-                        success: function(data) {
-                            if (data === 0){
-                                alert("บันทึกถูกยกเลิก");
-                            } else if (data === 1){
-                                alert("บันทึกเรียบร้อยแล้ว");
-                                location.reload();
-                            }
+        if (confirm('ต้องการยืนยันข้อมูล ?')) {
+            if ($(".role").val() !== '1') {
+                alert('ไม่สามารถยืนยันรายการได้เนื่องจากไม่มีสิทธิ์');
+            } else {
+                $.ajax({
+                    type: 'post',
+                    url: '?r=bicycletireinfo/setapproved',
+                    data: {dataar:dataar},
+                    dataType: 'json',
+                    success: function(data) {
+                        if (data === 0){
+                            alert("บันทึกถูกยกเลิก");
+                        } else if (data === 1){
+                            alert("บันทึกเรียบร้อยแล้ว");
+                            location.reload();
                         }
-                    });
-                }
+                    }
+                });
+            }
         }
     });
 JS;

@@ -12,14 +12,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
 $js1 = <<<JS
     function chkdelete(e) {
-    // var x = e.closest('tr').attr('id');
-        // alert(x);
-        //e.preventDefault();
         if (confirm('ต้องการลบข้อมูล ?')) {
             // alert(Url);
             if ($(".role").val() !== '1') {
                 var status = e.closest('tr').attr('id');
-                if (status !== 'Created') {
+                if (status !== '0') {
                     alert('ไม่สามารถลบข้อมูลได้เนื่องจากไม่มีสิทธิ์');
                 } else {
                     var link = e.parent().attr('data-url');
@@ -42,14 +39,43 @@ $js1 = <<<JS
                     asnyc: false,
                     cache: false,
                     success: function() {
-                            alert('ลบเรียบร้อยแล้ว');
-                            location.reload();
-                        }
+                        alert('ลบเรียบร้อยแล้ว');
+                        location.reload();
+                    }
                 })
             }
         }
         // e.preventDefault();
     }
+    
+    $("#binfo").on('click',function(e) {
+        e.preventDefault();
+        var dataar = $('input[type=checkbox]:checked').map(function() {
+            return $(this).val();
+        }).get();
+        
+        // alert(dataar);
+        if (confirm('ต้องการยืนยันข้อมูล ?')) {
+            if ($(".role").val() !== '1') {
+                alert('ไม่สามารถยืนยันได้เนื่องจากไม่มีสิทธิ์');
+            } else {
+                $.ajax({
+                    type: 'post',
+                    url: '?r=pibicalculator/setapproved',
+                    data: {dataar:dataar},
+                    dataType: 'json',
+                    success: function(data) {
+                        if (data === 0) {
+                            alert('บันทึกถูกยกเลิก');
+                        } else {
+                            alert('บันทึกเรียบร้อยแล้ว');
+                            location.reload();
+                        }
+                    }
+                })
+            }
+        }
+    })
 JS;
 
 $this->registerJs($js1, static::POS_END);
@@ -154,12 +180,8 @@ if ($Role == 'ITIT' || $Role == 'PSPS') {
                         'contentOptions' => [
                             'class' => 'text-center status'
                         ],
-                        'value' => function ($model, $key, $index, $column) {
-                            if (ArrayHelper::getValue($model, 'status') === 'Created') {
-                                return '<label class="label label-info">' . ArrayHelper::getValue($model, 'status') . '</label>';
-                            } else {
-                                return '<label class="label label-success">' . ArrayHelper::getValue($model, 'status') . '</label>';
-                            }
+                        'value' => function ($model) {
+                            return ArrayHelper::getValue($model, 'status') == 0 ? '<label class="label label-info">Created</label>' : '<label class="label label-success">Approved</label>';
                         },
                         'label' => 'สถานะ',
 //                        'value' => function($data) {
@@ -179,8 +201,14 @@ if ($Role == 'ITIT' || $Role == 'PSPS') {
                             'view' => function ($url) {
                                 return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', $url, []);
                             },
-                            'update' => function ($url) {
-                                return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, []);
+                            'update' => function ($url,$model) {
+                                if (ArrayHelper::getValue($model,'status') == '0') {
+                                    return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, []);
+                                } else if (ArrayHelper::getValue($model,'role') == '1') {
+                                    return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, []);
+                                } else {
+                                    return '';
+                                }
                             },
                             'delete' => function ($url, $model) {
                                 return Html::a('<span class="glyphicon glyphicon-trash" onclick="return chkdelete($(this))"></span>', 'javascript:void(0)', [
@@ -190,18 +218,8 @@ if ($Role == 'ITIT' || $Role == 'PSPS') {
                         ],
                         'urlCreator' => function ($action, $model) {
                             $id = ArrayHelper::getValue($model, 'id');
-                            if ($action == 'view') {
-                                $url = 'index.php?r=pibicalculator/view&id=' . $id;
-                                return $url;
-                            }
-                            if ($action == 'update') {
-                                $url = 'index.php?r=pibicalculator/update&id=' . $id;
-                                return $url;
-                            }
-                            if ($action == 'delete') {
-                                $url = 'index.php?r=pibicalculator/delete&id=' . $id;
-                                return $url;
-                            }
+                            $url = 'index.php?r=pibicalculator/'. $action .'&id=' . $id;
+                            return $url;
                         }
                     ],
                 ]

@@ -76,7 +76,7 @@
                     ['label' => 'ประกอบยางในจักรยาน', 'url' => '#', 'visible' => $pibi,
                         'items' =>
                             [
-                                ['label' => 'ค่ามาตรฐาน', 'icon' => 'fa fa-address-card-o', 'url' => ['/pibistandard']],
+                                ['label' => 'ค่ามาตรฐาน', 'icon' => 'fa fa-address-card-o', 'url' => ['/pibistandard'], 'visible' => $edi],
                                 ['label' => 'ค่าพิเศษ', 'icon' => 'fa fa-address-card-o', 'url' => ['/pibicalculator']],
                             ],
                     ],
