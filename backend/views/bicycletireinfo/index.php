@@ -36,7 +36,7 @@ $js = <<<JS
                   cache: false,
                   success: function() {
                       alert('ลบเรียบร้อยแล้ว');
-                      location.reload();
+                      location = '?r=bicycletireinfo';
                   }
               })
           }

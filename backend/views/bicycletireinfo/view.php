@@ -55,14 +55,15 @@ $this->params['breadcrumbs'][] = $model->empid;
             ]) ?>
             <hr>
             <div class="pull-left">
-                <?= Html::a('แก้ไขข้อมูล', ['update', 'empid' => $model->empid, 'date' => $model->date], ['class' => 'btn btn-primary']) ?>
+                <!--?= Html::a('แก้ไขข้อมูล', ['update', 'empid' => $model->empid, 'date' => $model->date], ['class' => 'btn btn-primary']) ?-->
                 <!--?= Html::a('ลบข้อมูล',
                     ['delete', 'empid' => $model->empid, 'date' => $model->date],
                     ['class' => 'btn btn-danger', 'data' => ['confirm' => 'Are you sure you want to delete this item?', 'method' => 'post']]) ?-->
-            </div>
-            <div class="pull-right">
                 <?= Html::a('หน้าหลัก', ['index'], ['class' => 'btn btn-info']) ?>
                 <?= Html::a('ย้อนกลับ', Yii::$app->request->referrer, ['class' => 'btn btn-danger']) ?>
+            </div>
+            <div class="pull-right">
+
             </div>
         </div>
     </div>
