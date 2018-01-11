@@ -83,8 +83,8 @@ class PibicalculatorSearch extends PIBICalculator
             if ($item->shift == 1) {
                 $shift = '<label class="label label-primary">' . $mshift->shiftname . '</label>';
             } elseif ($item->shift == 2) {
-                $shift = '<label class="label label-warning">' . $mshift->shiftname . '</label>';
-            }
+    $shift = '<label class="label label-warning">' . $mshift->shiftname . '</label>';
+    }
 
             $cnt = PibiDetail::find()->where(['Date' => date('Y-m-d', strtotime($item->date)), 'Shiftid' => $item->shift, 'Groupid' => $item->group])->count();
             $text = PibiDetail::find()->where(['Date' => date('Y-m-d', strtotime($item->date)), 'Shiftid' => $item->shift, 'Groupid' => $item->group])->one();

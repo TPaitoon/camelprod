@@ -68,8 +68,9 @@ $js1 = <<<JS
                         if (data === 0) {
                             alert('บันทึกถูกยกเลิก');
                         } else {
+                        //     alert(data);
                             alert('บันทึกเรียบร้อยแล้ว');
-                            location.reload();
+                            location = '?r=pibicalculator'
                         }
                     }
                 })

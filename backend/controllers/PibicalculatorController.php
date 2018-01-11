@@ -72,9 +72,31 @@ class PibicalculatorController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        $master = $this->findModel($id);
+
+        $loop = PibiDetail::find()->where(['Shiftid' => $master->shift, 'Groupid' => $master->group, 'Date' => date('Y-m-d', strtotime($master->date)), 'refid' => $master->id])->all();
+        $model = new PibiDetail();
+        $c = 0;
+        $recid = '';
+        foreach ($loop as $i) {
+            $i->Typeid == 1 ? $model->amount = $i->Qty : $model->amount = 0;
+            $recid == '' ? $recid = $recid . $i->id : $recid = $recid . ',' . $i->id;
+            if ($i->Typeid == 2) {
+                $model->rate = $i->Qty;
+                $c++;
+                $c == 1 ? $model->listid = $i->Empid : $model->listid = $model->listid . ',' . $i->Empid;
+                $model->Shiftid = $i->Shiftid;
+                $model->Groupid = $i->Groupid;
+                $model->Date = $i->Date;
+                $model->Hour = $i->Hour;
+                $model->Itemid = $i->Itemid;
+                $model->Totaltire = $i->Totaltire;
+                $model->Deduct = $i->Deduct;
+            }
+        }
+        $model->recid = $master->id . ',' . $recid;
+
+        return $this->render('view', ['model' => $model]);
     }
 
     /**
@@ -156,11 +178,7 @@ class PibicalculatorController extends Controller
             if ($item->Typeid == 2) {
                 $model->rate = $item->Qty;
                 $c++;
-                if ($c == 1) {
-                    $model->listid = $item->Empid;
-                } else {
-                    $model->listid = $model->listid . ',' . $item->Empid;
-                }
+                $c == 1 ? $model->listid = $item->Empid : $model->listid = $model->listid . ',' . $item->Empid;
                 $model->Shiftid = $item->Shiftid;
                 $model->Groupid = $item->Groupid;
                 $model->Date = $item->Date;
@@ -360,7 +378,22 @@ class PibicalculatorController extends Controller
     public function actionSetapproved()
     {
         $dataar = Yii::$app->request->post('dataar');
-                               /*Editing*/
-//        if (!empty($dataar))
+        /*Editing*/
+        if (!empty($dataar)) {
+
+            array_splice($dataar, 0, 1);
+            for ($i = 0; $i < count($dataar); $i++) {
+                try {
+                    PIBIMaster::updateAll(['status' => 1], ['id' => $dataar]);
+                } catch (Exception $exception) {
+                    return 0;
+                }
+            }
+
+//            return Json::encode($dataar);
+            return 1;
+        } else {
+            return 0;
+        }
     }
 }
