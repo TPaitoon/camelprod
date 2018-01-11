@@ -12,7 +12,7 @@ function calculator() {
         alert('ยอดยาง (หลังนึ่ง) ต้องไม่เยอะกว่า ยอดยาง (ก่อนนึ่ง)');
         $("#totaltire").val($("#amount").val());
     }
-    $.when(getRate($("#hour").val(),$("#std").val(),$("#totaltire").val())).done(function (data) {
+    $.when(getRate($("#hour").val(), $("#std").val(), $("#totaltire").val())).done(function (data) {
         //alert(data);
         $("#xrate").val(data);
         var cal = (parseInt(data) - parseInt($("#deduct").val())) / $(".cline").val();
@@ -36,23 +36,39 @@ function getRate(hour, std, amount) {
     return x;
 }
 
-$("#hour").on('change',function () {
+function chkstatus() {
+    var status = true;
+    if ($("#hour").val() === '') {
+        status = false;
+    } else if ($("#std").val() === '') {
+        status = false;
+    } else if ($("#amount").val() === '0' || $("#amount").val() === '') {
+        status = false;
+    } else if ($("#totaltire").val() === '0' || $("#totaltire").val() === '') {
+        status = false;
+    }  else if ($(".cline").val() < 1) {
+        status = false;
+    }
+    return status;
+}
+
+$("#hour").on('change', function () {
     calculator();
 });
 
-$("#std").on('change',function () {
-   calculator();
-});
-
-$("#amount").on('change',function () {
+$("#std").on('change', function () {
     calculator();
 });
 
-$("#totaltire").on('change',function () {
+$("#amount").on('change', function () {
     calculator();
 });
 
-$("#deduct").on('change',function () {
+$("#totaltire").on('change', function () {
+    calculator();
+});
+
+$("#deduct").on('change', function () {
     calculator();
 });
 
@@ -66,4 +82,13 @@ $("#check").on('click', function () {
     // })
     // alert(555555555555);
     calculator();
+});
+
+$("#pibisubmit").on('click', function (e) {
+    e.preventDefault();
+    if (chkstatus() === true) {
+        $("#pibisubmit").submit();
+    } else {
+        alert('กรอกข้อมูลไม่ครบ ...');
+    }
 });
