@@ -76,7 +76,7 @@ $js = <<<JS
     })            
 JS;
 $this->registerJs($js, static::POS_END);
-$this->title = 'Calculator BOM';
+$this->title = 'ค่าพิเศษเตา BOM';
 $this->params['breadcrumbs'][] = $this->title;
 
 /*$debug = new CheckDebug();

@@ -8,8 +8,8 @@ use yii\web\JqueryAsset;
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\StandardbicycleexSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-$this->title = 'Tire & Details';
-$this->params['breadcrumbs'][] = 'รายการยางและมาตรฐาน';
+$this->title = 'มาตรฐานรายละเอียดยาง';
+$this->params['breadcrumbs'][] = 'มาตรฐานรายละเอียดยาง';
 ?>
 <div class="standardbicycle-ex-index">
     <br>

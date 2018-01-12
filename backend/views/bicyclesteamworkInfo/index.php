@@ -76,7 +76,7 @@ $js = <<<JS
     
 JS;
 $this->registerJs($js, static::POS_END);
-$this->title = 'Steam Bicycle Employee Rate';
+$this->title = 'ค่าเข้างานนึ่งยางนอกจกย.';
 $this->params['breadcrumbs'][] = $this->title;
 
 if ($Role == 'ITIT' || $Role == 'PSPS') {

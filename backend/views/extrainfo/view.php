@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model backend\models\ExtraInfo */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Extra Infos', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'ค่ามาตรฐานเตา BOM', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="extra-info-view">

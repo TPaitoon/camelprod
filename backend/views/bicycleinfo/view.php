@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model common\models\BicycleInfo */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Bicycle Infos', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'ค่าพิเศษประกอบยางนอกจกย.', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="bicycle-info-view">

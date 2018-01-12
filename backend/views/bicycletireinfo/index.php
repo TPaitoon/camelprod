@@ -71,7 +71,7 @@ $js = <<<JS
     });
 JS;
 $this->registerJs($js, static::POS_END);
-$this->title = 'Calculator Bicycletire';
+$this->title = 'ค่าพิเศษนึ่งยางนอกจกย.';
 $this->params['breadcrumbs'][] = $this->title;
 
 if ($Role == 'ITIT' || $Role == 'PSPS') {

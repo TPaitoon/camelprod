@@ -8,8 +8,8 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model common\models\BicycletireInfo */
 
-$this->title = 'Calculator Bicycletire';
-$this->params['breadcrumbs'][] = ['label' => 'Calculator Bicycletire', 'url' => ['index']];
+$this->title = 'ค่าพิเศษนึ่งยางนอกจกย.';
+$this->params['breadcrumbs'][] = ['label' => 'ค่าพิเศษนึ่งยางนอกจกย.', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $model->empid;
 
 //$debug = new CheckDebug();

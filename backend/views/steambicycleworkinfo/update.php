@@ -5,8 +5,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\SteambicycleworkInfo */
 
-$this->title = 'Update Steambicyclework Info: ' . $model->idwork;
-$this->params['breadcrumbs'][] = ['label' => 'Steambicyclework Infos', 'url' => ['index']];
+$this->title = 'ค่ามาตรฐานเงินประจำตำแหน่งนึ่งยางนอกจกย. : ' . $model->idwork;
+$this->params['breadcrumbs'][] = ['label' => 'ค่ามาตรฐานเงินประจำตำแหน่งนึ่งยางนอกจกย.', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->idwork, 'url' => ['view', 'id' => $model->idwork]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>

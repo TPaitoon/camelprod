@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel backend\models\BicycleempinfoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Bicycle Employee Rate';
+$this->title = 'ค่าเข้างานประกอบยางนอกจกย.';
 $this->params['breadcrumbs'][] = $this->title;
 
 $JS = <<<JS

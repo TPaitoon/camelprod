@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel backend\models\StandardbicycleSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Standard Bicycle';
+$this->title = 'ค่ามาตรฐานเงินประจำตำแหน่งประกอบยางนอกจกย.';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="standard-bicycle-index">

@@ -7,8 +7,8 @@ use yii\web\JqueryAsset;
 /* @var $this yii\web\View */
 /* @var $model common\models\BicycleInfo */
 
-$this->title = 'Calculator Bicycle';
-$this->params['breadcrumbs'][] = ['label' => 'Calculator Bicycle', 'url' => ['index']];
+$this->title = 'ค่าพิเศษประกอบยางนอกจกย.';
+$this->params['breadcrumbs'][] = ['label' => 'ค่าพิเศษประกอบยางนอกจกย.', 'url' => ['index']];
 $this->params['breadcrumbs'][] = 'เพิ่มข้อมูล';
 $this->registerJsFile(Yii::$app->request->baseUrl . '/js/chkbicyclecreate.js?Ver=0001', ['depends' => JqueryAsset::className()]);
 ?>

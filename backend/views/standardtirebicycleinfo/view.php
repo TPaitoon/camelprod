@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model common\models\StandardTireBicycleInfo */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Standard Tire Bicycle Infos', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'ค่ามาตรฐานนึ่งยางนอกจกย.', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="standard-tire-bicycle-info-view">

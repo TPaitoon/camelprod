@@ -7,8 +7,8 @@ use yii\web\JqueryAsset;
 /* @var $this yii\web\View */
 /* @var $model backend\models\BOMInfo */
 
-$this->title = '';
-$this->params['breadcrumbs'][] = ['label' => 'Calculator BOM', 'url' => ['index']];
+$this->title = 'ค่าพิเศษเตา BOM';
+$this->params['breadcrumbs'][] = ['label' => 'ค่าพิเศษเตา BOM', 'url' => ['index']];
 $this->params['breadcrumbs'][] = 'เพิ่มข้อมูล';
 $this->registerJsFile(Yii::$app->request->baseUrl.'/js/chkbomscript.js?Ver=0001',['depends' => JqueryAsset::className()]);
 ?>

@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\StandardTireBicycleInfo */
 
-$this->title = 'Create Standard Tire Bicycle Info';
-$this->params['breadcrumbs'][] = ['label' => 'Standard Tire Bicycle Infos', 'url' => ['index']];
+$this->title = 'ค่ามาตรฐานนึ่งยางนอกจกย.';
+$this->params['breadcrumbs'][] = ['label' => 'ค่ามาตรฐานนึ่งยางนอกจกย.', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="standard-tire-bicycle-info-create">

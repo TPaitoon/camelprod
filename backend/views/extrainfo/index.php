@@ -14,7 +14,7 @@ $js = <<<JS
     }
 JS;
 $this->registerJs($js, static::POS_END);
-$this->title = 'Standard BOM';
+$this->title = 'ค่ามาตรฐานเตา BOM';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="extra-info-index">

@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model backend\models\ExtraInfo */
 $name = \backend\models\ExtraInfo::find()->select(['ExtraName'])->where(['extra_id' => $model->extra_id])->one();
-$this->title = '';
+$this->title = 'ค่ามาตรฐานเตา BOM';
 $this->params['breadcrumbs'][] = ['label' => 'ค่ามาตรฐานเตา BOM', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $name->ExtraName, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'แก้ไข';

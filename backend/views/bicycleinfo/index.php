@@ -41,7 +41,7 @@ $js = <<<JS
     
 JS;
 $this->registerJs($js, static::POS_END);
-$this->title = 'Calculator Bicycle';
+$this->title = 'ค่าพิเศษประกอบยางนอกจกย.';
 $this->params['breadcrumbs'][] = $this->title;
 
 if ($Role == 'ITIT' || $Role == 'PSPS') {

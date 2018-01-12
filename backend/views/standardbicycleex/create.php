@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\StandardbicycleEx */
 
-$this->title = 'Create Standardbicycle Ex';
-$this->params['breadcrumbs'][] = ['label' => 'Standardbicycle Exes', 'url' => ['index']];
+$this->title = 'มาตรฐานรายละเอียดยาง';
+$this->params['breadcrumbs'][] = ['label' => 'มาตรฐานรายละเอียดยาง', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="standardbicycle-ex-create">

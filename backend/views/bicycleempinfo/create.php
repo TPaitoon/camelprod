@@ -7,8 +7,8 @@ use yii\web\JqueryAsset;
 /* @var $this yii\web\View */
 /* @var $model common\models\BicycleEmpInfo */
 $this->registerJsFile(Yii::$app->request->baseUrl.'/js/chkbicycleempcreate.js?Ver=0001',['depends'=> JqueryAsset::className()]);
-$this->title = 'Bicycle Employee Rate';
-$this->params['breadcrumbs'][] = ['label' => 'Employee Rate', 'url' => ['index']];
+$this->title = 'ค่าเข้างานประกอบยางนอกจกย.';
+$this->params['breadcrumbs'][] = ['label' => 'ค่าเข้างานประกอบยางนอกจกย.', 'url' => ['index']];
 $this->params['breadcrumbs'][] = 'เพิ่มข้อมูล';
 ?>
 <div class="bicycle-emp-info-create">

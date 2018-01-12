@@ -9,8 +9,8 @@ use yii\web\JqueryAsset;
 
 $this->registerJsFile(Yii::$app->request->baseUrl . '/js/chkbicyclesteamworkcreate.js?Ver=0001', ['depends' => JqueryAsset::className()]);
 
-$this->title = 'Steam Bicycle Employee Rate';
-$this->params['breadcrumbs'][] = ['label' => 'Steam Bicycle Employee Rate', 'url' => ['index']];
+$this->title = 'ค่าเข้างานนึ่งยางนอกจกย.';
+$this->params['breadcrumbs'][] = ['label' => 'ค่าเข้างานนึ่งยางนอกจกย.', 'url' => ['index']];
 $this->params['breadcrumbs'][] = 'เพิ่มข้อมูล';
 ?>
 <div class="bicyclesteamwork-info-create">

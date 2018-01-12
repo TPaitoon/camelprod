@@ -5,8 +5,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model backend\models\BOMInfo */
 
-$this->title = '';
-$this->params['breadcrumbs'][] = ['label' => 'Calculator BOM', 'url' => ['index']];
+$this->title = 'ค่าพิเศษเตา BOM';
+$this->params['breadcrumbs'][] = ['label' => 'ค่าพิเศษเตา BOM', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->empid];
 $this->params['breadcrumbs'][] = 'แก้ไขข้อมูล';
 ?>

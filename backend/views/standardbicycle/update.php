@@ -5,8 +5,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\StandardBicycle */
 
-$this->title = '';
-$this->params['breadcrumbs'][] = ['label' => 'Standard Employee', 'url' => ['index']];
+$this->title = 'ค่ามาตรฐานเงินประจำตำแหน่งประกอบยางนอกจกย.';
+$this->params['breadcrumbs'][] = ['label' => 'ค่ามาตรฐานเงินประจำตำแหน่งประกอบยางนอกจกย.', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id];
 $this->params['breadcrumbs'][] = 'แก้ไข';
 ?>

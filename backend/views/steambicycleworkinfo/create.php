@@ -6,11 +6,10 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\SteambicycleworkInfo */
 
-$this->title = '';
-$this->params['breadcrumbs'][] = ['label' => 'Standard Steambicycle', 'url' => ['index']];
+$this->title = 'ค่ามาตรฐานเงินประจำตำแหน่งนึ่งยางนอกจกย.';
+$this->params['breadcrumbs'][] = ['label' => 'ค่ามาตรฐานเงินประจำตำแหน่งนึ่งยางนอกจกย.', 'url' => ['index']];
 $this->params['breadcrumbs'][] = 'เพิ่มเงินประจำตำแหน่ง';
 ?>
-<br>
 <div class="steambicyclework-info-create">
     <div class="box box-success box-solid">
         <div class="box-header">

@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model common\models\SteambicycleworkInfo */
 
 $this->title = $model->idwork;
-$this->params['breadcrumbs'][] = ['label' => 'Steambicyclework Infos', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'ค่ามาตรฐานเงินประจำตำแหน่งนึ่งยางนอกจกย.', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="steambicyclework-info-view">

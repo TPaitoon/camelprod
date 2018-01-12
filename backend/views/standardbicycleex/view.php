@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model common\models\StandardbicycleEx */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Standardbicycle Exes', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'มาตรฐานรายละเอียดยาง', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="standardbicycle-ex-view">

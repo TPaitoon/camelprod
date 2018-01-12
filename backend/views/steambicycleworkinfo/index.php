@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel backend\models\SteambicycleworkinfoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Standard Steambicycle';
+$this->title = 'ค่ามาตรฐานเงินประจำตำแหน่งนึ่งยางนอกจกย.';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="steambicyclework-info-index">

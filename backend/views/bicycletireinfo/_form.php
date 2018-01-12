@@ -26,7 +26,7 @@ $empmodel = EmpInfo::find()->where(['Dept' => 'ฝ่ายผลิต'])->andF
                 <?= $form->field($model, 'empid')->widget(Select2::className(), [
                     'data' => ArrayHelper::map($empmodel, 'PRS_NO', 'PRS_NO'),
                     'options' => [
-                        'placeholder' => 'เลือกรหัสพนกงาน',
+                        'placeholder' => 'เลือกรหัสพนักงาน',
                         'id' => 'btempid',
                         'onchange' => '$.post("index.php?r=bicycletireinfo/showempname&empid=' . '"+$(this).val(),function(data){
                         $("#btempname").val(data);

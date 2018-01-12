@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model backend\models\BOMInfo */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Calculator BOM', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'ค่าพิเศษเตา BOM', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="bominfo-view">
