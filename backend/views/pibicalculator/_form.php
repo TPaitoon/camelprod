@@ -159,7 +159,7 @@ $hourlist = HourInfo::find()->orderBy(['values' => SORT_ASC])->all();
                             <input type="text" name="empids[]" class="form-control empid" readonly="true">
                         </td>
                         <td>
-                            <input type="text" name="empname" class="form-control empname" readonly="true">
+                            <input type="text" name="empnames[]" class="form-control empname" readonly="true">
                         </td>
                         <td style="text-align: center">
                             <button type="button" class="btn btn-danger removeline" onclick="removeline($(this))">-

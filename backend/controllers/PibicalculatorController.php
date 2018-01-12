@@ -117,12 +117,14 @@ class PibicalculatorController extends Controller
                 $master->status = 0;
                 if ($master->save(false)) {
                     $empcnt = Yii::$app->request->post('empids');
+                    $empncnt = Yii::$app->request->post('empnames');
                     for ($i = 0; $i < count($empcnt); $i++) {
                         for ($r = 1; $r <= 2; $r++) {
                             $pibidata = new PIBIDetail();
                             $pibidata->Groupid = $model->Groupid;
                             $pibidata->Shiftid = $model->Shiftid;
                             $pibidata->Empid = $empcnt[$i];
+                            $pibidata->Empname = $empncnt[$i];
                             $pibidata->Date = $model->Date;
                             $pibidata->Hour = $model->Hour;
                             if ($r === 1) {
@@ -207,12 +209,14 @@ class PibicalculatorController extends Controller
                 $master->status = 0;
                 if ($master->save(false)) {
                     $empcnt = Yii::$app->request->post('empids');
+                    $empncnt = Yii::$app->request->post('empnames');
                     for ($i = 0; $i < count($empcnt); $i++) {
                         for ($r = 1; $r <= 2; $r++) {
                             $pibidata = new PIBIDetail();
                             $pibidata->Groupid = $model->Groupid;
                             $pibidata->Shiftid = $model->Shiftid;
                             $pibidata->Empid = $empcnt[$i];
+                            $pibidata->Empname = $empncnt[$i];
                             $pibidata->Date = $model->Date;
                             $pibidata->Hour = $model->Hour;
                             if ($r === 1) {
