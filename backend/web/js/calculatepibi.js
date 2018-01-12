@@ -16,7 +16,7 @@ function calculator() {
         //alert(data);
         $("#xrate").val(data);
         var cal = (parseInt(data) - parseInt($("#deduct").val())) / $(".cline").val();
-        $("#rate").val(Math.round(cal));
+        $("#rate").val(Math.ceil(cal));
     })
 }
 
