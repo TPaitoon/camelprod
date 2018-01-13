@@ -27,7 +27,7 @@ class PibicalculatorController extends \yii\web\Controller
         return $this->render('index');
     }
 
-    public function actionCreated()
+    public function actionCreate()
     {
         $model = new PIBIDetail();
 
