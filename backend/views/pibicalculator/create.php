@@ -1,11 +1,10 @@
 <?php
-
-use yii\helpers\Html;
-
-
-/* @var $this yii\web\View */
-/* @var $model backend\models\Pibicalculator */
-
+/**
+ * Created by PhpStorm.
+ * User: Paitoon
+ * Date: 13/01/2018
+ * Time: 10:29 AM
+ */
 $this->title = 'Create Pibicalculator';
 $this->params['breadcrumbs'][] = ['label' => 'Pibicalculators', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;

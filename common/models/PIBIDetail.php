@@ -8,18 +8,16 @@ use Yii;
  * This is the model class for table "USRP_PIBIDetail".
  *
  * @property integer $id
- * @property integer $Groupid
- * @property integer $Shiftid
  * @property string $Empid
+ * @property string $Empname
  * @property string $Date
  * @property integer $Hour
  * @property integer $Typeid
- * @property double $Qty
- * @property integer $Itemid
- * @property double $Deduct
- * @property integer $Totaltire
- * @property integer $refid
- * @property string $Empname
+ * @property double $TQty
+ * @property integer $Deductid
+ * @property double $DQty
+ * @property integer $Rate
+ * @property integer $Refid
  */
 class PIBIDetail extends \yii\db\ActiveRecord
 {
@@ -37,11 +35,10 @@ class PIBIDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['Groupid', 'Shiftid', 'Empid', 'Date', 'Hour', 'Typeid', 'Qty', 'Itemid', 'Deduct', 'Totaltire','refid'], 'required'],
-            [['Groupid', 'Shiftid', 'Hour', 'Typeid', 'Itemid', 'Totaltire','refid'], 'integer'],
-            [['Empid','Empname'], 'string'],
+            [['Empid', 'Empname'], 'string'],
             [['Date'], 'safe'],
-            [['Qty', 'Deduct'], 'number'],
+            [['Hour', 'Typeid', 'Deductid', 'Rate', 'Refid'], 'integer'],
+            [['TQty', 'DQty'], 'number'],
         ];
     }
 
@@ -52,16 +49,16 @@ class PIBIDetail extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'Groupid' => 'Groupid',
-            'Shiftid' => 'Shiftid',
             'Empid' => 'Empid',
+            'Empname' => 'Empname',
             'Date' => 'Date',
             'Hour' => 'Hour',
             'Typeid' => 'Typeid',
-            'Qty' => 'Qty',
-            'Itemid' => 'Itemid',
-            'Deduct' => 'Deduct',
-            'Totaltire' => 'Totaltire',
+            'TQty' => 'Tqty',
+            'Deductid' => 'Deductid',
+            'DQty' => 'Dqty',
+            'Rate' => 'Rate',
+            'Refid' => 'Refid',
         ];
     }
 }
