@@ -14,6 +14,8 @@ class m180113_022235_create_USRP_PIBIDetail_table extends Migration
     {
         $this->createTable('USRP_PIBIDetail', [
             'id' => $this->primaryKey(),
+            'Shiftid' => $this->integer(),
+            'Groupid' => $this->integer(),
             'Empid' => $this->string(),
             'Empname' => $this->string(),
             'Date' => $this->date(),

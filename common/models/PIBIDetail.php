@@ -8,6 +8,8 @@ use Yii;
  * This is the model class for table "USRP_PIBIDetail".
  *
  * @property integer $id
+ * @property integer $Shiftid
+ * @property integer $Groupid
  * @property string $Empid
  * @property string $Empname
  * @property string $Date
@@ -35,9 +37,9 @@ class PIBIDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['Shiftid', 'Groupid', 'Hour', 'Typeid', 'Deductid', 'Rate', 'Refid'], 'integer'],
             [['Empid', 'Empname'], 'string'],
             [['Date'], 'safe'],
-            [['Hour', 'Typeid', 'Deductid', 'Rate', 'Refid'], 'integer'],
             [['TQty', 'DQty'], 'number'],
         ];
     }
@@ -49,6 +51,8 @@ class PIBIDetail extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'Shiftid' => 'Shiftid',
+            'Groupid' => 'Groupid',
             'Empid' => 'Empid',
             'Empname' => 'Empname',
             'Date' => 'Date',
