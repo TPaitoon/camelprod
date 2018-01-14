@@ -97,7 +97,7 @@ $hourlist = HourInfo::find()->orderBy(['values' => SORT_ASC])->all();
                 </div>
                 <div class="col-lg-3">
                     <?php $model->Date == '' ? $model->Date = date('Y-m-d') : $model->Date ?>
-                    <?= $form->field($model, 'Date')->widget(DatePicker::classname(),[
+                    <?= $form->field($model, 'Date')->widget(DatePicker::classname(), [
                         'options' => ['id' => 'date'],
                         'name' => 'datepick',
                         'type' => DatePicker::TYPE_COMPONENT_APPEND,
@@ -108,7 +108,20 @@ $hourlist = HourInfo::find()->orderBy(['values' => SORT_ASC])->all();
                             'autoclose' => true,
                             'todayHighlight' => true
                         ]
-                    ]) ?>
+                    ])->label('วันที่') ?>
+                </div>
+                <div class="col-lg-2">
+                    <?= $form->field($model, 'Hour')->dropDownList(ArrayHelper::map($hourlist, 'values', 'hour'), ['id' => 'hour'])->label('ชั่วโมงงาน') ?>
+                </div>
+                <div class="row">
+                    <div class="col-lg-11">
+                        <hr>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-2">
+                        <?= $form->field($model, 'Itemid')->dropDownList(ArrayHelper::map($itemlist, 'refid', 'name'), ['id' => 'std'])->label('มาตรฐาน') ?>
+                    </div>
                 </div>
             </div>
         </div>

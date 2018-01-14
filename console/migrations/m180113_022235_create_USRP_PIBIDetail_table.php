@@ -20,6 +20,7 @@ class m180113_022235_create_USRP_PIBIDetail_table extends Migration
             'Empname' => $this->string(),
             'Date' => $this->date(),
             'Hour' => $this->integer(),
+            'Itemid' => $this->integer(),
             'Typeid' => $this->integer(),
             'TQty' => $this->double(),
             'Deductid' => $this->integer(),
