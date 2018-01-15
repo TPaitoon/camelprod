@@ -113,17 +113,60 @@ $hourlist = HourInfo::find()->orderBy(['values' => SORT_ASC])->all();
                 <div class="col-lg-2">
                     <?= $form->field($model, 'Hour')->dropDownList(ArrayHelper::map($hourlist, 'values', 'hour'), ['id' => 'hour'])->label('ชั่วโมงงาน') ?>
                 </div>
-                <div class="row">
-                    <div class="col-lg-11">
-                        <hr>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-2">
-                        <?= $form->field($model, 'Itemid')->dropDownList(ArrayHelper::map($itemlist, 'refid', 'name'), ['id' => 'std'])->label('มาตรฐาน') ?>
-                    </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <hr>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-lg-2">
+                    <?= $form->field($model, 'Itemid')->dropDownList(ArrayHelper::map($itemlist, 'refid', 'name'), ['id' => 'std'])->label('มาตรฐาน') ?>
+                </div>
+                <div class="col-lg-2">
+                    <!-- ยอดผลิต -->
+                    <?= $form->field($model, 'amount')->textInput(['maxlength' => 5, 'autocomplete' => 'off', 'id' => 'amount', 'onkeypress' => 'return chknumber(event);', 'style' => 'text-align: center'])->label('ยอดผลิต') ?>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <hr>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3">
+                    <?= $form->field($model, 'losttire1')->textInput(['maxlength' => 4, 'autocomplete' => 'off', 'id' => 'losttire1', 'onkeypress' => 'return chknumber(event);', 'style' => 'text-align: right'])->label('ยางเสีย (ก่อนนึ่ง) : เส้น') ?>
+                </div>
+                <div class="col-lg-2">
+                    <?= $form->field($model, 'dummy1')->textInput(['readonly' => 'true', 'value' => '0.30', 'style' => 'text-align: right'])->label('หักเงิน : เส้น') ?>
+                </div>
+                <div class="col-lg-2">
+                    <?= $form->field($model, 'listprice1')->textInput(['readonly' => 'true', 'style' => 'text-align: right'])->label('คิดเป็นเงิน : บาท') ?>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3">
+                    <?= $form->field($model, 'losttire2')->textInput(['maxlength' => 4, 'autocomplete' => 'off', 'id' => 'losttire1', 'onkeypress' => 'return chknumber(event);', 'style' => 'text-align: right'])->label('ยางเสีย (หลังนึ่ง) : เส้น') ?>
+                </div>
+                <div class="col-lg-2">
+                    <?= $form->field($model, 'dummy2')->textInput(['readonly' => 'true', 'value' => '5.00', 'style' => 'text-align: right'])->label('หักเงิน : เส้น') ?>
+                </div>
+                <div class="col-lg-2">
+                    <?= $form->field($model, 'listprice2')->textInput(['readonly' => 'true', 'style' => 'text-align: right'])->label('คิดเป็นเงิน : บาท') ?>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3">
+                    <?= $form->field($model, 'losttube')->textInput(['maxlength' => 4, 'autocomplete' => 'off', 'id' => 'losttube', 'onkeypress' => 'return chknumber(event);', 'style' => 'text-align: right'])->label('จุ๊บเสีย : ตัว') ?>
+                </div>
+                <div class="col-lg-2">
+                    <?= $form->field($model, 'dummy3')->textInput(['readonly' => 'true', 'value' => '7.00', 'style' => 'text-align: right'])->label('หักเงิน : ตัว') ?>
+                </div>
+                <div class="col-lg-2">
+                    <?= $form->field($model, 'listprice3')->textInput(['readonly' => 'true', 'style' => 'text-align: right'])->label('คิดเป็นเงิน : บาท') ?>
+                </div>
+            </div>
+            <div class="col-lg-12"></div>
         </div>
         <?php ActiveForm::end() ?>
     </div>
