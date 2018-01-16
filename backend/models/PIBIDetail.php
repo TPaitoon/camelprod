@@ -16,6 +16,7 @@ class PIBIDetail extends \common\models\PIBIDetail
     public $amount;
     public $losttire1, $losttire2, $losttube;
     public $listprice1, $listprice2, $listprice3;
+    public $listid;
 
 //    public $dummy1, $dummy2, $dummy3;
 
@@ -25,6 +26,7 @@ class PIBIDetail extends \common\models\PIBIDetail
             [['amount', 'losttire1', 'losttire2', 'losttube'], 'integer'],
             [['listprice2', 'listprice3'], 'integer'],
             [['listprice1'], 'double'],
+            [['listid'], 'string'],
 //            [['dummy1', 'dummy2', 'dummy3'], 'double'],
         ]);
     }
