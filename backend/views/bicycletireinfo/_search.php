@@ -12,14 +12,14 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 
 $js = <<<JS
-    $('#SearchSubmit').click(function(e) {
-      e.preventDefault();
-      if($('#Sdate').val() > $('#Edate').val()) {
-          alert('วันที่เริ่มห้ามน้อยกว่าวันที่สิ้นสุด');
-      }else{
-          $('#SearchForm').submit();
-      }
-    })
+    // $('#SearchSubmit').click(function(e) {
+    //   e.preventDefault();
+    //   if($('#Sdate').val() > $('#Edate').val()) {
+    //       alert('วันที่เริ่มห้ามน้อยกว่าวันที่สิ้นสุด');
+    //   }else{
+    //       $('#SearchForm').submit();
+    //   }
+    // })
     
 //    var x = document.getElementById('search');
 //    var y = document.getElementById('create');
@@ -99,7 +99,7 @@ $empmodel = EmpInfo::find()->where(['Dept' => 'ฝ่ายผลิต'])->andF
     </div>
 
     <div class="form-group">
-        <span id="search"><?= Html::submitButton('Search', ['class' => 'btn btn-primary', 'onclick' => 'chkdate()']) ?></span>
+        <span id="search"><?= Html::submitButton('Search', ['class' => 'btn btn-primary', 'onclick' => '']) ?></span>
         <span id="create"><?= Html::a('เพิ่มข้อมูล', ['create'], ['class' => 'btn btn-success']) ?></span>
         <span id="check"><?= Html::button('ยืนยันข้อมูล', ['id' => 'binfo', 'class' => 'btn btn-info pull-right']) ?></span>
     </div>
