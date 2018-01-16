@@ -38,12 +38,14 @@ for ($i = 1; $i <= 15; $i++) {
         </div>
         <div class="col-lg-3">
             <?= Select2::widget([
-                'id' => 'emplistselect',
                 'name' => 'empselect',
                 'data' => ArrayHelper::map($emplist, 'PRS_NO', function ($data) {
                     return $data->PRS_NO . ' ' . $data->EMP_NAME . ' ' . $data->EMP_SURNME;
                 }),
-                'options' => ['placeholder' => 'เลือกพนักงาน']
+                'options' => [
+                    'placeholder' => 'เลือกพนักงาน',
+                    'id' => 'emplistselect'
+                ]
             ]) ?>
         </div>
         <div class="col-lg-1">
@@ -53,7 +55,7 @@ for ($i = 1; $i <= 15; $i++) {
     <hr>
     <div class="row">
         <?php $form = ActiveForm::begin() ?>
-        <div class="col-lg-4">
+        <div class="col-lg-4" id="select-form">
             <table class="table table-bordered listemp">
                 <thead>
                 <tr>
@@ -69,10 +71,11 @@ for ($i = 1; $i <= 15; $i++) {
                         <input type="text" name="empids[]" class="form-control empid" readonly>
                     </td>
                     <td>
-                        <input type="text" name="empnames[]" class="form-control" readonly>
+                        <input type="text" name="empnames[]" class="form-control empname" readonly>
                     </td>
                     <td style="text-align: center">
-                        <button type="button" class="btn btn-danger removeline" onclick=""><i class="fa fa-minus"></i>
+                        <button type="button" class="btn btn-danger" onclick="removeline($(this))">
+                            <i class="fa fa-minus"></i>
                         </button>
                     </td>
                 </tr>
@@ -83,7 +86,7 @@ for ($i = 1; $i <= 15; $i++) {
                     <?php echo "จำนวณพนักงาน : " ?>
                 </div>
                 <div class="col-lg-1">
-                    <label class="cline" style="color: #00a157">#</label>
+                    <label id="cline" style="color: #00a157">#</label>
                 </div>
                 <div class="col-lg-1">
                     คน
@@ -141,6 +144,7 @@ for ($i = 1; $i <= 15; $i++) {
                 </div>
                 <div class="col-lg-2">
                     <!-- ยอดผลิต -->
+                    <?php $model->amount == '' ? $model->amount = 0 : $model->amount ?>
                     <?= $form->field($model, 'amount')->textInput(['maxlength' => 5, 'autocomplete' => 'off', 'id' => 'amount', 'onkeypress' => 'return chknumber(event);', 'style' => 'text-align: center'])->label('ยอดผลิต') ?>
                 </div>
             </div>
@@ -151,34 +155,40 @@ for ($i = 1; $i <= 15; $i++) {
             </div>
             <div class="row">
                 <div class="col-lg-3">
+                    <?php $model->losttire1 == '' ? $model->losttire1 = 0 : $model->losttire1 ?>
                     <?= $form->field($model, 'losttire1')->textInput(['maxlength' => 4, 'autocomplete' => 'off', 'id' => 'losttire1', 'onkeypress' => 'return chknumber(event);', 'style' => 'text-align: right'])->label('ยางเสีย (ก่อนนึ่ง) : เส้น') ?>
                 </div>
                 <div class="col-lg-2">
                     <?= $form->field($model, 'dummy1')->textInput(['readonly' => 'true', 'value' => '0.30', 'style' => 'text-align: right', 'id' => 'dummy1'])->label('หักเงิน : เส้น') ?>
                 </div>
                 <div class="col-lg-2">
+                    <?php $model->listprice1 == '' ? $model->listprice1 = 0 : $model->listprice1 ?>
                     <?= $form->field($model, 'listprice1')->textInput(['readonly' => 'true', 'style' => 'text-align: right', 'id' => 'listprice1'])->label('คิดเป็นเงิน : บาท') ?>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-3">
+                    <?php $model->losttire2 == '' ? $model->losttire2 = 0 : $model->losttire2 ?>
                     <?= $form->field($model, 'losttire2')->textInput(['maxlength' => 4, 'autocomplete' => 'off', 'id' => 'losttire2', 'onkeypress' => 'return chknumber(event);', 'style' => 'text-align: right'])->label('ยางเสีย (หลังนึ่ง) : เส้น') ?>
                 </div>
                 <div class="col-lg-2">
                     <?= $form->field($model, 'dummy2')->textInput(['readonly' => 'true', 'value' => '5.00', 'style' => 'text-align: right', 'id' => 'dummy2'])->label('หักเงิน : เส้น') ?>
                 </div>
                 <div class="col-lg-2">
+                    <?php $model->listprice2 == '' ? $model->listprice2 = 0 : $model->listprice2 ?>
                     <?= $form->field($model, 'listprice2')->textInput(['readonly' => 'true', 'style' => 'text-align: right', 'id' => 'listprice2'])->label('คิดเป็นเงิน : บาท') ?>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-3">
+                    <?php $model->losttube == '' ? $model->losttube = 0 : $model->losttube ?>
                     <?= $form->field($model, 'losttube')->textInput(['maxlength' => 4, 'autocomplete' => 'off', 'id' => 'losttube', 'onkeypress' => 'return chknumber(event);', 'style' => 'text-align: right'])->label('จุ๊บเสีย : ตัว') ?>
                 </div>
                 <div class="col-lg-2">
                     <?= $form->field($model, 'dummy3')->textInput(['readonly' => 'true', 'value' => '7.00', 'style' => 'text-align: right', 'id' => 'dummy3'])->label('หักเงิน : ตัว') ?>
                 </div>
                 <div class="col-lg-2">
+                    <?php $model->listprice3 == '' ? $model->listprice3 = 0 : $model->listprice3 ?>
                     <?= $form->field($model, 'listprice3')->textInput(['readonly' => 'true', 'style' => 'text-align: right', 'id' => 'listprice3'])->label('คิดเป็นเงิน : บาท') ?>
                 </div>
             </div>
@@ -195,6 +205,7 @@ for ($i = 1; $i <= 15; $i++) {
                     <?= $form->field($model, 'deduct')->textInput(['readonly' => true, 'value' => 0, 'style' => 'text-align: right', 'id' => 'deduct'])->label('หักเงินทั้งหมด') ?>
                 </div>
                 <div class="col-lg-2">
+                    <?php $model->Rate == '' ? $model->Rate = 0 : $model->Rate ?>
                     <?= $form->field($model, 'Rate')->textInput(['readonly' => true, 'style' => 'text-align: right', 'id' => 'rate'])->label('ค่าพิเศษ : คน') ?>
                 </div>
                 <div class="col-lg-2">
