@@ -78,7 +78,7 @@ $this->registerJs($js, static::POS_END);
     </div>
 
     <div class="form-group">
-        <span id="search"><?= Html::submitButton('ค้นหา', ['class' => 'btn btn-primary', 'id' => 'BSearch', 'onclick' => 'chkdate()']) ?></span>
+        <span id="search"><?= Html::submitButton('ค้นหา', ['class' => 'btn btn-primary', 'id' => 'BSearch', 'onclick' => '']) ?></span>
         <span id="create"><?= Html::a('เพิ่มข้อมูล', ['create'], ['class' => 'btn btn-success']) ?></span>
         <span id="check"><?= Html::button('ยืนยันข้อมูล', ['id' => 'binfo', 'class' => 'btn btn-info pull-right']) ?></span>
     </div>
