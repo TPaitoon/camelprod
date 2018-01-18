@@ -12,37 +12,15 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 
 $js = <<<JS
-    // $('#SearchSubmit').click(function(e) {
-    //   e.preventDefault();
-    //   if($('#Sdate').val() > $('#Edate').val()) {
-    //       alert('วันที่เริ่มห้ามน้อยกว่าวันที่สิ้นสุด');
-    //   }else{
-    //       $('#SearchForm').submit();
-    //   }
-    // })
-    
-//    var x = document.getElementById('search');
-//    var y = document.getElementById('create');
-//    var z = document.getElementById('check');
-//    var emp = document.getElementById('empids');
-//    var st = document.getElementById('starts');
-//    var ed = document.getElementById('ends');
-//    if ($Role === 1) {
-//        x.style.display = '';
-//        y.style.display = '';
-//        z.style.display = '';
-//        emp.style.display = '';
-//        st.style.display = '';
-//        ed.style.display = '';
-//    } else {
-//        x.style.display = 'none';   
-//        y.style.display = '';   
-//        z.style.display = 'none';   
-//        emp.style.display = 'none';   
-//        st.style.display = 'none';   
-//        ed.style.display = 'none';   
-//    }
-    
+    $('#SearchSubmit').click(function(e) {
+      e.preventDefault();
+      if($('#Sdate').val() > $('#Edate').val()) {
+          alert('วันที่เริ่มห้ามน้อยกว่าวันที่สิ้นสุด');
+      }else{
+          $('#SearchForm').submit();
+      }
+    })
+
 JS;
 $this->registerJs($js, static::POS_END);
 
@@ -75,6 +53,7 @@ $empmodel = EmpInfo::find()->where(['Dept' => 'ฝ่ายผลิต'])->andF
                 'type' => DatePicker::TYPE_COMPONENT_APPEND,
                 'readonly' => true,
                 'layout' => '{picker}{input}',
+                'options' => ['id' => 'Sdate'],
                 'pluginOptions' => [
                     'todayHighlight' => true,
                     'autoclose' => true,
@@ -89,6 +68,7 @@ $empmodel = EmpInfo::find()->where(['Dept' => 'ฝ่ายผลิต'])->andF
                 'type' => DatePicker::TYPE_COMPONENT_APPEND,
                 'readonly' => true,
                 'layout' => '{picker}{input}',
+                'options' => ['id' => 'Edate'],
                 'pluginOptions' => [
                     'todayHighlight' => true,
                     'autoclose' => true,
@@ -99,7 +79,7 @@ $empmodel = EmpInfo::find()->where(['Dept' => 'ฝ่ายผลิต'])->andF
     </div>
 
     <div class="form-group">
-        <span id="search"><?= Html::submitButton('Search', ['class' => 'btn btn-primary', 'onclick' => '']) ?></span>
+        <span id="search"><?= Html::submitButton('Search', ['id' => 'SearchSubmit','class' => 'btn btn-primary', 'onclick' => '']) ?></span>
         <span id="create"><?= Html::a('เพิ่มข้อมูล', ['create'], ['class' => 'btn btn-success']) ?></span>
         <span id="check"><?= Html::button('ยืนยันข้อมูล', ['id' => 'binfo', 'class' => 'btn btn-info pull-right']) ?></span>
     </div>

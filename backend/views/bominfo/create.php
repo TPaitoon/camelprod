@@ -10,16 +10,16 @@ use yii\web\JqueryAsset;
 $this->title = 'ค่าพิเศษเตา BOM';
 $this->params['breadcrumbs'][] = ['label' => 'ค่าพิเศษเตา BOM', 'url' => ['index']];
 $this->params['breadcrumbs'][] = 'เพิ่มข้อมูล';
-$this->registerJsFile(Yii::$app->request->baseUrl.'/js/chkbomscript.js?Ver=0001',['depends' => JqueryAsset::className()]);
+$baseurl = Yii::$app->request->baseUrl;
+$this->registerJsFile($baseurl . '/js/chkbomscript.js?Ver=0001', ['depends' => JqueryAsset::className()]);
+$this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => JqueryAsset::className()]);
 ?>
-<br>
 <div class="bominfo-create">
-    <div class="box box-primary box-solid">
-        <div class="box-header">
+    <div class="panel">
+        <div class="panel panel-heading">
             <label style="font-size: x-large">เพิ่มข้อมูล</label>
-            <hr>
         </div>
-        <div class="box-body">
+        <div class="panel panel-body">
             <?= $this->render('_form', [
                 'model' => $model,
                 'data' => $data,

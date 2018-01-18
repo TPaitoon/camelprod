@@ -58,7 +58,6 @@ for ($i = 1; $i <= 15; $i++) {
                         </div>
                     </div>
                 </div>
-
                 <div class="panel-body">
                     <table class="table table-bordered listemp">
                         <thead>
