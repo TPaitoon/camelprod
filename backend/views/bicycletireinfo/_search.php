@@ -19,8 +19,7 @@ $js = <<<JS
       }else{
           $('#SearchForm').submit();
       }
-    })
-
+    }) 
 JS;
 $this->registerJs($js, static::POS_END);
 
@@ -52,8 +51,8 @@ $empmodel = EmpInfo::find()->where(['Dept' => 'ฝ่ายผลิต'])->andF
                 'name' => 'startdate',
                 'type' => DatePicker::TYPE_COMPONENT_APPEND,
                 'readonly' => true,
-                'layout' => '{picker}{input}',
                 'options' => ['id' => 'Sdate'],
+                'layout' => '{picker}{input}',
                 'pluginOptions' => [
                     'todayHighlight' => true,
                     'autoclose' => true,
@@ -67,8 +66,8 @@ $empmodel = EmpInfo::find()->where(['Dept' => 'ฝ่ายผลิต'])->andF
                 'name' => 'enddate',
                 'type' => DatePicker::TYPE_COMPONENT_APPEND,
                 'readonly' => true,
-                'layout' => '{picker}{input}',
                 'options' => ['id' => 'Edate'],
+                'layout' => '{picker}{input}',
                 'pluginOptions' => [
                     'todayHighlight' => true,
                     'autoclose' => true,
@@ -79,7 +78,7 @@ $empmodel = EmpInfo::find()->where(['Dept' => 'ฝ่ายผลิต'])->andF
     </div>
 
     <div class="form-group">
-        <span id="search"><?= Html::submitButton('Search', ['id' => 'SearchSubmit','class' => 'btn btn-primary', 'onclick' => '']) ?></span>
+        <span id="search"><?= Html::submitButton('Search', ['class' => 'btn btn-primary', 'id' => 'SearchSubmit', 'onclick' => '']) ?></span>
         <span id="create"><?= Html::a('เพิ่มข้อมูล', ['create'], ['class' => 'btn btn-success']) ?></span>
         <span id="check"><?= Html::button('ยืนยันข้อมูล', ['id' => 'binfo', 'class' => 'btn btn-info pull-right']) ?></span>
     </div>

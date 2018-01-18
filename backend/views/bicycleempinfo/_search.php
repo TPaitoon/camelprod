@@ -19,7 +19,7 @@ $js = <<<JS
       }else{
           $('#SearchForm').submit();
       }
-    })    
+    })
 JS;
 $this->registerJs($js, static::POS_END);
 
