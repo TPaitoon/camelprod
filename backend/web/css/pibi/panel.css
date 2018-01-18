@@ -1,9 +1,0 @@
-.panel {
-    background-color: #fff;
-    border-radius: 1px;
-}
-
-.panel > .panel-heading {
-    border-radius: 1px;
-    color: white;
-}
