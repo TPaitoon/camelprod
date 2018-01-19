@@ -248,5 +248,5 @@ for ($i = 1; $i <= 15; $i++) {
 $baseurl = Yii::$app->request->baseUrl;
 $this->registerJsFile($baseurl . '/js/chkkeypressnumber.js?Ver=0001', ['depends' => JqueryAsset::className()]);
 $this->registerJsFile($baseurl . '/js/pibi/newline.js?Ver=0001', ['depends' => JqueryAsset::className()]);
-$this->registerCssFile($baseurl . '/css/pibi/panel.css?Ver=0001', ['depends' => JqueryAsset::className()]);
+$this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => JqueryAsset::className()]);
 ?>

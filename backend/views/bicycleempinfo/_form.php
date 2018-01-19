@@ -31,26 +31,16 @@ $bicyclesec = StandardBicycle::find()->all();
                 ],])->label('รหัสพนักงาน')
             ?>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
             <?= $form->field($model, 'empName')->textInput(['id' => 'eempname', 'readonly' => true])->label('ชื่อ - นามสกุล') ?>
         </div>
-        <div class="col-md-3">
-            <?= $form->field($model, 'rank')->widget(Select2::className(), [
-                'data' => ArrayHelper::map($bicyclesec, 'Section', 'Section'),
-                'options' => [
-                    'placeholder' => 'เลือกตำแหน่งงาน',
-                    'id' => 'erank',
-                    'onchange' => '$.post("index.php?r=bicycleempinfo/showextra&id=' . '"+$(this).val(),function(data){
-                        $("#eextra").val(data); 
-                    });',
-                ],])->label('ตำแหน่ง') ?>
-
+        <div class="col-md-2">
             <?= $form->field($model, 'Extra')->hiddenInput(['id' => 'eextra', 'readonly' => true])->label(false) ?>
         </div>
     </div>
     <hr>
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-2">
             <?php $model->date == '' ? $model->date = date('Y-m-d') : $model->date ?>
             <?= $form->field($model, 'date')->widget(DatePicker::className(), [
                 'options' => [
@@ -65,6 +55,17 @@ $bicyclesec = StandardBicycle::find()->all();
                     'todayHighlight' => true,
                 ]
             ])->label('วันที่ทำงาน') ?>
+        </div>
+        <div class="col-md-2">
+            <?= $form->field($model, 'rank')->widget(Select2::className(), [
+                'data' => ArrayHelper::map($bicyclesec, 'Section', 'Section'),
+                'options' => [
+                    'placeholder' => 'เลือกตำแหน่งงาน',
+                    'id' => 'erank',
+                    'onchange' => '$.post("index.php?r=bicycleempinfo/showextra&id=' . '"+$(this).val(),function(data){
+                        $("#eextra").val(data); 
+                    });',
+                ],])->label('ตำแหน่ง') ?>
         </div>
         <div class="col-md-3">
             <?= $form->field($model, 'confirms')->hiddenInput(['value' => 0])->label(false) ?>

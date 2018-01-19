@@ -4,6 +4,7 @@ use backend\models\CheckDebug;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\web\JqueryAsset;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\BominfoSearch */
@@ -78,7 +79,7 @@ JS;
 $this->registerJs($js, static::POS_END);
 $this->title = 'ค่าพิเศษเตา BOM';
 $this->params['breadcrumbs'][] = $this->title;
-
+$baseurl = Yii::$app->request->baseUrl;
 /*$debug = new CheckDebug();
 $debug->printr($dataProvider);
 return;*/
@@ -90,11 +91,12 @@ if ($Role == 'ITIT' || $Role == 'PSPS') {
 }
 
 //echo Yii::$app->formatter->asDate(str_replace('/','-','20/10/2017'),'yyyy-MM-dd');
+$this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => JqueryAsset::className()]);
 ?>
 <input hidden class="role" value="<?php echo $sys ?>">
 <div class="bominfo-index">
-    <div class="box box-primary box-solid">
-        <div class="box-body">
+    <div class="panel">
+        <div class="panel panel-body">
             <?php echo $this->render('_search', ['model' => $searchModel]); ?>
             <hr>
             <?= GridView::widget([

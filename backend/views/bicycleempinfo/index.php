@@ -49,8 +49,8 @@ if ($Role == 'ITIT' || $Role == 'PSPS') {
 }
 ?>
 <div class="bicycle-emp-info-index">
-    <div class="box box-primary box-solid">
-        <div class="box-body">
+    <div class="panel panel-primary">
+        <div class="panel panel-body">
             <?php echo $this->render('_search', ['model' => $searchModel, 'Role' => $sys]); ?>
             <hr>
             <?= GridView::widget([

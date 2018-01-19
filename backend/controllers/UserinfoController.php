@@ -41,7 +41,7 @@ class UserinfoController extends Controller
     {
         $chk = new UserDirect();
         $chk->ChkusrForIT();
-        
+
         $searchModel = new UserinfoSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -80,14 +80,17 @@ class UserinfoController extends Controller
             //$debug = new CheckDebug();
             //$debug->printr($model);
 
-            $user = new User();
-            $user->username = $model->username;
-            $user->email = $model->email;
-            $user->auth_key = Yii::$app->security->generateRandomString();
-            $user->password_hash = Yii::$app->security->generatePasswordHash($model->password);
-            //$user->generateAuthKey();
-
-            $user->save(false);
+            $cnt = User::find()->where(['username' => $model->username])->count();
+            if ($cnt < 1) {
+                $user = new User();
+                $user->username = $model->username;
+                $user->email = $model->email;
+                $user->auth_key = Yii::$app->security->generateRandomString();
+                $user->password_hash = Yii::$app->security->generatePasswordHash($model->password);
+                //$user->generateAuthKey();
+                $user->save(false);
+            }
+            
             $model->save(false);
 
             return $this->redirect(['index']);
