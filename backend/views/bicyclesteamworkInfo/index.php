@@ -3,6 +3,7 @@
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\web\JqueryAsset;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\BicyclesteamworkinfoSearch */
@@ -78,6 +79,8 @@ JS;
 $this->registerJs($js, static::POS_END);
 $this->title = 'ค่าเข้างานนึ่งยางนอกจกย.';
 $this->params['breadcrumbs'][] = $this->title;
+$baseurl = Yii::$app->request->baseUrl;
+$this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => JqueryAsset::className()]);
 
 if ($Role == 'ITIT' || $Role == 'PSPS') {
     $sys = 1;
@@ -88,8 +91,8 @@ if ($Role == 'ITIT' || $Role == 'PSPS') {
 ?>
 <input hidden class="role" value="<?php echo $sys ?>">
 <div class="bicyclesteamwork-info-index">
-    <div class="box box-primary box-solid">
-        <div class="box-body">
+    <div class="panel">
+        <div class="panel panel-body">
             <?php echo $this->render('_search', ["model" => $searchModel, 'Role' => $sys]); ?>
             <hr>
             <?= GridView::widget([

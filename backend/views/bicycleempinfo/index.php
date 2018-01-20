@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\web\JqueryAsset;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\BicycleempinfoSearch */
@@ -41,6 +42,8 @@ $JS = <<<JS
     })
 JS;
 $this->registerJs($JS, static::POS_END);
+$baseurl = Yii::$app->request->baseUrl;
+$this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => JqueryAsset::className()]);
 
 if ($Role == 'ITIT' || $Role == 'PSPS') {
     $sys = 1;
@@ -49,7 +52,7 @@ if ($Role == 'ITIT' || $Role == 'PSPS') {
 }
 ?>
 <div class="bicycle-emp-info-index">
-    <div class="panel panel-primary">
+    <div class="panel">
         <div class="panel panel-body">
             <?php echo $this->render('_search', ['model' => $searchModel, 'Role' => $sys]); ?>
             <hr>

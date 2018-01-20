@@ -79,7 +79,7 @@ JS;
 $this->registerJs($js, static::POS_END);
 $this->title = 'ค่าพิเศษเตา BOM';
 $this->params['breadcrumbs'][] = $this->title;
-$baseurl = Yii::$app->request->baseUrl;
+
 /*$debug = new CheckDebug();
 $debug->printr($dataProvider);
 return;*/

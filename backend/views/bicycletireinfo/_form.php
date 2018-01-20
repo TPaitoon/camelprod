@@ -22,7 +22,7 @@ $empmodel = EmpInfo::find()->where(['Dept' => 'ฝ่ายผลิต'])->andF
     <?php $form = ActiveForm::begin(['id' => 'bicycletire-form']); ?>
     <div class="box-body">
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <?= $form->field($model, 'empid')->widget(Select2::className(), [
                     'data' => ArrayHelper::map($empmodel, 'PRS_NO', 'PRS_NO'),
                     'options' => [
@@ -34,10 +34,10 @@ $empmodel = EmpInfo::find()->where(['Dept' => 'ฝ่ายผลิต'])->andF
                     ],
                 ])->label('รหัสพนักงาน') ?>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <?= $form->field($model, 'empName')->textInput(['id' => 'btempname', 'readonly' => 'true'])->label('ชื่อ - นามสกุล') ?>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <?php $model->date == '' ? $model->date = date('Y-m-d') : $model->date ?>
                 <?= $form->field($model, 'date')->widget(DatePicker::className(), [
                     'options' => [

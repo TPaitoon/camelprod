@@ -72,7 +72,6 @@ $tiremodel = Weaverbicycle::find()->all();
             <?= $form->field($model, 'amount')->textInput(['id' => 'bamount', 'autocomplete' => 'off'])->label('ยอดผลิต') ?>
         </div>
     </div>
-
     <div class="row">
         <div class="col-md-1">
             <?= $form->field($model, 'losttime')->textInput(['id' => 'blosttime', 'autocomplete' => 'off'])->label('เสียเวลา : นาที') ?>

@@ -19,7 +19,7 @@ $bicyclesec = SteambicycleworkInfo::find()->all();
 <div class="bicyclesteamwork-info-form">
     <?php $form = ActiveForm::begin(['id' => 'bicyclesteamwork-form']); ?>
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-2">
             <?= $form->field($model, 'empid')->widget(Select2::className(), [
                 'data' => ArrayHelper::map($empmodel, 'PRS_NO', 'PRS_NO'),
                 'options' => [
@@ -31,10 +31,13 @@ $bicyclesec = SteambicycleworkInfo::find()->all();
                 ],
             ])->label('รหัสพนักงาน') ?>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-3">
             <?= $form->field($model, 'empName')->textInput(['id' => 'bsempname', 'readonly' => true])->label('ชื่อ - นามสกุล') ?>
         </div>
-        <div class="col-md-3">
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-md-2">
             <?php $model->date == '' ? $model->date = date('Y-m-d') : $model->date ?>
             <?= $form->field($model, 'date')->widget(DatePicker::className(), [
                 'options' => [
@@ -50,10 +53,7 @@ $bicyclesec = SteambicycleworkInfo::find()->all();
                 ]
             ])->label('วันที่ทำงาน') ?>
         </div>
-    </div>
-    <hr>
-    <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-2">
             <?= $form->field($model, 'rank')->widget(Select2::className(), [
                 'data' => ArrayHelper::map($bicyclesec, 'section', 'section'),
                 'options' => [

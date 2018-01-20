@@ -10,15 +10,16 @@ use yii\web\JqueryAsset;
 $this->title = 'ค่าพิเศษนึ่งยางนอกจกย.';
 $this->params['breadcrumbs'][] = ['label' => 'ค่าพิเศษนึ่งยางนอกจกย.', 'url' => ['index']];
 $this->params['breadcrumbs'][] = 'เพิ่มข้อมูล';
-$this->registerJsFile(Yii::$app->request->baseUrl . '/js/chkbicycletirecreate.js?Ver=0001', ['depends' => JqueryAsset::className()]);
+$baseurl = Yii::$app->request->baseUrl;
+$this->registerJsFile($baseurl . '/js/chkbicycletirecreate.js?Ver=0001', ['depends' => JqueryAsset::className()]);
+$this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => JqueryAsset::className()]);
 ?>
 <div class="bicycletire-info-create">
-    <div class="box box-primary box-solid">
-        <div class="box-header">
-            <label style="font-size: x-large">เพิ่มข้อมูล</label>
-            <hr>
+    <div class="panel">
+        <div class="panel panel-heading">
+            <h4>เพิ่มข้อมูล</h4>
         </div>
-        <div class="box-body">
+        <div class="panel panel-body">
             <?= $this->render('_form', [
                 'model' => $model,
             ]) ?>
