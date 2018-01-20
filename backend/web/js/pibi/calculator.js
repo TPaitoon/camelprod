@@ -31,3 +31,17 @@ function getRate(hour, std, amount) {
     });
     return x;
 }
+
+function chkStatus() {
+    var status = true;
+    if ($("#hour").val() === '') {
+        status = false;
+    } else if ($("#std").val() === '') {
+        status = false;
+    } else if ($("#amount").val() === 0 || $("#amount").val() === '') {
+        status = false;
+    } else if ($("#cline").val() < 1) {
+        status = false;
+    }
+    return status;
+}
