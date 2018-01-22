@@ -8,13 +8,16 @@
 
 use yii\web\JqueryAsset;
 $baseurl = Yii::$app->request->baseUrl;
-$this->title = 'Create Pibicalculator';
-$this->params['breadcrumbs'][] = ['label' => 'Pibicalculators', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = 'ค่าพิเศษประกอบยางในจกย.';
+$this->params['breadcrumbs'][] = ['label' => 'ค่าพิเศษประกอบยางในจกย.', 'url' => ['index']];
+$this->params['breadcrumbs'][] = 'เพิ่มข้อมูล';
 
 ?>
 <div class="pibicalculator-create">
     <div class="panel">
+        <div class="panel panel-heading">
+            <h4>เพิ่มข้อมูล</h4>
+        </div>
         <div class="panel panel-body">
             <?= $this->render('_form', [
                 'model' => $model,

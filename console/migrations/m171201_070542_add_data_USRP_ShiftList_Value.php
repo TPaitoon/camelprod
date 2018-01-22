@@ -6,8 +6,8 @@ class m171201_070542_add_data_USRP_ShiftList_Value extends Migration
 {
     public function safeUp()
     {
-        $this->insert('USRP_ShiftList', array('shiftname' => 'กะกลางวัน'));
-        $this->insert('USRP_ShiftList', array('shiftname' => 'กะกลางคืน'));
+        $this->insert('USRP_ShiftList', array('shiftname' => 'กลางวัน'));
+        $this->insert('USRP_ShiftList', array('shiftname' => 'กลางคืน'));
     }
 
     public function safeDown()

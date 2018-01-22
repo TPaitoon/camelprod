@@ -13,7 +13,7 @@ use yii\helpers\ArrayHelper;
 
 class PIBIDetail extends \common\models\PIBIDetail
 {
-    public $amount;
+    public $amount, $deduct;
     public $losttire1, $losttire2, $losttube;
     public $listprice1, $listprice2, $listprice3;
     public $listid;
@@ -24,7 +24,7 @@ class PIBIDetail extends \common\models\PIBIDetail
     {
         return ArrayHelper::merge(parent::rules(), [
             [['amount', 'losttire1', 'losttire2', 'losttube'], 'integer'],
-            [['listprice2', 'listprice3'], 'integer'],
+            [['listprice2', 'listprice3','deduct'], 'integer'],
             [['listprice1'], 'double'],
             [['listid'], 'string'],
 //            [['dummy1', 'dummy2', 'dummy3'], 'double'],

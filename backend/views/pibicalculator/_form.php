@@ -254,7 +254,7 @@ for ($i = 1; $i <= 15; $i++) {
                     <div class="form-group">
                         <div class="pull-left">
                             <?= Html::submitButton($model->isNewRecord ? 'บันทึก' : 'แก้ไข', ['id' => 'pibisubmit', 'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-                            <span><?= Html::button('ตรวจสอบ', ['id' => 'checkinfo', 'class' => 'btn btn-info']) ?></span>
+                            <span hidden><?= Html::button('ตรวจสอบ', ['id' => 'checkinfo', 'class' => 'btn btn-info']) ?></span>
                         </div>
                         <div class="pull-right">
                             <?= Html::a('หน้าหลัก', ['index'], ['class' => 'btn btn-info']) ?>
@@ -272,5 +272,6 @@ for ($i = 1; $i <= 15; $i++) {
 $baseurl = Yii::$app->request->baseUrl;
 $this->registerJsFile($baseurl . '/js/chkkeypressnumber.js?Ver=0001', ['depends' => JqueryAsset::className()]);
 $this->registerJsFile($baseurl . '/js/pibi/newline.js?Ver=0001', ['depends' => JqueryAsset::className()]);
+$this->registerJsFile($baseurl . '/js/pibi/calculator.js?Ver=0001', ['depends' => JqueryAsset::className()]);
 $this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => JqueryAsset::className()]);
 ?>

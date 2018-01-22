@@ -1,0 +1,78 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: Paitoon
+ * Date: 22/01/2018
+ * Time: 13:59 PM
+ */
+
+namespace backend\models;
+
+
+use common\models\ShiftList;
+use yii\base\Model;
+use yii\data\ArrayDataProvider;
+use yii\helpers\ArrayHelper;
+
+class PibicalculatorSearch extends PIBICalculator
+{
+    public $startdate, $enddate, $role;
+
+    public function rules()
+    {
+        return [
+            [['id', 'group', 'shift', 'status'], 'integer'],
+            [['date', 'startdate', 'enddate'], 'safe'],
+        ];
+    }
+
+    public function scenarios()
+    {
+        return Model::scenarios();
+    }
+
+    public function search($params)
+    {
+        if (empty($this->startdate) && empty($this->enddate)) {
+            $this->startdate && $this->enddate = date('Y-m-d');
+        }
+
+        $this->load($params);
+
+        $query = PIBICalculator::find()->asArray()
+            ->where(['shift' => $this->shift])
+            ->andWhere(['<=', 'date', $this->startdate])
+            ->andWhere(['>=', 'date', $this->enddate])
+            ->all();
+
+        $chk = new UserDirect();
+        $usr = $chk->ChkusrForPIBIMaster();
+        $usr == 'ITIT' || $usr == 'PSPS' ? $this->role = 1 : $this->role = 0;
+        $array = [];
+
+        foreach ($query as $i) {
+            $shiftname = ShiftList::find()->where(['id' => $this->shift])->all();
+            $data = PIBIDetail::find()->where(['Date' => date('Y-m-d', strtotime($i->date))])
+                ->andWhere(['Shiftid' => $this->shift, 'Groupid' => $this->group])
+                ->all();
+
+            array_push($array, [
+                'id' => $i->id,
+                'date' => $i->date,
+                'group' => $i->group,
+                'shift' => $shiftname,
+                'cnt' => count($data) / 4,
+                'hour' => ArrayHelper::getValue($data, '0.Hour'),
+                'status' => $i->status,
+                'role' => $this->role
+            ]);
+        }
+
+        ArrayHelper::multisort($array, ['date', 'group'], SORT_ASC);
+        $dataProvider = new ArrayDataProvider([
+            'allModels' => $array
+        ]);
+
+        return $dataProvider;
+    }
+}

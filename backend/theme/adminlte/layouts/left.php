@@ -14,9 +14,10 @@
         $sbw = false;
         $edi = false;
         $pibi = false;
+        $it = false;
 
         if (count($usr) > 0) {
-            if ($usr === 'ITIT' || $usr === 'PSPS') {
+            if ($usr === 'PSPS') {
                 $bom = true;
                 $bce = true;
                 $sbw = true;
@@ -28,7 +29,12 @@
                 $bom = true;
                 $sbw = true;
             } elseif ($usr === 'ITIT') {
+                $it = true;
+                $bom = true;
+                $bce = true;
+                $sbw = true;
                 $edi = true;
+                $pibi = true;
             } elseif ($usr === 'PIBI') {
                 $pibi = true;
             }
@@ -80,8 +86,8 @@
                                 ['label' => 'ค่าพิเศษ', 'icon' => 'fa fa-address-card-o', 'url' => ['/pibicalculator']],
                             ],
                     ],
-                    ['label' => 'User Info', 'icon' => 'fa fa-user-o', 'url' => ['/userinfo'], 'visible' => $edi],
-                    ['label' => 'Log History', 'icon' => 'fa fa-user-o', 'url' => ['/loginhistory'], 'visible' => $edi],
+                    ['label' => 'User Info', 'icon' => 'fa fa-user-o', 'url' => ['/userinfo'], 'visible' => $it],
+                    ['label' => 'Log History', 'icon' => 'fa fa-user-o', 'url' => ['/loginhistory'], 'visible' => $it],
                 ],
             ]);
         ?>

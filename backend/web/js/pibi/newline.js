@@ -1,5 +1,6 @@
 if (parseInt($("#amount").val()) === 0) {
     var cntline = 0;
+    setLine(cntline);
 }
 
 function setLine(value) {
