@@ -39,10 +39,11 @@ class PibicalculatorSearch extends PIBICalculator
 
         $this->load($params);
 
-        $query = PIBICalculator::find()->asArray()
-            ->where(['shift' => $this->shift])
-            ->andWhere(['<=', 'date', $this->startdate])
-            ->andWhere(['>=', 'date', $this->enddate])
+        $query = PIBICalculator::find()
+            ->andFilterWhere(['and',
+                ['like', 'shift', $this->shift],
+                ['>=', 'date', $this->startdate],
+                ['<=', 'date', $this->enddate]])
             ->all();
 
         $chk = new UserDirect();
@@ -51,16 +52,52 @@ class PibicalculatorSearch extends PIBICalculator
         $array = [];
 
         foreach ($query as $i) {
-            $shiftname = ShiftList::find()->where(['id' => $this->shift])->all();
+            $shift = ShiftList::find()->where(['id' => $i->shift])->one();
             $data = PIBIDetail::find()->where(['Date' => date('Y-m-d', strtotime($i->date))])
-                ->andWhere(['Shiftid' => $this->shift, 'Groupid' => $this->group])
+                ->andWhere(['Shiftid' => $i->shift, 'Groupid' => $i->group])
                 ->all();
+            $i->shift == 0 ? $mshift = '<label class="label label-primary">' . $shift->shiftname . '</label>' : $mshift = '<label class="label label-warning">' . $shift->shiftname . '</label>';
 
             array_push($array, [
                 'id' => $i->id,
                 'date' => $i->date,
                 'group' => $i->group,
-                'shift' => $shiftname,
+                'shift' => $mshift,
+                'cnt' => count($data) / 4,
+                'hour' => ArrayHelper::getValue($data, '0.Hour'),
+                'status' => $i->status,
+                'role' => $this->role
+            ]);
+        }
+
+        ArrayHelper::multisort($array, ['date', 'group'], SORT_ASC);
+        $dataProvider = new ArrayDataProvider([
+            'allModels' => $array
+        ]);
+
+        return $dataProvider;
+    }
+
+    public function searchcreated()
+    {
+        $query = PIBICalculator::find()->where(['status' => 0])->all();
+        $array = [];
+        $chk = new UserDirect();
+        $usr = $chk->ChkusrForPIBIMaster();
+        $usr == 'ITIT' || $usr == 'PSPS' ? $role = 1 : $role = 0;
+
+        foreach ($query as $i) {
+            $shift = ShiftList::find()->where(['id' => $i->shift])->one();
+            $data = PIBIDetail::find()->where(['Date' => date('Y-m-d', strtotime($i->date))])
+                ->andWhere(['Shiftid' => $i->shift, 'Groupid' => $i->group])
+                ->all();
+            $i->shift == 0 ? $mshift = '<label class="label label-primary">' . $shift->shiftname . '</label>' : $mshift = '<label class="label label-warning">' . $shift->shiftname . '</label>';
+
+            array_push($array, [
+                'id' => $i->id,
+                'date' => $i->date,
+                'group' => $i->group,
+                'shift' => $mshift,
                 'cnt' => count($data) / 4,
                 'hour' => ArrayHelper::getValue($data, '0.Hour'),
                 'status' => $i->status,

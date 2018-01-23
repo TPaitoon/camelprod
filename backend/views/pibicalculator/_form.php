@@ -274,4 +274,5 @@ $this->registerJsFile($baseurl . '/js/chkkeypressnumber.js?Ver=0001', ['depends'
 $this->registerJsFile($baseurl . '/js/pibi/newline.js?Ver=0001', ['depends' => JqueryAsset::className()]);
 $this->registerJsFile($baseurl . '/js/pibi/calculator.js?Ver=0001', ['depends' => JqueryAsset::className()]);
 $this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => JqueryAsset::className()]);
+$this->registerJsFile($baseurl . '/js/pibi/editline.js?Ver=0001', ['depends' => JqueryAsset::className()]);
 ?>

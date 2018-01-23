@@ -16,7 +16,7 @@ class PIBIDetail extends \common\models\PIBIDetail
     public $amount, $deduct;
     public $losttire1, $losttire2, $losttube;
     public $listprice1, $listprice2, $listprice3;
-    public $listid;
+    public $listid, $recid;
 
 //    public $dummy1, $dummy2, $dummy3;
 
@@ -24,9 +24,9 @@ class PIBIDetail extends \common\models\PIBIDetail
     {
         return ArrayHelper::merge(parent::rules(), [
             [['amount', 'losttire1', 'losttire2', 'losttube'], 'integer'],
-            [['listprice2', 'listprice3','deduct'], 'integer'],
+            [['listprice2', 'listprice3', 'deduct'], 'integer'],
             [['listprice1'], 'double'],
-            [['listid'], 'string'],
+            [['listid', 'recid'], 'string'],
 //            [['dummy1', 'dummy2', 'dummy3'], 'double'],
         ]);
     }

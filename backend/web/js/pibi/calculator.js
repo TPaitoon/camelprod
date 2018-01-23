@@ -132,9 +132,9 @@ losttube.on('change', function () {
     if ($(this).val() === '') {
         $(this).val(0);
     }
-    var losttire = parseInt($(this).val());
+    var losttube = parseInt($(this).val());
     var deduct = parseFloat($("#dummy3").val());
-    var cal = losttire * deduct;
+    var cal = losttube * deduct;
     $("#listprice3").val(cal);
     calDeduct();
     calculator();
