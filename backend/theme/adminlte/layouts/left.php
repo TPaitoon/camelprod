@@ -79,11 +79,14 @@
                                 ['label' => 'ค่าพิเศษ', 'icon' => 'fa fa-address-card-o', 'url' => ['/bicycletireinfo']],
                             ],
                     ],
-                    ['label' => 'ประกอบยางในจักรยาน', 'url' => '#', 'visible' => $pibi,
+                    ['label' => 'ประกอบยางใน', 'url' => '#', 'visible' => $pibi,
                         'items' =>
                             [
+                                ['label' => 'ประกอบยางในจกย.', 'options' => ['class' => 'header']],
                                 ['label' => 'ค่ามาตรฐาน', 'icon' => 'fa fa-address-card-o', 'url' => ['/pibistandard'], 'visible' => $edi],
                                 ['label' => 'ค่าพิเศษ', 'icon' => 'fa fa-address-card-o', 'url' => ['/pibicalculator']],
+                                ['label' => 'ประกอบยางในมตซ.', 'options' => ['class' => 'header']],
+                                ['label' => 'ค่ามาตรฐาน', 'icon' => 'fa fa-address-card-o', 'url' => ['/pibimcstandard'],'visible' => $edi],
                             ],
                     ],
                     ['label' => 'User Info', 'icon' => 'fa fa-user-o', 'url' => ['/userinfo'], 'visible' => $it],
