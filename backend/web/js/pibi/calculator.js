@@ -1,16 +1,18 @@
 function calculator() {
-    if (parseInt(document.getElementById("cline").innerHTML) < 1) {
-        return alert("เลือกพนักงานก่อน ...");
-    } else if (!parseInt($("#amount").val()) < 1) {
-        var hour = parseInt($("#hour").val());
-        var std = parseInt($("#std").val());
-        var amount = parseInt($("#amount").val());
-        $.when(getRate(hour, std, amount)).done(function (data) {
-            $("#xrate").val(data);
-            var cal = (parseInt($("#xrate").val()) - parseInt($("#deduct").val()))
-                / parseInt(document.getElementById("cline").innerHTML);
-            $("#rate").val(Math.ceil(cal));
-        })
+    if (parseInt(document.getElementById("cline").innerHTML) > 0) {
+        var amount = $("#amount");
+        var xrate = $("#xrate");
+        if (!parseInt(amount.val()) < 1) {
+            var hour = parseInt($("#hour").val());
+            var std = parseInt($("#std").val());
+            var _amount = parseInt(amount.val());
+            $.when(getRate(hour, std, _amount)).done(function (data) {
+                xrate.val(data);
+                var cal = (parseInt(xrate.val()) - parseInt($("#deduct").val()))
+                    / parseInt(document.getElementById("cline").innerHTML);
+                $("#rate").val(Math.ceil(cal));
+            })
+        }
     }
 }
 
@@ -96,7 +98,7 @@ losttire1.on('click', function () {
         $(this).select();
     }
 });
-losttire1.on('focusout',function () {
+losttire1.on('focusout', function () {
     if ($(this).val() === '') {
         $(this).val(0);
     }
@@ -121,7 +123,7 @@ losttire2.on('click', function () {
         $(this).select();
     }
 });
-losttire2.on('focusout',function () {
+losttire2.on('focusout', function () {
     if ($(this).val() === '') {
         $(this).val(0);
     }
@@ -146,7 +148,7 @@ losttube.on('click', function () {
         $(this).select();
     }
 });
-losttube.on('focusout',function () {
+losttube.on('focusout', function () {
     if ($(this).val() === '') {
         $(this).val(0);
     }
@@ -161,7 +163,7 @@ losttube.on('focusout',function () {
 //     }
 // });
 
-$("#pibisubmit").on('click',function (e) {
+$("#pibisubmit").on('click', function (e) {
     e.preventDefault();
     if (chkStatus() === true) {
         $(this).submit();

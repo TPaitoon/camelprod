@@ -1,29 +1,57 @@
 <?php
-
+/**
+ * Created by PhpStorm.
+ * User: Paitoon
+ * Date: 24/01/2018
+ * Time: 09:05 AM
+ */
 
 use common\models\PIBIStandard;
 use common\models\ShiftList;
+use yii\bootstrap\Html;
 use yii\helpers\ArrayHelper;
-use yii\helpers\Html;
+use yii\web\JqueryAsset;
 use yii\widgets\DetailView;
+
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\PIBICalculator */
-$id = explode(',', ArrayHelper::getValue($model, 'recid'));
-$this->title = $id[0];
-//print_r($model);
-$this->params['breadcrumbs'][] = ['label' => 'Pibicalculators', 'url' => ['index']];
+
+$id = explode(",", ArrayHelper::getValue($model, 'recid'));
+$this->title = 'ข้อมูล : ' . $id[0];
+$this->params['breadcrumbs'][] = ['label' => 'ค่าพิเศษประกอบยางในจกย.', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+$baseurl = Yii::$app->request->baseUrl;
+$this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => JqueryAsset::className()]);
 ?>
 <div class="pibicalculator-view">
-    <div class="box box-info box-solid">
-        <div class="box-header"></div>
-        <div class="box-body">
+    <div class="panel">
+        <div class="panel panel-heading">
+            <h4>รายละเอียด</h4>
+        </div>
+        <div class="panel panel-body">
             <?=
             DetailView::widget([
                 'model' => $model,
                 'attributes' => [
-                    'listid:text:รหัสพนักงาน',
+                    [
+                        'attribute' => 'listid',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            $id = explode(",",ArrayHelper::getValue($model,'listid'));
+                            $_temp = null;
+                            for ($i = 0; $i < count($id); $i++) {
+                                if ($i == 0) {
+                                    $_temp = $id[$i] . "<br>";
+                                } else {
+                                    $_temp = $_temp . $id[$i] . "<br>";
+                                }
+                            }
+
+                            return $_temp;
+                        },
+                        'label' => 'พนักงาน'
+                    ],
                     'Groupid:raw:กลุ่ม',
                     [
                         'attribute' => 'Shiftid',
@@ -59,17 +87,15 @@ $this->params['breadcrumbs'][] = $this->title;
                         },
                         'label' => 'มาตรฐาน'
                     ],
-                    'Totaltire:raw:ยอดผลิต',
-                    'Deduct:raw:หักเงิน',
-                    'rate:raw:ค่าพิเศษ : คน',
+                    'amount:raw:ยอดผลิต',
+                    'Rate:raw:ค่าพิเศษ : คน',
                 ]
             ])
             ?>
-            <hr>
-            <div class="pull-left">
-                <?= Html::a('หน้าหลัก', ['index'], ['class' => 'btn btn-info']) ?>
-                <?= Html::a('ย้อนกลับ',Yii::$app->request->referrer,['class' => 'btn btn-danger']) ?>
-            </div>
+        </div>
+        <div class="panel panel-footer">
+            <?= Html::a('หน้าหลัก', ['index'], ['class' => 'btn btn-info']) ?>
+            <?= Html::a('ย้อนกลับ', Yii::$app->request->referrer, ['class' => 'btn btn-danger']) ?>
         </div>
     </div>
 </div>

@@ -68,7 +68,7 @@ $this->registerJsFile($baseurl . '/js/pibi/script.js?Ver=0001', ['depends' => Jq
                             'class' => 'text-center'
                         ],
                         'value' => function ($model) {
-                            return '<i class="fa fa-calendar">' . ' ' . date('d/m/Y',strtotime(ArrayHelper::getValue($model, 'date')));
+                            return '<i class="fa fa-calendar">' . ' ' . date('d/m/Y', strtotime(ArrayHelper::getValue($model, 'date')));
                         },
                         'label' => 'วันที่'
                     ],
@@ -118,6 +118,10 @@ $this->registerJsFile($baseurl . '/js/pibi/script.js?Ver=0001', ['depends' => Jq
                         'contentOptions' => [
                             'class' => 'text-center'
                         ],
+                        'value' => function ($model) {
+                            $id = ArrayHelper::getValue($model, 'shift');
+                            return $id == 1 ? '<label class="label label-primary">กลางวัน</label>' : '<label class="label label-warning">กลางคืน</label>';
+                        },
                         'label' => 'ช่วงทำงาน'
                     ],
                     [

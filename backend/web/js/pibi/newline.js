@@ -63,6 +63,7 @@ $(".pibicalculator-form").each(function () {
             }
         }
         emplist.val("").trigger("change");
+        calculator();
     });
 });
 
@@ -83,4 +84,5 @@ function removeline(e) {
             setLine(cntline);
         }
     }
+    calculator();
 }

@@ -52,17 +52,15 @@ class PibicalculatorSearch extends PIBICalculator
         $array = [];
 
         foreach ($query as $i) {
-            $shift = ShiftList::find()->where(['id' => $i->shift])->one();
             $data = PIBIDetail::find()->where(['Date' => date('Y-m-d', strtotime($i->date))])
                 ->andWhere(['Shiftid' => $i->shift, 'Groupid' => $i->group])
                 ->all();
-            $i->shift == 0 ? $mshift = '<label class="label label-primary">' . $shift->shiftname . '</label>' : $mshift = '<label class="label label-warning">' . $shift->shiftname . '</label>';
 
             array_push($array, [
                 'id' => $i->id,
                 'date' => $i->date,
                 'group' => $i->group,
-                'shift' => $mshift,
+                'shift' => $i->shift,
                 'cnt' => count($data) / 4,
                 'hour' => ArrayHelper::getValue($data, '0.Hour'),
                 'status' => $i->status,
@@ -87,17 +85,15 @@ class PibicalculatorSearch extends PIBICalculator
         $usr == 'ITIT' || $usr == 'PSPS' ? $role = 1 : $role = 0;
 
         foreach ($query as $i) {
-            $shift = ShiftList::find()->where(['id' => $i->shift])->one();
             $data = PIBIDetail::find()->where(['Date' => date('Y-m-d', strtotime($i->date))])
                 ->andWhere(['Shiftid' => $i->shift, 'Groupid' => $i->group])
                 ->all();
-            $i->shift == 0 ? $mshift = '<label class="label label-primary">' . $shift->shiftname . '</label>' : $mshift = '<label class="label label-warning">' . $shift->shiftname . '</label>';
 
             array_push($array, [
                 'id' => $i->id,
                 'date' => $i->date,
                 'group' => $i->group,
-                'shift' => $mshift,
+                'shift' => $i->shift,
                 'cnt' => count($data) / 4,
                 'hour' => ArrayHelper::getValue($data, '0.Hour'),
                 'status' => $i->status,

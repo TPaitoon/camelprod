@@ -86,7 +86,7 @@ for ($i = 1; $i <= 15; $i++) {
                 </div>
                 <div class="panel panel-footer">
                     <div class="row">
-                        <div class="col-lg-3">
+                        <div class="col-lg-4">
                             <?php echo "จำนวณพนักงาน : " ?>
                         </div>
                         <div class="col-lg-1">

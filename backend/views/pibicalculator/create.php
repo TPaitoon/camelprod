@@ -6,8 +6,6 @@
  * Time: 10:29 AM
  */
 
-use yii\web\JqueryAsset;
-$baseurl = Yii::$app->request->baseUrl;
 $this->title = 'ค่าพิเศษประกอบยางในจกย.';
 $this->params['breadcrumbs'][] = ['label' => 'ค่าพิเศษประกอบยางในจกย.', 'url' => ['index']];
 $this->params['breadcrumbs'][] = 'เพิ่มข้อมูล';
