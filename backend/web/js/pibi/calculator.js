@@ -10,7 +10,7 @@ function calculator() {
                 xrate.val(data);
                 var cal = (parseInt(xrate.val()) - parseInt($("#deduct").val()))
                     / parseInt(document.getElementById("cline").innerHTML);
-                $("#rate").val(Math.ceil(cal));
+                $("#rate").val(Math.round(cal));
             })
         }
     }

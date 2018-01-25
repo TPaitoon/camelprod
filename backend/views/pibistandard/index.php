@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel backend\models\PibistandardSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'มาตรฐานประกอบยางใน';
+$this->title = 'มาตรฐานประกอบยางในจกย.';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="pibistandard-index">
