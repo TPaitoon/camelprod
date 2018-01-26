@@ -82,7 +82,6 @@
                     ['label' => 'ประกอบยางในจกย', 'url' => '#', 'visible' => $pibi,
                         'items' =>
                             [
-                                ['label' => 'ประกอบยางในจกย.', 'options' => ['class' => 'header']],
                                 ['label' => 'ค่ามาตรฐาน', 'icon' => 'fa fa-address-card-o', 'url' => ['/pibistandard'], 'visible' => $edi],
                                 ['label' => 'ค่าพิเศษ', 'icon' => 'fa fa-address-card-o', 'url' => ['/pibicalculator']],
                             ],

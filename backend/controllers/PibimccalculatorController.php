@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use backend\models\PibimccalculatorSearch;
 use backend\models\UserDirect;
+use common\models\PIBIMCDetail;
 use Yii;
 use yii\web\Controller;
 
@@ -24,11 +25,23 @@ class PibimccalculatorController extends Controller
             $dataProvider = $searchModel->searchcreated();
         }
 
-        return $this->render('index',[
+        return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'role' => $role
         ]);
+    }
+
+    public function actionCreate()
+    {
+        $model = new PIBIMCDetail();
+        $app = Yii::$app->request;
+
+        if ($model->load($app->post())) {
+
+        } else {
+            return $this->render('create', ['model' => $model]);
+        }
     }
 
 }

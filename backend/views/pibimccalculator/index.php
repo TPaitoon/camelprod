@@ -17,7 +17,7 @@ $this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => Jquer
 <div class="pibimccalculator-index">
     <div class="panel">
         <div class="panel panel-heading">
-
+            <?php echo $this->render('_search', ['model' => $searchModel]) ?>
         </div>
         <div class="panel panel-body">
             <?= GridView::widget([
