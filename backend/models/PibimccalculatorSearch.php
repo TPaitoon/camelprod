@@ -52,7 +52,7 @@ class PibimccalculatorSearch extends PIBIMCMaster
 
         foreach ($_temp as $i) {
             $_data = PIBIMCDetail::find()->where(['date' => date('Y-m-d', strtotime($i->date))])
-                ->andWhere(['shiftid' => $this->shift, 'groupid' => $this->group])
+                ->andWhere(['shiftid' => $i->shift, 'groupid' => $i->group])
                 ->all();
 
             array_push($_array, [
@@ -61,7 +61,7 @@ class PibimccalculatorSearch extends PIBIMCMaster
                 'group' => $i->group,
                 'shift' => $i->shift,
                 'cnt' => count($_data) / 4,
-                'hour' => ArrayHelper::getValue($_data, '0.Hour'),
+                'hour' => ArrayHelper::getValue($_data, '0.hour'),
                 'status' => $i->status,
                 'role' => $this->role
             ]);
@@ -86,7 +86,7 @@ class PibimccalculatorSearch extends PIBIMCMaster
 
         foreach ($_temp as $i) {
             $_data = PIBIMCDetail::find()->where(['date' => date('Y-m-d', strtotime($i->date))])
-                ->andWhere(['shiftid' => $this->shift, 'groupid' => $this->group])
+                ->andWhere(['shiftid' => $i->shift, 'groupid' => $i->group])
                 ->all();
 
             array_push($_array, [
@@ -95,7 +95,7 @@ class PibimccalculatorSearch extends PIBIMCMaster
                 'group' => $i->group,
                 'shift' => $i->shift,
                 'cnt' => count($_data) / 4,
-                'hour' => ArrayHelper::getValue($_data, '0.Hour'),
+                'hour' => ArrayHelper::getValue($_data, '0.hour'),
                 'status' => $i->status,
                 'role' => $this->role
             ]);

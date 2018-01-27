@@ -91,7 +91,6 @@ if ($Role == 'ITIT' || $Role == 'PSPS') {
 }
 
 //echo Yii::$app->formatter->asDate(str_replace('/','-','20/10/2017'),'yyyy-MM-dd');
-$this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => JqueryAsset::className()]);
 ?>
 <input hidden class="role" value="<?php echo $sys ?>">
 <div class="bominfo-index">
@@ -207,3 +206,7 @@ $this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => Jquer
         </div>
     </div>
 </div>
+<?php
+$baseurl = Yii::$app->request->baseUrl;
+$this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => JqueryAsset::className()]);
+?>

@@ -21,8 +21,6 @@ $id = explode(",", ArrayHelper::getValue($model, 'recid'));
 $this->title = 'ข้อมูล : ' . $id[0];
 $this->params['breadcrumbs'][] = ['label' => 'ค่าพิเศษประกอบยางในจกย.', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-$baseurl = Yii::$app->request->baseUrl;
-$this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => JqueryAsset::className()]);
 ?>
 <div class="pibicalculator-view">
     <div class="panel">
@@ -99,3 +97,7 @@ $this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => Jquer
         </div>
     </div>
 </div>
+<?php
+$baseurl = Yii::$app->request->baseUrl;
+$this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => JqueryAsset::className()]);
+?>

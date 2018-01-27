@@ -9,8 +9,6 @@ use yii\web\JqueryAsset;
 
 $this->title = 'มาตรฐานประกอบยางในมตซ.';
 $this->params['breadcrumbs'][] = $this->title;
-$baseurl = Yii::$app->request->baseUrl;
-$this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => JqueryAsset::className()]);
 ?>
 <div class="pibimcstandard-index">
     <div class="panel">
@@ -38,3 +36,7 @@ $this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => Jquer
         </div>
     </div>
 </div>
+<?php
+$baseurl = Yii::$app->request->baseUrl;
+$this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => JqueryAsset::className()]);
+?>

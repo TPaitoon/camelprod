@@ -17,13 +17,14 @@ class m180125_063202_create_USRP_PIBIMCDetail_table extends Migration
             'shiftid' => $this->integer(),
             'groupid' => $this->integer(),
             'empid' => $this->string(),
-            'empname' => $this->integer(),
+            'empname' => $this->string(),
             'date' => $this->date(),
             'hour' => $this->integer(),
             'itemid' => $this->integer(),
             'typeid' => $this->integer(),
             'qty' => $this->double(),
-            'deduct' => $this->integer(),
+            'deduct' => $this->double(),
+            'rate' => $this->integer(),
             'refid' => $this->integer(),
         ]);
     }

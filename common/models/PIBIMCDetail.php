@@ -11,13 +11,14 @@ use Yii;
  * @property integer $shiftid
  * @property integer $groupid
  * @property string $empid
- * @property integer $empname
+ * @property string $empname
  * @property string $date
  * @property integer $hour
  * @property integer $itemid
  * @property integer $typeid
  * @property double $qty
- * @property integer $deduct
+ * @property double $deduct
+ * @property integer $rate
  * @property integer $refid
  */
 class PIBIMCDetail extends \yii\db\ActiveRecord
@@ -36,10 +37,10 @@ class PIBIMCDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['shiftid', 'groupid', 'empname', 'hour', 'itemid', 'typeid', 'deduct', 'refid'], 'integer'],
-            [['empid'], 'string'],
+            [['shiftid', 'groupid', 'hour', 'itemid', 'typeid', 'refid', 'rate'], 'integer'],
+            [['empid', 'empname'], 'string'],
             [['date'], 'safe'],
-            [['qty'], 'number'],
+            [['qty', 'deduct'], 'number'],
         ];
     }
 
@@ -61,6 +62,7 @@ class PIBIMCDetail extends \yii\db\ActiveRecord
             'qty' => 'Qty',
             'deduct' => 'Deduct',
             'refid' => 'Refid',
+            'rate' => 'Rate'
         ];
     }
 }

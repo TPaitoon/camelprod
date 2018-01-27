@@ -8,8 +8,6 @@ use yii\web\JqueryAsset;
 
 $this->title = 'ค่าพิเศษประกอบยางนอกมตซ.';
 $this->params['breadcrumbs'][] = $this->title;
-$baseurl = Yii::$app->request->baseUrl;
-$this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => JqueryAsset::className()]);
 
 ?>
 
@@ -182,3 +180,7 @@ $this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => Jquer
         </div>
     </div>
 </div>
+<?php
+$baseurl = Yii::$app->request->baseUrl;
+$this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => JqueryAsset::className()]);
+?>

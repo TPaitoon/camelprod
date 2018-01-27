@@ -4,8 +4,11 @@ namespace backend\controllers;
 
 use backend\models\PibimccalculatorSearch;
 use backend\models\UserDirect;
-use common\models\PIBIMCDetail;
+use backend\models\PIBIMCDetail;
+use common\models\PIBIMCMaster;
+use common\models\PIBIMCStandardDetail;
 use Yii;
+use yii\helpers\Json;
 use yii\web\Controller;
 
 class PibimccalculatorController extends Controller
@@ -38,10 +41,100 @@ class PibimccalculatorController extends Controller
         $app = Yii::$app->request;
 
         if ($model->load($app->post())) {
-
+            $_master = new PIBIMCMaster();
+            $_master->date = $model->date;
+            $_master->group = $model->groupid;
+            $_master->shift = $model->shiftid;
+            $_master->status = 0;
+            if ($_master->save(false)) {
+                $emplist = $app->post('empids');
+                $empnamelist = $app->post('empnames');
+                for ($i = 0; $i < count($emplist); $i++) {
+                    for ($r = 1; $r <= 4; $r++) {
+                        $_detail = new PIBIMCDetail();
+                        $_detail->groupid = $model->groupid;
+                        $_detail->shiftid = $model->shiftid;
+                        $_detail->empid = $emplist[$i];
+                        $_detail->empname = $empnamelist[$i];
+                        $_detail->date = $model->date;
+                        $_detail->hour = $model->hour;
+                        $_detail->typeid = $r;
+                        if ($r == 1) {
+                            $_detail->qty = $model->amount;
+                        } elseif ($r == 2) {
+                            $_detail->qty = $model->losttire1;
+                        } elseif ($r == 3) {
+                            $_detail->qty = $model->losttire2;
+                        } elseif ($r == 4) {
+                            $_detail->qty = $model->losttube;
+                        }
+                        $_detail->deduct = $model->deduct;
+                        $_detail->itemid = $model->itemid;
+                        $_detail->refid = $_master->id;
+                        $_detail->rate = $model->rate;
+                        $_detail->save(false);
+                    }
+                }
+            }
+            return $this->redirect(['index']);
         } else {
             return $this->render('create', ['model' => $model]);
         }
     }
 
+    public function actionGetrate()
+    {
+        $app = Yii::$app->request;
+        if ($app->isAjax) {
+            $hour = $app->post('hour');
+            $amount = $app->post('amount');
+            $std = $app->post('std');
+
+            if ($hour === '12') {
+                return $this->calculator($amount, $hour, $std);
+            } elseif ($hour === '11') {
+                return $this->calculator($amount, $hour, $std);
+            } elseif ($hour === '10') {
+                return $this->calculator($amount, $hour, $std);
+            } elseif ($hour === '9') {
+                return $this->calculator($amount, $hour, $std);
+            } elseif ($hour === '8') {
+                $FindQuery = PIBIMCStandardDetail::find();
+                $data = $FindQuery->andWhere(['hour' => $hour, 'refid' => $std])
+                    ->andFilterWhere(['<=', 'amount', $amount])
+                    ->one();
+                if (!empty($data)) {
+                    $ex = ((int)$amount - $data->amount) * 0.2917;
+                    $cal = $data->rate + $ex;
+                    return Json::encode(round($cal));
+                } else {
+                    return Json::encode(0);
+                }
+            }
+        }
+    }
+
+    private function calculator($amount, $hour, $std)
+    {
+        $FindQuery = PIBIMCStandardDetail::find();
+        $_data = $FindQuery->andWhere(['hour' => $hour, 'refid' => $std])
+            ->andFilterWhere(['<=', 'amount', $amount])
+            ->one();
+        if (!empty($_data)) {
+            $ex = ((int)$amount - $_data->amount) * 0.2917;
+            $cal = $_data->rate + $ex;
+            return Json::encode(round($cal));
+        } else {
+            $_data = $FindQuery->andFilterWhere(['hour' => $hour - 1, 'refid' => $std])
+                ->andFilterWhere(['<=', 'amount', $amount])
+                ->one();
+            if (!empty($_data)) {
+                return Json::encode($_data->rate);
+            } else {
+                return Json::encode(0);
+            }
+        }
+    }
+
+//    public function
 }

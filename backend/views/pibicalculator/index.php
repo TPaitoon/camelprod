@@ -9,9 +9,7 @@ use yii\web\JqueryAsset;
 $this->title = 'ค่าพิเศษประกอบยางในจกย.';
 $this->params['breadcrumbs'][] = $this->title;
 $baseurl = Yii::$app->request->baseUrl;
-$this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => JqueryAsset::className()]);
 $this->registerJsFile($baseurl . '/js/pibi/script.js?Ver=0001', ['depends' => JqueryAsset::className()]);
-
 ?>
 <input hidden class="role" value="<?php echo $role ?>">
 <div class="pibicalculator-index">
@@ -182,3 +180,7 @@ $this->registerJsFile($baseurl . '/js/pibi/script.js?Ver=0001', ['depends' => Jq
         </div>
     </div>
 </div>
+<?php
+$baseurl = Yii::$app->request->baseUrl;
+$this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => JqueryAsset::className()]);
+?>
