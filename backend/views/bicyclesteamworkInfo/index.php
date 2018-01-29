@@ -79,8 +79,6 @@ JS;
 $this->registerJs($js, static::POS_END);
 $this->title = 'ค่าเข้างานนึ่งยางนอกจกย.';
 $this->params['breadcrumbs'][] = $this->title;
-$baseurl = Yii::$app->request->baseUrl;
-$this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => JqueryAsset::className()]);
 
 if ($Role == 'ITIT' || $Role == 'PSPS') {
     $sys = 1;
@@ -89,87 +87,93 @@ if ($Role == 'ITIT' || $Role == 'PSPS') {
 }
 
 ?>
-<input hidden class="role" value="<?php echo $sys ?>">
-<div class="bicyclesteamwork-info-index">
-    <div class="panel">
-        <div class="panel panel-body">
-            <?php echo $this->render('_search', ["model" => $searchModel, 'Role' => $sys]); ?>
-            <hr>
-            <?= GridView::widget([
-                'dataProvider' => $dataProvider,
-                'pager' => [
-                    'firstPageLabel' => 'First',
-                    'lastPageLabel' => 'Last'
-                ],
-                'rowOptions' => function ($model) {
-                    return ['id' => ArrayHelper::getValue($model, 'confirms')];
-                },
-                //'filterModel' => $searchModel,
-                'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
-                    [
-                        'class' => 'yii\grid\CheckboxColumn',
-                        'headerOptions' => [
-                            'class' => 'text-center',
-                        ],
-                        'contentOptions' => [
-                            'class' => 'text-center',
-                        ],
-                        'checkboxOptions' => function ($model) {
+    <input hidden class="role" value="<?php echo $sys ?>">
+    <div class="bicyclesteamwork-info-index">
+        <div class="panel">
+            <div class="panel panel-body">
+                <?php echo $this->render('_search', ["model" => $searchModel, 'Role' => $sys]); ?>
+                <hr>
+                <?= GridView::widget([
+                    'dataProvider' => $dataProvider,
+                    'pager' => [
+                        'firstPageLabel' => '<i class="fa fa-angle-double-left" aria-hidden="true"></i>',
+                        'nextPageLabel' => '<i class="fa fa-angle-right" aria-hidden="true"></i>',
+                        'lastPageLabel' => '<i class="fa fa-angle-double-right" aria-hidden="true"></i>',
+                        'prevPageLabel' => '<i class="fa fa-angle-left" aria-hidden="true"></i>'
+                    ],
+                    'rowOptions' => function ($model) {
+                        return ['id' => ArrayHelper::getValue($model, 'confirms')];
+                    },
+                    //'filterModel' => $searchModel,
+                    'columns' => [
+                        ['class' => 'yii\grid\SerialColumn'],
+                        [
+                            'class' => 'yii\grid\CheckboxColumn',
+                            'headerOptions' => [
+                                'class' => 'text-center',
+                            ],
+                            'contentOptions' => [
+                                'class' => 'text-center',
+                            ],
+                            'checkboxOptions' => function ($model) {
 //                            $data = $model->empid . "," . $model->date;
-                            $data = ArrayHelper::getValue($model, 'empid') . "," . ArrayHelper::getValue($model, 'date');
-                            return ['value' => $data];
-                        }
-                    ],
-                    //'idsteamwork',
-                    'empid:text:รหัสพนักงาน',
-                    'empName:text:ชื่อ - นามสกุล',
-                    'rank:text:ตำแหน่ง',
-                    'Extra:integer:เงินพิเศษ',
-                    'date:date:วันที่',
-                    //'confirms',
-                    [
-                        'attribute' => 'confirms',
-                        'format' => 'raw',
-                        'headerOptions' => ['class' => 'text-center'],
-                        'contentOptions' => ['class' => 'text-center confirms'],
-                        'label' => 'สถานะ',
-                        'value' => function ($model) {
-//                            return $model->confirms == 0 ? '<label class="label label-info">Created</label>' : '<label class="label label-success">Approved</label>';
-                            return ArrayHelper::getValue($model, 'confirms') == 0 ? '<label class="label label-info">Created</label>' : '<label class="label label-success">Approved</label>';
-                        }
-                    ],
-                    [
-                        'class' => 'yii\grid\ActionColumn',
-                        'headerOptions' => ['class' => 'text-center'],
-                        'template' => '{update} {delete}',
-                        'contentOptions' => ['class' => 'text-center'],
-                        'buttons' => [
-                            'update' => function ($url, $model) {
-                                if (ArrayHelper::getValue($model, 'confirms') == '0') {
-                                    return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, []);
-                                } else {
-                                    if (ArrayHelper::getValue($model, 'role') == '1') {
-                                        return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, []);
-                                    } else {
-                                        return '';
-                                    }
-                                }
-                            },
-                            'delete' => function ($url) {
-                                return Html::a('<span class="glyphicon glyphicon-trash" onclick="return chkdelete($(this))"></span>', 'javascript:void(0)', [
-                                    'data-url' => $url,
-                                ]);
+                                $data = ArrayHelper::getValue($model, 'empid') . "," . ArrayHelper::getValue($model, 'date');
+                                return ['value' => $data];
                             }
                         ],
-                        'urlCreator' => function ($action, $model) {
-                            $id = ArrayHelper::getValue($model, 'id');
-                            $url = 'index.php?r=bicyclesteamworkinfo/' . $action . '&id=' . $id;
-                            return $url;
-                        }
+                        //'idsteamwork',
+                        'empid:text:รหัสพนักงาน',
+                        'empName:text:ชื่อ - นามสกุล',
+                        'rank:text:ตำแหน่ง',
+                        'Extra:integer:เงินพิเศษ',
+                        'date:date:วันที่',
+                        //'confirms',
+                        [
+                            'attribute' => 'confirms',
+                            'format' => 'raw',
+                            'headerOptions' => ['class' => 'text-center'],
+                            'contentOptions' => ['class' => 'text-center confirms'],
+                            'label' => 'สถานะ',
+                            'value' => function ($model) {
+//                            return $model->confirms == 0 ? '<label class="label label-info">Created</label>' : '<label class="label label-success">Approved</label>';
+                                return ArrayHelper::getValue($model, 'confirms') == 0 ? '<label class="label label-info">Created</label>' : '<label class="label label-success">Approved</label>';
+                            }
+                        ],
+                        [
+                            'class' => 'yii\grid\ActionColumn',
+                            'headerOptions' => ['class' => 'text-center'],
+                            'template' => '{update} {delete}',
+                            'contentOptions' => ['class' => 'text-center'],
+                            'buttons' => [
+                                'update' => function ($url, $model) {
+                                    if (ArrayHelper::getValue($model, 'confirms') == '0') {
+                                        return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, []);
+                                    } else {
+                                        if (ArrayHelper::getValue($model, 'role') == '1') {
+                                            return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, []);
+                                        } else {
+                                            return '';
+                                        }
+                                    }
+                                },
+                                'delete' => function ($url) {
+                                    return Html::a('<span class="glyphicon glyphicon-trash" onclick="return chkdelete($(this))"></span>', 'javascript:void(0)', [
+                                        'data-url' => $url,
+                                    ]);
+                                }
+                            ],
+                            'urlCreator' => function ($action, $model) {
+                                $id = ArrayHelper::getValue($model, 'id');
+                                $url = 'index.php?r=bicyclesteamworkinfo/' . $action . '&id=' . $id;
+                                return $url;
+                            }
+                        ],
                     ],
-                ],
-            ]); ?>
+                ]); ?>
+            </div>
         </div>
     </div>
-</div>
+<?php
+$baseurl = Yii::$app->request->baseUrl;
+$this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => JqueryAsset::className()]);
+?>

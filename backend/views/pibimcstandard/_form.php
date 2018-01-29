@@ -12,7 +12,6 @@ use yii\web\JqueryAsset;
 /* @var $form yii\widgets\ActiveForm */
 
 $baseurl = Yii::$app->request->baseUrl;
-$this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => JqueryAsset::className()]);
 $this->registerJsFile($baseurl . '/js/chkkeypressnumber.js?Ver=0001', ['depends' => JqueryAsset::className()]);
 $_tempmaster = PIBIMCStandardMaster::find()->all();
 ?>
@@ -59,3 +58,7 @@ $_tempmaster = PIBIMCStandardMaster::find()->all();
     </div>
     <?php ActiveForm::end(); ?>
 </div>
+<?php
+$baseurl = Yii::$app->request->baseUrl;
+$this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => JqueryAsset::className()]);
+?>

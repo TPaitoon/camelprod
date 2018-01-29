@@ -12,7 +12,6 @@ use yii\web\JqueryAsset;
 /* @var $form yii\widgets\ActiveForm */
 
 $baseurl = Yii::$app->request->baseUrl;
-$this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => JqueryAsset::className()]);
 $this->registerJsFile($baseurl . '/js/chkkeypressnumber.js?Ver=0001', ['depends' => JqueryAsset::className()]);
 
 $_ref = PIBIMCStandardMaster::find()->max('refid');
@@ -49,3 +48,7 @@ empty($_ref) ? $model->refid = 1 : $model->refid = $_ref + 1;
     </div>
     <?php ActiveForm::end(); ?>
 </div>
+<?php
+$baseurl = Yii::$app->request->baseUrl;
+$this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => JqueryAsset::className()]);
+?>

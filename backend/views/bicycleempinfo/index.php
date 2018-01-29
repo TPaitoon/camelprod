@@ -42,8 +42,6 @@ $JS = <<<JS
     })
 JS;
 $this->registerJs($JS, static::POS_END);
-$baseurl = Yii::$app->request->baseUrl;
-$this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => JqueryAsset::className()]);
 
 if ($Role == 'ITIT' || $Role == 'PSPS') {
     $sys = 1;
@@ -51,59 +49,65 @@ if ($Role == 'ITIT' || $Role == 'PSPS') {
     $sys = 0;
 }
 ?>
-<div class="bicycle-emp-info-index">
-    <div class="panel">
-        <div class="panel panel-body">
-            <?php echo $this->render('_search', ['model' => $searchModel, 'Role' => $sys]); ?>
-            <hr>
-            <?= GridView::widget([
-                'dataProvider' => $dataProvider,
-                //'filterModel' => $searchModel,
-                'pager' => [
-                    'firstPageLabel' => 'First',
-                    'lastPageLabel' => 'Last',
-                ],
-                'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
-                    [
-                        'class' => 'yii\grid\CheckboxColumn',
-                        'headerOptions' => [
-                            'class' => 'text-center'
-                        ],
-                        'contentOptions' => [
-                            'class' => 'text-center'
-                        ],
-                        'checkboxOptions' => function ($model) {
-                            $data = $model->empid . ',' . $model->date;
-                            return ['value' => $data];
-                        }
+    <div class="bicycle-emp-info-index">
+        <div class="panel">
+            <div class="panel panel-body">
+                <?php echo $this->render('_search', ['model' => $searchModel, 'Role' => $sys]); ?>
+                <hr>
+                <?= GridView::widget([
+                    'dataProvider' => $dataProvider,
+                    //'filterModel' => $searchModel,
+                    'pager' => [
+                        'firstPageLabel' => '<i class="fa fa-angle-double-left" aria-hidden="true"></i>',
+                        'nextPageLabel' => '<i class="fa fa-angle-right" aria-hidden="true"></i>',
+                        'lastPageLabel' => '<i class="fa fa-angle-double-right" aria-hidden="true"></i>',
+                        'prevPageLabel' => '<i class="fa fa-angle-left" aria-hidden="true"></i>'
                     ],
-                    //'id',
-                    'empid:text:รหัสพนักงาน',
-                    'empName:text:ชื่อ - นามสกุล',
-                    'rank:text:ตำแหน่ง',
-                    'Extra:integer:เงินพิเศษ',
-                    'date:date:วันที่',
-                    //'confirms:raw:สถานะ',
-                    [
-                        'attribute' => 'confirms',
-                        'format' => 'raw',
-                        'label' => 'สถานะ',
-                        'value' => function ($model) {
-                            return $model->confirms == 0 ? '<label class="label label-info">Created</label>' : '<label class="label label-success">Approved</label>';
-                        }
-                    ],
-                    ['class' => 'yii\grid\ActionColumn',
-                        'headerOptions' => [
-                            'class' => 'text-center',
+                    'columns' => [
+                        ['class' => 'yii\grid\SerialColumn'],
+                        [
+                            'class' => 'yii\grid\CheckboxColumn',
+                            'headerOptions' => [
+                                'class' => 'text-center'
+                            ],
+                            'contentOptions' => [
+                                'class' => 'text-center'
+                            ],
+                            'checkboxOptions' => function ($model) {
+                                $data = $model->empid . ',' . $model->date;
+                                return ['value' => $data];
+                            }
                         ],
-                        'template' => '{update}{delete}',
-                        'contentOptions' => [
-                            'class' => 'text-center',
-                        ]
+                        //'id',
+                        'empid:text:รหัสพนักงาน',
+                        'empName:text:ชื่อ - นามสกุล',
+                        'rank:text:ตำแหน่ง',
+                        'Extra:integer:เงินพิเศษ',
+                        'date:date:วันที่',
+                        //'confirms:raw:สถานะ',
+                        [
+                            'attribute' => 'confirms',
+                            'format' => 'raw',
+                            'label' => 'สถานะ',
+                            'value' => function ($model) {
+                                return $model->confirms == 0 ? '<label class="label label-info">Created</label>' : '<label class="label label-success">Approved</label>';
+                            }
+                        ],
+                        ['class' => 'yii\grid\ActionColumn',
+                            'headerOptions' => [
+                                'class' => 'text-center',
+                            ],
+                            'template' => '{update}{delete}',
+                            'contentOptions' => [
+                                'class' => 'text-center',
+                            ]
+                        ],
                     ],
-                ],
-            ]); ?>
+                ]); ?>
+            </div>
         </div>
     </div>
-</div>
+<?php
+$baseurl = Yii::$app->request->baseUrl;
+$this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => JqueryAsset::className()]);
+?>

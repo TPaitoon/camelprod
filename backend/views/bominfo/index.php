@@ -102,8 +102,10 @@ if ($Role == 'ITIT' || $Role == 'PSPS') {
                 'dataProvider' => $dataProvider,
                 //'filterModel' => $searchModel,
                 'pager' => [
-                    'firstPageLabel' => 'First',
-                    'lastPageLabel' => 'Last'
+                    'firstPageLabel' => '<i class="fa fa-angle-double-left" aria-hidden="true"></i>',
+                    'nextPageLabel' => '<i class="fa fa-angle-right" aria-hidden="true"></i>',
+                    'lastPageLabel' => '<i class="fa fa-angle-double-right" aria-hidden="true"></i>',
+                    'prevPageLabel' => '<i class="fa fa-angle-left" aria-hidden="true"></i>'
                 ],
                 'options' => [
                     'id' => 'grid',
