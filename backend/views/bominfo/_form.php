@@ -220,3 +220,7 @@ foreach ($hourarray as $item) {
         <?php ActiveForm::end(); ?>
     </div>
 </div>
+<?php
+$baseurl = Yii::$app->request->baseUrl;
+$this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => JqueryAsset::className()]);
+?>

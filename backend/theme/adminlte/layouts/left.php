@@ -39,6 +39,7 @@
                 $pibi = true;
             }
         }
+
         ?>
 
         <?= dmstr\widgets\Menu::widget(
@@ -51,50 +52,70 @@
 //                            ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug']],
 //                        ],
 //                    ],
-                    ['label' => 'นึ่งยางเตา BOM', 'url' => '#', 'visible' => $bom,
+                    ['label' => 'นึ่งยางนอก', 'url' => '#', 'icon' => 'home', 'visible' => $bom,
                         'items' =>
                             [
-                                //['label' => 'Dashboard', 'icon' => 'dashboard', 'url' => ['/dashboard']],
-                                ['label' => 'ค่ามาตรฐาน', 'icon' => 'fa fa-address-card-o', 'url' => ['/extrainfo'], 'visible' => $edi],
-                                ['label' => 'ค่าพิเศษ', 'icon' => 'fa fa-address-card-o', 'url' => ['/bominfo']],
+                                ['label' => 'BOM', 'url' => '#', 'icon' => 'chevron-circle-right',
+                                    'items' =>
+                                        [
+                                            //['label' => 'Dashboard', 'icon' => 'dashboard', 'url' => ['/dashboard']],
+                                            ['label' => 'ค่ามาตรฐาน', 'icon' => 'cog', 'url' => ['/extrainfo'], 'visible' => $edi],
+                                            ['label' => 'ค่าพิเศษ', 'icon' => 'btc', 'url' => ['/bominfo']],
+                                        ],
+                                ],
+                                ['label' => 'จักรยาน', 'url' => '#', 'icon' => 'chevron-circle-right',
+                                    'items' =>
+                                        [
+                                            //['label' => 'Dashboard', 'icon' => 'dashboard', 'url' => ['/dashboard']],
+                                            ['label' => 'เงินประจำตำแหน่ง', 'icon' => 'cog', 'url' => ['/steambicycleworkinfo'], 'visible' => $edi],
+                                            ['label' => 'ค่าเข้างาน', 'icon' => 'btc', 'url' => ['/bicyclesteamworkinfo']],
+                                            ['label' => 'ค่ามาตรฐาน', 'icon' => 'cog', 'url' => ['/standardtirebicycleinfo'], 'visible' => $edi],
+                                            ['label' => 'ค่าพิเศษ', 'icon' => 'btc', 'url' => ['/bicycletireinfo']],
+                                        ],
+                                ],
                             ],
                     ],
-                    ['label' => 'ประกอบยางนอกจกย', 'url' => '#', 'visible' => $bce,
+                    ['label' => 'ประกอบยางนอก', 'url' => '#', 'icon' => 'home', 'visible' => $bce,
                         'items' =>
                             [
-                                //['label' => 'Dashboard', 'icon' => 'dashboard', 'url' => ['/dashboard']],
-                                ['label' => 'เงินประจำตำแหน่ง', 'icon' => 'fa fa-address-card-o', 'url' => ['/standardbicycle'], 'visible' => $edi],
-                                ['label' => 'ค่าเข้างาน', 'icon' => 'fa fa-address-card-o', 'url' => ['/bicycleempinfo']],
-                                ['label' => 'รายละเอียดยาง', 'icon' => 'fa fa-address-card-o', 'url' => ['/standardbicycleex'], 'visible' => $edi],
-                                ['label' => 'ค่าพิเศษ', 'icon' => 'fa fa-address-card-o', 'url' => ['/bicycleinfo']],
+                                ['label' => 'จักรยาน', 'url' => '#', 'icon' => 'chevron-circle-right',
+                                    'items' =>
+                                        [
+                                            //['label' => 'Dashboard', 'icon' => 'dashboard', 'url' => ['/dashboard']],
+                                            ['label' => 'เงินประจำตำแหน่ง', 'icon' => 'cog', 'url' => ['/standardbicycle'], 'visible' => $edi],
+                                            ['label' => 'ค่าเข้างาน', 'icon' => 'btc', 'url' => ['/bicycleempinfo']],
+                                            ['label' => 'รายละเอียดยาง', 'icon' => 'cog', 'url' => ['/standardbicycleex'], 'visible' => $edi],
+                                            ['label' => 'ค่าพิเศษ', 'icon' => 'btc', 'url' => ['/bicycleinfo']],
+                                        ],
+                                ],
                             ],
                     ],
-                    ['label' => 'นึ่งยางนอกจกย', 'url' => '#', 'visible' => $sbw,
+                    ['label' => 'ประกอบยางใน', 'url' => '#', 'icon' => 'home', 'visible' => $pibi,
                         'items' =>
                             [
-                                //['label' => 'Dashboard', 'icon' => 'dashboard', 'url' => ['/dashboard']],
-                                ['label' => 'เงินประจำตำแหน่ง', 'icon' => 'fa fa-address-card-o', 'url' => ['/steambicycleworkinfo'], 'visible' => $edi],
-                                ['label' => 'ค่าเข้างาน', 'icon' => 'fa fa-address-card-o', 'url' => ['/bicyclesteamworkinfo']],
-                                ['label' => 'ค่ามาตรฐาน', 'icon' => 'fa fa-address-card-o', 'url' => ['/standardtirebicycleinfo'], 'visible' => $edi],
-                                ['label' => 'ค่าพิเศษ', 'icon' => 'fa fa-address-card-o', 'url' => ['/bicycletireinfo']],
+                                ['label' => 'จักรยาน', 'url' => '#', 'icon' => 'chevron-circle-right',
+                                    'items' =>
+                                        [
+                                            ['label' => 'ค่ามาตรฐาน', 'icon' => 'cog', 'url' => ['/pibistandard'], 'visible' => $edi],
+                                            ['label' => 'ค่าพิเศษ', 'icon' => 'btc', 'url' => ['/pibicalculator']],
+                                        ],
+                                ],
+                                ['label' => 'มอเตอร์ไซค์', 'url' => '#', 'icon' => 'chevron-circle-right',
+                                    'items' =>
+                                        [
+                                            ['label' => 'ค่ามาตรฐาน', 'icon' => 'cog', 'url' => ['/pibimcstandard'], 'visible' => $edi],
+                                            ['label' => 'ค่าพิเศษ', 'icon' => 'btc', 'url' => ['/pibimccalculator']],
+                                        ],
+                                ],
                             ],
                     ],
-                    ['label' => 'ประกอบยางในจกย', 'url' => '#', 'visible' => $pibi,
+                    ['label' => 'ผู้ดูแลระบบ', 'url' => '#', 'icon' => 'lock', 'visible' => $it,
                         'items' =>
                             [
-                                ['label' => 'ค่ามาตรฐาน', 'icon' => 'fa fa-address-card-o', 'url' => ['/pibistandard'], 'visible' => $edi],
-                                ['label' => 'ค่าพิเศษ', 'icon' => 'fa fa-address-card-o', 'url' => ['/pibicalculator']],
+                                ['label' => 'User Info', 'icon' => 'cog', 'url' => ['/userinfo'], 'visible' => $it],
+                                ['label' => 'Log History', 'icon' => 'cog', 'url' => ['/loginhistory'], 'visible' => $it],
                             ],
                     ],
-                    ['label' => 'ประกอบยางในมตซ', 'url' => '#', 'visible' => $pibi,
-                        'items' =>
-                            [
-                                ['label' => 'ค่ามาตรฐาน', 'icon' => 'fa fa-address-card-o', 'url' => ['/pibimcstandard'],'visible' => $edi],
-                                ['label' => 'ค่าพิเศษ', 'icon' => 'fa fa-address-card-o', 'url' => ['/pibimccalculator']],
-                            ],
-                    ],
-                    ['label' => 'User Info', 'icon' => 'fa fa-user-o', 'url' => ['/userinfo'], 'visible' => $it],
-                    ['label' => 'Log History', 'icon' => 'fa fa-user-o', 'url' => ['/loginhistory'], 'visible' => $it],
                 ],
             ]);
         ?>

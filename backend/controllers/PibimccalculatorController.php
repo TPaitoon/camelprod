@@ -17,7 +17,7 @@ use yii\web\NotFoundHttpException;
 class PibimccalculatorController extends Controller
 {
     public $enableCsrfValidation = false;
-    
+
     public function actionIndex()
     {
         $chk = new UserDirect();
@@ -27,7 +27,7 @@ class PibimccalculatorController extends Controller
         $app = Yii::$app->request;
         $searchModel = new PibimccalculatorSearch();
 
-        if ($app->isGet && isset($app->queryParams['Pibimccalculator']['startdate'])) {
+        if ($app->isGet && isset($app->queryParams['PibimccalculatorSearch']['startdate'])) {
             $dataProvider = $searchModel->search($app->queryParams);
         } else {
             $dataProvider = $searchModel->searchcreated();
@@ -85,6 +85,41 @@ class PibimccalculatorController extends Controller
         } else {
             return $this->render('create', ['model' => $model]);
         }
+    }
+
+    public function actionView($id)
+    {
+        $master = $this->findModel($id);
+        $query = PIBIMCDetail::find()->where(['refid' => $master->id])
+            ->andWhere(['shiftid' => $master->shift, 'groupid' => $master->group])
+            ->andFilterWhere(['date' => date('Y-m-d', strtotime($master->date))])
+            ->all();
+        $model = new PIBIMCDetail();
+        $c = 0;
+        $recid = null;
+
+        foreach ($query as $item) {
+            $recid == '' ? $recid = $recid . $item->id : $recid = $recid . ',' . $item->id;
+            $item->typeid == 1 ? $model->amount = $item->qty : $model->amount;
+            $item->typeid == 2 ? $model->losttire1 = $item->qty : $model->losttire1;
+            $item->typeid == 3 ? $model->losttire2 = $item->qty : $model->losttire2;
+            $item->typeid == 4 ? $model->losttube = $item->qty : $model->losttube;
+
+            if ($item->typeid == 4) {
+                $c++;
+                $c == 1 ? $model->listid = $item->empid . ' ' . $item->empname : $model->listid = $model->listid . ',' . $item->empid . ' ' . $item->empname;
+                $model->shiftid = $item->shiftid;
+                $model->groupid = $item->groupid;
+                $model->date = $item->date;
+                $model->hour = $item->hour;
+                $model->itemid = $item->itemid;
+                $model->refid = $item->refid;
+                $model->rate = $item->rate;
+            }
+        }
+        $model->recid = $master->id . ',' . $recid;
+
+        return $this->render('view', ['model' => $model]);
     }
 
     public function actionUpdate($id)
@@ -269,7 +304,7 @@ class PibimccalculatorController extends Controller
                 $temparray = [];
 
                 for ($i = 0; $i < count($listtemp); $i++) {
-                    $query = EmpInfo::find()->select(['EMP_NAME','EMP_SURNME'])
+                    $query = EmpInfo::find()->select(['EMP_NAME', 'EMP_SURNME'])
                         ->where(['PRS_NO' => $listtemp[$i]])->one();
 
                     if (!empty($query)) {
