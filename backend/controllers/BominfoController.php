@@ -71,11 +71,54 @@ class BominfoController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
+    public function actionView($empid,$date,$stoveid)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        $extra = new ExtrainfoSearch();
+        $bomquery = BOMInfo::find()->where(['empid' => $empid, 'stoveid' => $stoveid, 'date' => $date])->all();
+        $losttime = '';
+        $amount = '';
+        $perpcs = '';
+        $rate = '';
+        $recid = '';
+        $index = 0;
+        foreach ($bomquery as $item) {
+            switch ($item->typeID) {
+                case 1:
+                    $losttime = $item->qty;
+                    $recid = $recid . $item->id;
+                    break;
+                case  2:
+                    $amount = $item->qty;
+                    $recid = $recid . ',' . $item->id;
+                    break;
+                case 3:
+                    $perpcs = $item->qty;
+                    $recid = $recid . ',' . $item->id;
+                    break;
+                case 4:
+                    $rate = $item->qty;
+                    $recid = $recid . ',' . $item->id;
+                    break;
+            }
+            $index++;
+            if ($index == 4) {
+                $model = new BOMInfo();
+                $model->empid = $item->empid;
+                $model->empName = $item->empName;
+                $model->date = $item->date;
+                $model->stoveid = $item->stoveid;
+                $model->standard = $item->standard;
+                $model->hour = $item->hour;
+                $model->amount = $amount;
+                $model->losttime = $losttime;
+                $model->totaltire = $item->totaltire;
+                $model->perpcs = $perpcs;
+                $model->rate = $rate;
+                $model->deduct = $item->deduct;
+                $model->listid = $recid;
+            }
+        }
+        return $this->render('view', ['model' => $model]);
     }
 
     /**

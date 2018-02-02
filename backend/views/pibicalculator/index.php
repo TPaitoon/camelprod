@@ -13,6 +13,9 @@ $this->registerJsFile($baseurl . '/js/pibi/script.js?Ver=0001', ['depends' => Jq
 ?>
     <input hidden class="role" value="<?php echo $role ?>">
     <div class="pibicalculator-index">
+        <?php $session = Yii::$app->session;
+        $res = $session->getFlash('res');
+        ?>
         <div class="panel">
             <div class="panel panel-heading">
                 <?php echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -185,4 +188,9 @@ $this->registerJsFile($baseurl . '/js/pibi/script.js?Ver=0001', ['depends' => Jq
 <?php
 $baseurl = Yii::$app->request->baseUrl;
 $this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => JqueryAsset::className()]);
+$this->registerJs('
+var txt = "' . $res . '";
+if (txt !== "") {
+    alert(test);
+}', static::POS_END);
 ?>

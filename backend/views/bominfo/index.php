@@ -11,7 +11,6 @@ use yii\web\JqueryAsset;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $js = <<<JS
-    
     function chkdelete(e) {
         if (confirm('ต้องการลบข้อมูล ?')) {
             if ($(".role").val() !== '1') {
@@ -92,122 +91,119 @@ if ($Role == 'ITIT' || $Role == 'PSPS') {
 
 //echo Yii::$app->formatter->asDate(str_replace('/','-','20/10/2017'),'yyyy-MM-dd');
 ?>
-<input hidden class="role" value="<?php echo $sys ?>">
-<div class="bominfo-index">
-    <div class="panel">
-        <div class="panel panel-body">
-            <?php echo $this->render('_search', ['model' => $searchModel]); ?>
-            <hr>
-            <?= GridView::widget([
-                'dataProvider' => $dataProvider,
-                //'filterModel' => $searchModel,
-                'pager' => [
-                    'firstPageLabel' => '<i class="fa fa-angle-double-left" aria-hidden="true"></i>',
-                    'nextPageLabel' => '<i class="fa fa-angle-right" aria-hidden="true"></i>',
-                    'lastPageLabel' => '<i class="fa fa-angle-double-right" aria-hidden="true"></i>',
-                    'prevPageLabel' => '<i class="fa fa-angle-left" aria-hidden="true"></i>'
-                ],
-                'options' => [
-                    'id' => 'grid',
-                ],
-                'rowOptions' => function ($model) {
-                    return ['id' => ArrayHelper::getValue($model, 'check')];
-                },
-                'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
-                    [
-                        'class' => 'yii\grid\CheckboxColumn',
-                        'headerOptions' => [
-                            'class' => 'text-center',
-                        ],
-                        'contentOptions' => [
-                            'class' => 'text-center',
-                        ],
-                        'checkboxOptions' => function ($model) {
-                            $data = ArrayHelper::getValue($model, 'empid') . "," . ArrayHelper::getValue($model, 'date') . "," . ArrayHelper::getValue($model, 'stoveid');
-                            return ['value' => $data];
-                        },
+    <input hidden class="role" value="<?php echo $sys ?>">
+    <div class="bominfo-index">
+        <div class="panel">
+            <div class="panel panel-body">
+                <?php echo $this->render('_search', ['model' => $searchModel]); ?>
+                <hr>
+                <?= GridView::widget([
+                    'dataProvider' => $dataProvider,
+                    //'filterModel' => $searchModel,
+                    'pager' => [
+                        'firstPageLabel' => '<i class="fa fa-angle-double-left" aria-hidden="true"></i>',
+                        'nextPageLabel' => '<i class="fa fa-angle-right" aria-hidden="true"></i>',
+                        'lastPageLabel' => '<i class="fa fa-angle-double-right" aria-hidden="true"></i>',
+                        'prevPageLabel' => '<i class="fa fa-angle-left" aria-hidden="true"></i>'
                     ],
-                    'empid:text:รหัสพนักงาน',
-                    'empname:text:ชื่อ - นามสกุล',
-                    'date:date:วันที่',
-                    'hour:text:ชั่วโมง',
-                    'stoveid:text:เตาที่',
-                    'standard:text:มาตรฐาน',
-                    'amount:integer:ยอดนึ่ง',
-                    'losttime:integer:เสียเวลา : นาที',
-                    'totaltire:integer:ยอดยาง',
-                    'priceperpcs:text:ราคา : เส้น',
-                    'deduct:integer:หักเงิน',
-                    'rate:text:ค่าพิเศษ : วัน',
+                    'options' => [
+                        'id' => 'grid',
+                    ],
+                    'rowOptions' => function ($model) {
+                        return ['id' => ArrayHelper::getValue($model, 'check')];
+                    },
+                    'columns' => [
+                        ['class' => 'yii\grid\SerialColumn'],
+                        [
+                            'class' => 'yii\grid\CheckboxColumn',
+                            'headerOptions' => [
+                                'class' => 'text-center',
+                            ],
+                            'contentOptions' => [
+                                'class' => 'text-center',
+                            ],
+                            'checkboxOptions' => function ($model) {
+                                $data = ArrayHelper::getValue($model, 'empid') . "," . ArrayHelper::getValue($model, 'date') . "," . ArrayHelper::getValue($model, 'stoveid');
+                                return ['value' => $data];
+                            },
+                        ],
+                        'empid:text:รหัสพนักงาน',
+                        'empname:text:ชื่อ - นามสกุล',
+                        'date:date:วันที่',
+                        'hour:text:ชั่วโมง',
+                        'stoveid:text:เตาที่',
+                        'standard:text:มาตรฐาน',
+//                    'amount:integer:ยอดนึ่ง',
+//                    'losttime:integer:เสียเวลา : นาที',
+                        'totaltire:integer:ยอดยาง',
+//                    'priceperpcs:text:ราคา : เส้น',
+                        'deduct:integer:หักเงิน',
+                        'rate:text:ค่าพิเศษ',
 //                    'role:text:sssss',
 //                    'check:raw:สถานะ',
-                    [
-                        'attribute' => 'check',
-                        'format' => 'raw',
-                        'headerOptions' => [
-                            'class' => 'text-center'
-                        ],
-                        'contentOptions' => [
-                            'class' => 'text-center status'
-                        ],
-                        'value' => function ($model) {
-                            if (ArrayHelper::getValue($model, 'check') === 'Created') {
-                                return '<label class="label label-info">' . ArrayHelper::getValue($model, 'check') . '</label>';
-                            } else {
-                                return '<label class="label label-success">' . ArrayHelper::getValue($model, 'check') . '</label>';
-                            }
-                        },
-                        'label' => 'สถานะ',
-                    ],
-                    [
-                        'class' => 'yii\grid\ActionColumn',
-                        'headerOptions' => [
-                            'class' => 'text-center'
-                        ],
-                        'contentOptions' => [
-                            'class' => 'text-center',
-                        ],
-                        'template' => '{update} {delete}',
-                        'buttons' => [
-                            'update' => function ($url,$model) {
-                                if (ArrayHelper::getValue($model,'check') == 'Created') {
-                                    return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, []);
-
+                        [
+                            'attribute' => 'check',
+                            'format' => 'raw',
+                            'headerOptions' => [
+                                'class' => 'text-center'
+                            ],
+                            'contentOptions' => [
+                                'class' => 'text-center status'
+                            ],
+                            'value' => function ($model) {
+                                if (ArrayHelper::getValue($model, 'check') === 'Created') {
+                                    return '<label class="label label-info">' . ArrayHelper::getValue($model, 'check') . '</label>';
                                 } else {
-                                    if (ArrayHelper::getValue($model,'role') == '1') {
-                                        return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, []);
-                                    } else {
-                                        return '';
-                                    }
+                                    return '<label class="label label-success">' . ArrayHelper::getValue($model, 'check') . '</label>';
                                 }
                             },
-                            'delete' => function ($url) {
-                                return Html::a('<span class="glyphicon glyphicon-trash" onclick="return chkdelete($(this))"></span>', 'javascript:void(0)', [
-                                    'data-url' => $url,
-                                ]);
+                            'label' => 'สถานะ',
+                        ],
+                        [
+                            'class' => 'yii\grid\ActionColumn',
+                            'headerOptions' => [
+                                'class' => 'text-center'
+                            ],
+                            'contentOptions' => [
+                                'class' => 'text-center',
+                            ],
+                            'template' => '{view} {update} {delete}',
+                            'buttons' => [
+                                'view' => function ($url, $model) {
+                                    return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', $url, []);
+                                },
+                                'update' => function ($url, $model) {
+                                    if (ArrayHelper::getValue($model, 'check') == 'Created') {
+                                        return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, []);
+
+                                    } else {
+                                        if (ArrayHelper::getValue($model, 'role') == '1') {
+                                            return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, []);
+                                        } else {
+                                            return '';
+                                        }
+                                    }
+                                },
+                                'delete' => function ($url) {
+                                    return Html::a('<span class="glyphicon glyphicon-trash" onclick="return chkdelete($(this))"></span>', 'javascript:void(0)', [
+                                        'data-url' => $url,
+                                    ]);
+                                }
+                            ],
+                            'urlCreator' => function ($action, $model) {
+                                $empid = ArrayHelper::getValue($model, 'empid');
+                                $date = ArrayHelper::getValue($model, 'date');
+                                $stoveid = ArrayHelper::getValue($model, 'stoveid');
+
+                                $url = '?r=bominfo/' . $action . '&empid=' . $empid . '&date=' . $date . '&stoveid=' . $stoveid;
+                                return $url;
                             }
                         ],
-                        'urlCreator' => function ($action, $model) {
-                            $empid = ArrayHelper::getValue($model, 'empid');
-                            $date = ArrayHelper::getValue($model, 'date');
-                            $stoveid = ArrayHelper::getValue($model, 'stoveid');
-
-                            if ($action == 'update') {
-                                $url = 'index.php?r=bominfo/update&empid=' . $empid . '&date=' . $date . '&stoveid=' . $stoveid;
-                                return $url;
-                            }
-                            if ($action == 'delete') {
-                                $url = 'index.php?r=bominfo/delete&empid=' . $empid . '&date=' . $date . '&stoveid=' . $stoveid;
-                                return $url;
-                            }
-                        }
                     ],
-                ],
-            ]); ?>
+                ]); ?>
+            </div>
         </div>
     </div>
-</div>
 <?php
 $baseurl = Yii::$app->request->baseUrl;
 $this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => JqueryAsset::className()]);

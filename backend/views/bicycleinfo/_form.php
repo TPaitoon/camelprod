@@ -1,6 +1,5 @@
 <?php
 
-use common\models\CheckStatusInfo;
 use common\models\EmpInfo;
 use common\models\Weaverbicycle;
 use kartik\date\DatePicker;
@@ -73,7 +72,7 @@ $tiremodel = Weaverbicycle::find()->all();
         </div>
     </div>
     <div class="row">
-        <div class="col-md-1">
+        <div class="col-md-2">
             <?= $form->field($model, 'losttime')->textInput(['id' => 'blosttime', 'autocomplete' => 'off'])->label('เสียเวลา : นาที') ?>
         </div>
         <div class="col-md-2">

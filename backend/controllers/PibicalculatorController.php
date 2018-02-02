@@ -227,8 +227,13 @@ class PibicalculatorController extends Controller
             PIBIDetail::deleteAll(['Shiftid' => $master->shift, 'Groupid' => $master->group, 'Date' => date('Y-m-d', strtotime($master->date))]);
             $this->findModel($id)->delete();
         }
+        $session = Yii::$app->session;
+        $session->setFlash('res','ลบข้อมูลเรียบร้อยแล้ว !');
+
         return $this->redirect(['index']);
     }
+
+
 
     protected function findModel($id)
     {

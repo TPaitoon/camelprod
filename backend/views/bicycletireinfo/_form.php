@@ -16,6 +16,20 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 $this->registerJsFile(Yii::$app->request->baseUrl . '/js/calculatebicycletire.js?Ver=0001', ['depends' => JqueryAsset::className()]);
 $empmodel = EmpInfo::find()->where(['Dept' => 'ฝ่ายผลิต'])->andFilterWhere(['like', 'Sec', 'นึ่ง'])->all();
+$hourarray = HourInfo::find()->orderBy(['values' => SORT_ASC])->all();
+$hourlist = [];
+foreach ($hourarray as $item) {
+    if ($item->values == '9') {
+        continue;
+    }
+    if ($item->values == '11') {
+        continue;
+    }
+    array_push($hourlist, [
+        'values' => $item->values,
+        'hour' => $item->hour,
+    ]);
+}
 ?>
 
 <div class="bicycletire-info-form">
@@ -57,7 +71,7 @@ $empmodel = EmpInfo::find()->where(['Dept' => 'ฝ่ายผลิต'])->andF
         <hr>
         <div class="row">
             <div class="col-md-2">
-                <?= $form->field($model, 'hour')->dropDownList(ArrayHelper::map(HourInfo::find()->all(), 'values', 'hour'), ['id' => 'bthour'])->label('ชั่วโมง') ?>
+                <?= $form->field($model, 'hour')->dropDownList(ArrayHelper::map($hourlist, 'values', 'hour'), ['id' => 'bthour'])->label('ชั่วโมง') ?>
             </div>
             <div class="col-md-2">
                 <?= $form->field($model, 'standard')->dropDownList(ArrayHelper::map(StandardTireBicycleInfo::find()->all(), 'standardname', 'standardname'), ['id' => 'btstandard'])->label('มาตรฐาน') ?>
@@ -119,7 +133,7 @@ $empmodel = EmpInfo::find()->where(['Dept' => 'ฝ่ายผลิต'])->andF
         <hr>
         <div class="form-group">
             <div class="pull-left">
-                <?= Html::submitButton($model->isNewRecord ? 'บันทึก' : 'แก้ไข', ['id' => 'bicycletire-submit','class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                <?= Html::submitButton($model->isNewRecord ? 'บันทึก' : 'แก้ไข', ['id' => 'bicycletire-submit', 'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
             </div>
             <div class="pull-right">
                 <?= Html::a('หน้าหลัก', ['index'], ['class' => 'btn btn-info']) ?>
