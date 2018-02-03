@@ -131,7 +131,7 @@ if ($Role == 'ITIT' || $Role == 'PSPS') {
                         //'stickeramount:integer:ติดสติกเกอร์',
                         //'stickerperpcs:text:ราคา : ดวง',
                         //'stickerrate:integer:ค่าติดสติกเกอร์',
-                        'deduct:integer:หักเงิน'  ,
+                        'deduct:integer:หักเงิน',
                         'totalrate:integer:ค่าพิเศษ',
                         [
                             'attribute' => 'check',
@@ -189,4 +189,8 @@ if ($Role == 'ITIT' || $Role == 'PSPS') {
 <?php
 $baseurl = Yii::$app->request->baseUrl;
 $this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => JqueryAsset::className()]);
+$res = Yii::$app->session->getFlash('res');
+$this->registerJs('
+var txt = "' . $res . '";
+if (txt !== "") { alert(txt); }', static::POS_END);
 ?>

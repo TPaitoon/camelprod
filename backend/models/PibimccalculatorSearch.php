@@ -9,7 +9,6 @@
 namespace backend\models;
 
 
-use common\models\PIBIMCDetail;
 use common\models\PIBIMCMaster;
 use yii\base\Model;
 use yii\data\ArrayDataProvider;

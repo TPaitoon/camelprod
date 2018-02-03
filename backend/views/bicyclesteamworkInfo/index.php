@@ -79,6 +79,7 @@ JS;
 $this->registerJs($js, static::POS_END);
 $this->title = 'ค่าเข้างานนึ่งยางนอกจกย.';
 $this->params['breadcrumbs'][] = $this->title;
+$res = Yii::$app->session->getFlash('res');
 
 if ($Role == 'ITIT' || $Role == 'PSPS') {
     $sys = 1;
@@ -176,4 +177,7 @@ if ($Role == 'ITIT' || $Role == 'PSPS') {
 <?php
 $baseurl = Yii::$app->request->baseUrl;
 $this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => JqueryAsset::className()]);
+$this->registerJs('
+var txt = "' . $res . '";
+if (txt !== "") { alert(txt); } ', static::POS_END);
 ?>

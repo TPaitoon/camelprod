@@ -93,6 +93,12 @@
                     ['label' => 'ประกอบยางใน', 'url' => '#', 'icon' => 'home', 'visible' => $pibi,
                         'items' =>
                             [
+                                ['label' => 'เตรียมจุ๊บ', 'url' => '#', 'icon' => 'chevron-circle-right',
+                                    'items' =>
+                                        [
+                                            ['label' => 'ค่าเพิเศษ', 'icon' => 'btc', 'url' => ['/pibitubecalculator']],
+                                        ],
+                                ],
                                 ['label' => 'จักรยาน', 'url' => '#', 'icon' => 'chevron-circle-right',
                                     'items' =>
                                         [

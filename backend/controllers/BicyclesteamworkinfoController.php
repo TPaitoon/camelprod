@@ -116,6 +116,7 @@ class BicyclesteamworkinfoController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
+        Yii::$app->session->setFlash('res','ลบข้อมูลเรียบร้อยแล้ว !');
 
         return $this->redirect(['index']);
     }

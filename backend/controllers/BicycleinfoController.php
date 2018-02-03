@@ -207,6 +207,7 @@ class BicycleinfoController extends Controller
     public function actionDelete($empid, $date)
     {
         BicycleInfo::deleteAll(['empid' => $empid, 'date' => $date]);
+        Yii::$app->session->setFlash('res','ลบข้อมูลเรียบร้อยแล้ว !');
 
         return $this->redirect(['index']);
     }

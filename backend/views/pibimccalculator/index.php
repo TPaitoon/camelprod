@@ -8,9 +8,8 @@ use yii\web\JqueryAsset;
 
 $this->title = 'ค่าพิเศษประกอบยางนอกมตซ.';
 $this->params['breadcrumbs'][] = $this->title;
-
+$res = Yii::$app->session->getFlash('res');
 ?>
-
     <input hidden class="role" value="<?php echo $role ?>">
     <div class="pibimccalculator-index">
         <div class="panel">
@@ -186,4 +185,7 @@ $this->params['breadcrumbs'][] = $this->title;
 $baseurl = Yii::$app->request->baseUrl;
 $this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => JqueryAsset::className()]);
 $this->registerJsFile($baseurl . '/js/pibimc/script.js?Ver=0001', ['depends' => JqueryAsset::className()]);
+$this->registerJs('
+var txt = "' . $res . '";
+if(txt !== "") { alert(txt); }', static::POS_END);
 ?>

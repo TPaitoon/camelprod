@@ -73,7 +73,6 @@ class BominfoController extends Controller
      */
     public function actionView($empid,$date,$stoveid)
     {
-        $extra = new ExtrainfoSearch();
         $bomquery = BOMInfo::find()->where(['empid' => $empid, 'stoveid' => $stoveid, 'date' => $date])->all();
         $losttime = '';
         $amount = '';
@@ -285,6 +284,8 @@ class BominfoController extends Controller
     {
         //$this->findModel($id)->delete();
         BOMInfo::deleteAll(['empid' => $empid, 'date' => $date, 'stoveid' => $stoveid]);
+        $session = Yii::$app->session;
+        $session->setFlash('res','ลบข้อมูลเรียบร้อยแล้ว !');
         return $this->redirect(['index']);
     }
 

@@ -6,25 +6,21 @@ function checkDel(e) {
             if (st !== '0') {
                 alert('ไม่สามารถลบข้อมูลได้เนื่องจากไม่มีสิทธิ์');
             } else {
-                del();
+                del(e);
             }
         } else {
-            del();
+            del(e);
         }
     }
 }
 
-function del() {
+function del(e) {
     var link = e.parent().attr('data-url');
     $.ajax({
         type: 'post',
         url: link,
         async: false,
         cache: false,
-        success: function () {
-            alert('ลบเรียบร้อยแล้ว');
-            location.reload();
-        }
     })
 }
 

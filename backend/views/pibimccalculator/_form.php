@@ -110,12 +110,12 @@ for ($i = 1; $i <= 15; $i++) {
                     <div class="row">
                         <div class="col-lg-2">
                             <?= $form->field($model, 'shiftid')
-                                ->dropDownList(ArrayHelper::map($shiftlist, 'id', 'shiftname'))
+                                ->dropDownList(ArrayHelper::map($shiftlist, 'id', 'shiftname'), ['id' => 'shift'])
                                 ->label('เลือกกะ') ?>
                         </div>
                         <div class="col-lg-2">
                             <?= $form->field($model, 'groupid')
-                                ->dropDownList(ArrayHelper::map($grouplist, 'A', 'A'))
+                                ->dropDownList(ArrayHelper::map($grouplist, 'A', 'A'), ['id' => 'group'])
                                 ->label('กลุ่ม') ?>
                         </div>
                         <div class="col-lg-3">

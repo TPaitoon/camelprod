@@ -23,11 +23,7 @@ $js = <<<JS
                         type: 'post',
                         url: link,
                         async: false,
-                        cache: false,
-                        success: function() {
-                            alert('ลบเรียบร้อยแล้ว');
-                            location.reload();
-                        }
+                        cache: false
                     });
                 }
             } else {
@@ -36,11 +32,7 @@ $js = <<<JS
                     type: 'post',
                     url: link,
                     async: false,
-                    cache: false,
-                    success: function() {
-                        alert('ลบเรียบร้อยแล้ว');
-                        location.reload();
-                    }
+                    cache: false
                 });
             }
         }
@@ -79,6 +71,8 @@ $this->registerJs($js, static::POS_END);
 $this->title = 'ค่าพิเศษเตา BOM';
 $this->params['breadcrumbs'][] = $this->title;
 $baseurl = Yii::$app->request->baseUrl;
+$session = Yii::$app->session;
+$res = $session->getFlash('res');
 /*$debug = new CheckDebug();
 $debug->printr($dataProvider);
 return;*/
@@ -207,4 +201,9 @@ if ($Role == 'ITIT' || $Role == 'PSPS') {
 <?php
 $baseurl = Yii::$app->request->baseUrl;
 $this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => JqueryAsset::className()]);
+$this->registerJs('
+var txt = "' . $res . '";
+if (txt !== ""){
+alert(txt);
+}', static::POS_END);
 ?>

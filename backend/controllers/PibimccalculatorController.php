@@ -202,6 +202,18 @@ class PibimccalculatorController extends Controller
         }
     }
 
+    public function actionDelete($id)
+    {
+        $master = $this->findModel($id);
+        if (!empty($master)) {
+            PIBIMCDetail::deleteAll(['shiftid' => $master->shift, 'groupid' => $master->group, 'date' => date('Y-m-d', strtotime($master->date))]);
+            $this->findModel($id)->delete();
+            Yii::$app->session->setFlash('res','ลบข้อมูลเรียบร้อยแล้ว !');
+
+            return $this->redirect(['index']);
+        }
+    }
+
     public function actionGetrate()
     {
         $app = Yii::$app->request;
@@ -316,5 +328,16 @@ class PibimccalculatorController extends Controller
                 return Json::encode($temparray);
             }
         }
+    }
+
+    public function actionGetcount()
+    {
+        $req = Yii::$app->request;
+        $shift = $req->post('shift');
+        $group = $req->post('group');
+        $date = $req->post('date');
+
+        $cnt = PIBIMCMaster::find()->where(['shift' => $shift, 'group' => $group, 'date' => date('Y-m-d',strtotime($date))])->count();
+        return $cnt;
     }
 }

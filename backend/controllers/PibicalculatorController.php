@@ -228,11 +228,10 @@ class PibicalculatorController extends Controller
             $this->findModel($id)->delete();
         }
         $session = Yii::$app->session;
-        $session->setFlash('res','ลบข้อมูลเรียบร้อยแล้ว !');
+        $session->setFlash('res', 'ลบข้อมูลเรียบร้อยแล้ว !');
 
         return $this->redirect(['index']);
     }
-
 
 
     protected function findModel($id)
@@ -349,6 +348,21 @@ class PibicalculatorController extends Controller
 
                 return Json::encode($_temp);
             }
+        }
+    }
+
+    public function actionGetcount()
+    {
+        $req = Yii::$app->request;
+        $shift = $req->post('shift');
+        $group = $req->post('group');
+        $date = $req->post('date');
+
+        $cnt = PIBIMaster::find()->where(['shift' => $shift, 'group' => $group, 'date' => $date])->count();
+        if (!empty($cnt)) {
+            return $cnt;
+        } else {
+            return 0;
         }
     }
 }

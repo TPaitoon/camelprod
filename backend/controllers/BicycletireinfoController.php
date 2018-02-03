@@ -289,6 +289,7 @@ class BicycletireinfoController extends Controller
     {
         //$this->findModel($id)->delete();
         BicycletireInfo::deleteAll(['empid' => $empid, 'date' => $date]);
+        Yii::$app->session->setFlash('res','ลบข้อมูลเรียบร้อยแล้ว !');
 
         return $this->redirect(['index']);
     }

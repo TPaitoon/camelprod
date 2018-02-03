@@ -110,4 +110,8 @@ if ($Role == 'ITIT' || $Role == 'PSPS') {
 <?php
 $baseurl = Yii::$app->request->baseUrl;
 $this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => JqueryAsset::className()]);
+$res = Yii::$app->session->getFlash('res');
+$this->registerJs('
+var txt = "' . $res . '";
+if (txt !== "") { alert(txt); }', static::POS_END);
 ?>

@@ -8,14 +8,13 @@ use yii\web\JqueryAsset;
 
 $this->title = 'ค่าพิเศษประกอบยางในจกย.';
 $this->params['breadcrumbs'][] = $this->title;
+$session = Yii::$app->session;
+$res = $session->getFlash('res');
 $baseurl = Yii::$app->request->baseUrl;
 $this->registerJsFile($baseurl . '/js/pibi/script.js?Ver=0001', ['depends' => JqueryAsset::className()]);
 ?>
     <input hidden class="role" value="<?php echo $role ?>">
     <div class="pibicalculator-index">
-        <?php $session = Yii::$app->session;
-        $res = $session->getFlash('res');
-        ?>
         <div class="panel">
             <div class="panel panel-heading">
                 <?php echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -191,6 +190,6 @@ $this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => Jquer
 $this->registerJs('
 var txt = "' . $res . '";
 if (txt !== "") {
-    alert(test);
+    alert(txt);
 }', static::POS_END);
 ?>

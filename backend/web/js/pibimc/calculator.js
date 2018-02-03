@@ -166,7 +166,29 @@ losttube.on('focusout', function () {
 $("#pibimcsubmit").on('click', function (e) {
     e.preventDefault();
     if (chkStatus() === true) {
-        $(this).submit();
+        // $(this).submit();
+        var group = $("#group").val();
+        var shift = $("#shift").val();
+        var date = $("#date").val();
+        $.ajax({
+            type: 'post',
+            url: '?r=pibimccalculator/getcount',
+            data: {shift: shift, date: date, group: group},
+            success: function (data) {
+                // alert(data);
+                if (parseInt(data) === 0) {
+                    $("#pibimcsubmit").submit();
+                } else if (parseInt(data) >= 1) {
+                    var txt;
+                    if (shift === '1') {
+                        txt = 'กลางวัน';
+                    } else {
+                        txt = 'กลางคืน';
+                    }
+                    alert("กะ " + txt + " กลุ่มที่ " + group + " ของวันที่ " + date + " มีข้อมูลแล้ว ..");
+                }
+            }
+        });
     } else {
         return alert('กรอกข้อมูลไม่ครบ ...');
     }
