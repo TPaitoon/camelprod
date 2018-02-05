@@ -149,7 +149,7 @@ for ($i = 0; $i <= 1; $i++) {
                             <div class="col-lg-3">
                                 <?php $model->losttire1 == '' ? $model->losttire1 = 0 : $model->losttire1 ?>
                                 <?= $form->field($model, 'losttire1')
-                                    ->textInput(['maxlength' => 4, 'autocomplete' => 'off', 'id' => 'losttire1', 'onkeypress' => 'chknumber(event)', 'style' => 'text-align: right'])
+                                    ->textInput(['maxlength' => 4, 'autocomplete' => 'off', 'id' => 'losttire1', 'onkeypress' => 'return chknumber(event)', 'style' => 'text-align: right'])
                                     ->label('จุ๊บเสีย (ก่อนนึ่ง)') ?>
                             </div>
                             <div class="col-lg-3">
@@ -169,7 +169,7 @@ for ($i = 0; $i <= 1; $i++) {
                             <div class="col-lg-3">
                                 <?php $model->losttire2 == '' ? $model->losttire2 = 0 : $model->losttire2 ?>
                                 <?= $form->field($model, 'losttire2')
-                                    ->textInput(['maxlength' => 4, 'autocomplete' => 'off', 'id' => 'losttire2', 'onkeypress' => 'chknumber(event)', 'style' => 'text-align: right'])
+                                    ->textInput(['maxlength' => 4, 'autocomplete' => 'off', 'id' => 'losttire2', 'onkeypress' => 'return chknumber(event)', 'style' => 'text-align: right'])
                                     ->label('จุ๊บเสีย (หลังนึ่ง)') ?>
                             </div>
                             <div class="col-lg-3">
@@ -255,4 +255,5 @@ for ($i = 0; $i <= 1; $i++) {
 <?php
 $baseurl = Yii::$app->request->baseUrl;
 $this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => JqueryAsset::className()]);
+$this->registerJsFile($baseurl . '/js/chkkeypressnumber.js?Ver=0001', ['depends' => JqueryAsset::className()]);
 ?>
