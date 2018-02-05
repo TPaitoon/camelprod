@@ -36,7 +36,7 @@ for ($i = 1; $i <= 15; $i++) {
 <div class="pibimccalculator-form">
     <div class="row">
         <?php $form = ActiveForm::begin(); ?>
-        <div class="col-lg-4" id="select-form">
+        <div class="col-lg-5" id="select-form">
             <div class="panel panel-primary">
                 <div class="panel panel-heading">
                     <div class="row">
@@ -86,7 +86,7 @@ for ($i = 1; $i <= 15; $i++) {
                         </tbody>
                     </table>
                 </div>
-                <div class="panel panel-footer">
+                <div class="panel-footer">
                     <div class="row">
                         <div class="col-lg-4">
                             <?php echo "จำนวณพนักงาน : " ?>
@@ -102,13 +102,11 @@ for ($i = 1; $i <= 15; $i++) {
             </div>
         </div>
 
-        <div class="col-lg-1"></div>
-
         <div class="col-lg-7">
             <div class="panel panel-primary">
                 <div class="panel panel-body">
                     <div class="row">
-                        <div class="col-lg-2">
+                        <div class="col-lg-3">
                             <?= $form->field($model, 'shiftid')
                                 ->dropDownList(ArrayHelper::map($shiftlist, 'id', 'shiftname'), ['id' => 'shift'])
                                 ->label('เลือกกะ') ?>
@@ -118,7 +116,7 @@ for ($i = 1; $i <= 15; $i++) {
                                 ->dropDownList(ArrayHelper::map($grouplist, 'A', 'A'), ['id' => 'group'])
                                 ->label('กลุ่ม') ?>
                         </div>
-                        <div class="col-lg-3">
+                        <div class="col-lg-4">
                             <?php $model->date == '' ? $model->date = date('Y-m-d') : $model->date ?>
                             <?= $form->field($model, 'date')
                                 ->widget(DatePicker::classname(), [
@@ -135,7 +133,7 @@ for ($i = 1; $i <= 15; $i++) {
                                 ])
                                 ->label('วันที่') ?>
                         </div>
-                        <div class="col-lg-2">
+                        <div class="col-lg-3">
                             <?= $form->field($model, 'hour')
                                 ->dropDownList(ArrayHelper::map($hourlist, 'values', 'hour'), ['id' => 'hour'])
                                 ->label('ชั่วโมงงาน') ?>
@@ -147,12 +145,12 @@ for ($i = 1; $i <= 15; $i++) {
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-2">
+                        <div class="col-lg-3">
                             <?= $form->field($model, 'itemid')
                                 ->dropDownList(ArrayHelper::map($itemlist, 'refid', 'name'), ['id' => 'std'])
                                 ->label('มาตรฐาน') ?>
                         </div>
-                        <div class="col-lg-2">
+                        <div class="col-lg-3">
                             <!-- ยอดผลิต -->
                             <?php $model->amount == '' ? $model->amount = 0 : $model->amount ?>
                             <?= $form->field($model, 'amount')
@@ -166,18 +164,18 @@ for ($i = 1; $i <= 15; $i++) {
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-3">
+                        <div class="col-lg-4">
                             <?php $model->losttire1 == '' ? $model->losttire1 = 0 : $model->losttire1 ?>
                             <?= $form->field($model, 'losttire1')
                                 ->textInput(['maxlength' => 4, 'autocomplete' => 'off', 'id' => 'losttire1', 'onkeypress' => 'return chknumber(event);', 'style' => 'text-align: right'])
                                 ->label('ยางเสีย (ก่อนนึ่ง) : เส้น') ?>
                         </div>
-                        <div class="col-lg-2">
+                        <div class="col-lg-3">
                             <?= $form->field($model, 'dummy1')
                                 ->textInput(['readonly' => 'true', 'value' => '0.30', 'style' => 'text-align: right', 'id' => 'dummy1'])
                                 ->label('หักเงิน : เส้น') ?>
                         </div>
-                        <div class="col-lg-2">
+                        <div class="col-lg-3">
                             <?php $model->listprice1 == '' ? $model->listprice1 = 0 : $model->listprice1 ?>
                             <?= $form->field($model, 'listprice1')
                                 ->textInput(['readonly' => 'true', 'style' => 'text-align: right', 'id' => 'listprice1'])
@@ -185,18 +183,18 @@ for ($i = 1; $i <= 15; $i++) {
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-3">
+                        <div class="col-lg-4">
                             <?php $model->losttire2 == '' ? $model->losttire2 = 0 : $model->losttire2 ?>
                             <?= $form->field($model, 'losttire2')
                                 ->textInput(['maxlength' => 4, 'autocomplete' => 'off', 'id' => 'losttire2', 'onkeypress' => 'return chknumber(event);', 'style' => 'text-align: right'])
                                 ->label('ยางเสีย (หลังนึ่ง) : เส้น') ?>
                         </div>
-                        <div class="col-lg-2">
+                        <div class="col-lg-3">
                             <?= $form->field($model, 'dummy2')
                                 ->textInput(['readonly' => 'true', 'value' => '5.00', 'style' => 'text-align: right', 'id' => 'dummy2'])
                                 ->label('หักเงิน : เส้น') ?>
                         </div>
-                        <div class="col-lg-2">
+                        <div class="col-lg-3">
                             <?php $model->listprice2 == '' ? $model->listprice2 = 0 : $model->listprice2 ?>
                             <?= $form->field($model, 'listprice2')
                                 ->textInput(['readonly' => 'true', 'style' => 'text-align: right', 'id' => 'listprice2'])
@@ -204,18 +202,18 @@ for ($i = 1; $i <= 15; $i++) {
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-3">
+                        <div class="col-lg-4">
                             <?php $model->losttube == '' ? $model->losttube = 0 : $model->losttube ?>
                             <?= $form->field($model, 'losttube')
                                 ->textInput(['maxlength' => 4, 'autocomplete' => 'off', 'id' => 'losttube', 'onkeypress' => 'return chknumber(event);', 'style' => 'text-align: right'])
                                 ->label('จุ๊บเสีย : ตัว') ?>
                         </div>
-                        <div class="col-lg-2">
+                        <div class="col-lg-3">
                             <?= $form->field($model, 'dummy3')
                                 ->textInput(['readonly' => 'true', 'value' => '7.00', 'style' => 'text-align: right', 'id' => 'dummy3'])
                                 ->label('หักเงิน : ตัว') ?>
                         </div>
-                        <div class="col-lg-2">
+                        <div class="col-lg-3">
                             <?php $model->listprice3 == '' ? $model->listprice3 = 0 : $model->listprice3 ?>
                             <?= $form->field($model, 'listprice3')
                                 ->textInput(['readonly' => 'true', 'style' => 'text-align: right', 'id' => 'listprice3'])
@@ -228,17 +226,17 @@ for ($i = 1; $i <= 15; $i++) {
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-2">
+                        <div class="col-lg-3">
                             <?= $form->field($model, 'xrate')
                                 ->textInput(['readonly' => true, 'value' => 0, 'style' => 'text-align: right', 'id' => 'xrate'])
                                 ->label('ค่าพิเศษ') ?>
                         </div>
-                        <div class="col-lg-2">
+                        <div class="col-lg-3">
                             <?= $form->field($model, 'deduct')
                                 ->textInput(['readonly' => true, 'value' => 0, 'style' => 'text-align: right', 'id' => 'deduct'])
                                 ->label('หักเงินทั้งหมด') ?>
                         </div>
-                        <div class="col-lg-2">
+                        <div class="col-lg-3">
                             <?php $model->rate == '' ? $model->rate = 0 : $model->rate ?>
                             <?= $form->field($model, 'rate')
                                 ->textInput(['readonly' => true, 'style' => 'text-align: right', 'id' => 'rate'])
