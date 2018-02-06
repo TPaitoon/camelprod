@@ -56,7 +56,7 @@ for ($i = 0; $i <= 1; $i++) {
                                     ]
                                 ]) ?>
                             </div>
-                            <div class="col-lg-1">
+                            <div class="col-lg-2" style="text-align: center">
                                 <button type="button" class="btn btn-success addemp"><i class="fa fa-plus"></i></button>
                             </div>
                         </div>
@@ -79,7 +79,7 @@ for ($i = 0; $i <= 1; $i++) {
                                     <input type="text" name="empnames[]" class="form-control empname" readonly>
                                 </td>
                                 <td style="text-align: center">
-                                    <button type="button" class="btn btn-danger" onclick="removeline($(this))">
+                                    <button type="button" class="btn btn-danger" onclick="removegroupline($(this))">
                                         <i class="fa fa-minus"></i>
                                     </button>
                                 </td>
@@ -97,6 +97,64 @@ for ($i = 0; $i <= 1; $i++) {
                             </div>
                             <div class="col-lg-1">
                                 คน
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h5><b>กรอกข้อมูลยอดผลิตของแต่ละกลุ่ม</b></h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-bordered listtube">
+                            <thead>
+                            <tr>
+                                <th width="100">กลุ่ม</th>
+                                <th>ยอดเตรียมจุ๊บ</th>
+                                <th class="text-center">#</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <?= Html::dropDownList('groupselect', null, ArrayHelper::map($grouplist, 'A', 'A'), ['id' => 'grouplistselect', 'class' => 'form-control']) ?>
+                                </td>
+                                <td>
+                                    <input type="text" name="amount" class="form-control amount" value="0" onkeypress="return chknumber(event)" maxlength="5">
+                                </td>
+                                <td style="text-align: center">
+                                    <button type="button" class="btn btn-success adddetail"><i class="fa fa-plus"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="panel-footer">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <?= "จำนวนกลุ่ม : " ?>
+                            </div>
+                            <div class="col-lg-2" style="text-align: right">
+                                <label id="gline" class="greenright">#</label>
+                            </div>
+                            <div class="col-lg-1">
+                                กลุ่ม
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <?= "ยอดผลิตรวม : " ?>
+                            </div>
+                            <div class="col-lg-2" style="text-align: right">
+                                <label id="aline" class="greenright">#</label>
+                            </div>
+                            <div class="col-lg-1">
+                                เส้น
                             </div>
                         </div>
                     </div>
@@ -189,7 +247,7 @@ for ($i = 0; $i <= 1; $i++) {
                             <div class="col-lg-3">
                                 <?php $model->car == '' ? $model->car = 0 : $model->car ?>
                                 <?= $form->field($model, 'car')
-                                    ->dropDownList(ArrayHelper::map($carlist, 'A', 'B'))
+                                    ->dropDownList(ArrayHelper::map($carlist, 'A', 'B'),['id' => 'car'])
                                     ->label('หัก 5 ส.') ?>
                             </div>
                             <div class="col-lg-3">
@@ -255,5 +313,9 @@ for ($i = 0; $i <= 1; $i++) {
 <?php
 $baseurl = Yii::$app->request->baseUrl;
 $this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => JqueryAsset::className()]);
+$this->registerCssFile($baseurl . '/css/pibitube/aligntext.css?Ver=0001', ['depends' => JqueryAsset::className()]);
 $this->registerJsFile($baseurl . '/js/chkkeypressnumber.js?Ver=0001', ['depends' => JqueryAsset::className()]);
+$this->registerJsFile($baseurl . '/js/pibitube/newline.js?Ver=0001', ['depends' => JqueryAsset::className()]);
+$this->registerJsFile($baseurl . '/js/pibitube/newtube.js?Ver=0001', ['depends' => JqueryAsset::className()]);
+$this->registerJsFile($baseurl . '/js/pibitube/calculator.js?Ver=0001', ['depends' => JqueryAsset::className()]);
 ?>

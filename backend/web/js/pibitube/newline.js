@@ -1,13 +1,13 @@
-if (parseInt($("#amount").val()) === 0) {
-    var cntline = 0;
-    setLine(cntline);
+if (parseInt($("#xrate").val()) === 0) {
+    var cntgroupline = 0;
+    setGroupLine(cntgroupline);
 }
 
-function setLine(value) {
+function setGroupLine(value) {
     document.getElementById("cline").innerHTML = value;
 }
 
-function checkValue(value) {
+function checkGroupValue(value) {
     var chkloop = document.getElementsByName("empids[]");
     for (var i = 0; i < chkloop.length; i++) {
         if (chkloop[i].value === value) {
@@ -17,16 +17,16 @@ function checkValue(value) {
     return 1;
 }
 
-$(".pibimccalculator-form").each(function () {
+$(".pibitubecalculator-form").each(function () {
     var fBody = $(this).find(".listemp");
     var fLast = fBody.find("tr:last");
     var fLaststr = fLast.closest("tr");
     var fNew;
 
     if (fLast.closest("tr").find(".empid").val() !== "") {
-        cntline++;
+        cntgroupline++;
     }
-    setLine(cntline);
+    setGroupLine(cntgroupline);
 
     $(".addemp", $(this)).on('click', function () {
         var emplist = $("#emplistselect");
@@ -41,10 +41,10 @@ $(".pibimccalculator-form").each(function () {
                 if (fLaststr.find(".empid").val() === "") {
                     fLaststr.find(".empid").val(id);
                     fLaststr.find(".empname").val(name);
-                    cntline++;
-                    setLine(cntline);
+                    cntgroupline++;
+                    setGroupLine(cntgroupline);
                 } else {
-                    if (checkValue(id) === 1) {
+                    if (checkGroupValue(id) === 1) {
                         fLast = fBody.find("tr:last");
                         fLaststr = fLast.closest("tr");
                         fNew = fLast.clone();
@@ -54,8 +54,8 @@ $(".pibimccalculator-form").each(function () {
                         });
                         fLaststr.find(".empid").val(id);
                         fLaststr.find(".empname").val(name);
-                        cntline++;
-                        setLine(cntline);
+                        cntgroupline++;
+                        setGroupLine(cntgroupline);
                     } else {
                         alert('รหัสพนักงาน : ' + id + ' มีรายชื่อแล้ว');
                     }
@@ -67,20 +67,21 @@ $(".pibimccalculator-form").each(function () {
     });
 });
 
-function removeline(e) {
-    var fBody = $(".pibimccalculator-form").find(".listemp");
+function removegroupline(e) {
+    var fBody = $(".pibitubecalculator-form").find(".listemp");
     var fLast = fBody.find("tr:last");
     var fLaststr = fLast.closest("tr");
     if ($("table.listemp >tbody >tr").length > 1) {
         e.parent().parent().remove();
-        cntline--;
-        setLine(cntline);
+        cntgroupline--;
+        setGroupLine(cntgroupline);
     } else {
+
         if (fLaststr.find(".empid").val() !== "") {
             fLaststr.find(".empid").val("");
             fLaststr.find(".empname").val("");
-            cntline--;
-            setLine(cntline);
+            cntgroupline--;
+            setGroupLine(cntgroupline);
         }
     }
     calculator();

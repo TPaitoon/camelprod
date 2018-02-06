@@ -26,7 +26,8 @@
             <input type="text" name="values[]" class="form-control values" readonly>
         </td>
         <td class="text-center">
-            <button type="button" class="btn btn-danger"><i class="fa fa-minus"></i></button>
+            <button type="button" class="btn btn-danger" onclick="removeline($(this))"><i class="fa fa-minus"></i>
+            </button>
         </td>
     </tr>
     </tbody>
