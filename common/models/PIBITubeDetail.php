@@ -15,6 +15,7 @@ use Yii;
  * @property integer $itemid
  * @property integer $qty
  * @property integer $rate
+ * @property integer $refid
  */
 class PIBITubeDetail extends \yii\db\ActiveRecord
 {
@@ -34,7 +35,7 @@ class PIBITubeDetail extends \yii\db\ActiveRecord
         return [
             [['empid', 'empname'], 'string'],
             [['date'], 'safe'],
-            [['shift', 'itemid', 'qty', 'rate'], 'integer'],
+            [['shift', 'itemid', 'qty', 'rate','refid'], 'integer'],
         ];
     }
 

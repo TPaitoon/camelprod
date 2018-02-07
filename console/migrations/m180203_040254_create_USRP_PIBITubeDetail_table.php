@@ -21,6 +21,7 @@ class m180203_040254_create_USRP_PIBITubeDetail_table extends Migration
             'itemid' => $this->integer(),
             'qty' => $this->integer(),
             'rate' => $this->integer(),
+            'refid' => $this->integer()
         ]);
     }
 

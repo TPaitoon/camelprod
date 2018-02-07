@@ -124,7 +124,8 @@ for ($i = 0; $i <= 1; $i++) {
                                     <?= Html::dropDownList('groupselect', null, ArrayHelper::map($grouplist, 'A', 'A'), ['id' => 'grouplistselect', 'class' => 'form-control']) ?>
                                 </td>
                                 <td>
-                                    <input type="text" name="amount" class="form-control amount" value="0" onkeypress="return chknumber(event)" maxlength="5">
+                                    <input type="text" name="amount" class="form-control amount" value="0"
+                                           onkeypress="return chknumber(event)" maxlength="5">
                                 </td>
                                 <td style="text-align: center">
                                     <button type="button" class="btn btn-success adddetail"><i class="fa fa-plus"></i>
@@ -205,13 +206,12 @@ for ($i = 0; $i <= 1; $i++) {
                         </div>
                         <div class="row">
                             <div class="col-lg-3">
-                                <?php $model->losttire1 == '' ? $model->losttire1 = 0 : $model->losttire1 ?>
-                                <?= $form->field($model, 'losttire1')
+                                <?php $model->losttube1 == '' ? $model->losttube1 = 0 : $model->losttube1 ?>
+                                <?= $form->field($model, 'losttube1')
                                     ->textInput(['maxlength' => 4, 'autocomplete' => 'off', 'id' => 'losttire1', 'onkeypress' => 'return chknumber(event)', 'style' => 'text-align: right'])
                                     ->label('จุ๊บเสีย (ก่อนนึ่ง)') ?>
                             </div>
                             <div class="col-lg-3">
-                                <?php $model->losttire1 == '' ? $model->losttire1 = 0 : $model->losttire1 ?>
                                 <?= $form->field($model, 'dummy1')
                                     ->textInput(['maxlength' => 4, 'readonly' => 'true', 'style' => 'text-align: right', 'id' => 'dummy1', 'value' => '0.25'])
                                     ->label('หักเงิน : ตัว') ?>
@@ -225,13 +225,12 @@ for ($i = 0; $i <= 1; $i++) {
                         </div>
                         <div class="row">
                             <div class="col-lg-3">
-                                <?php $model->losttire2 == '' ? $model->losttire2 = 0 : $model->losttire2 ?>
-                                <?= $form->field($model, 'losttire2')
+                                <?php $model->losttube2 == '' ? $model->losttube2 = 0 : $model->losttube2 ?>
+                                <?= $form->field($model, 'losttube2')
                                     ->textInput(['maxlength' => 4, 'autocomplete' => 'off', 'id' => 'losttire2', 'onkeypress' => 'return chknumber(event)', 'style' => 'text-align: right'])
                                     ->label('จุ๊บเสีย (หลังนึ่ง)') ?>
                             </div>
                             <div class="col-lg-3">
-                                <?php $model->losttire2 == '' ? $model->losttire2 = 0 : $model->losttire2 ?>
                                 <?= $form->field($model, 'dummy2')
                                     ->textInput(['maxlength' => 4, 'readonly' => 'true', 'style' => 'text-align: right', 'id' => 'dummy2', 'value' => '5.00'])
                                     ->label('หักเงิน : ตัว') ?>
@@ -247,11 +246,10 @@ for ($i = 0; $i <= 1; $i++) {
                             <div class="col-lg-3">
                                 <?php $model->car == '' ? $model->car = 0 : $model->car ?>
                                 <?= $form->field($model, 'car')
-                                    ->dropDownList(ArrayHelper::map($carlist, 'A', 'B'),['id' => 'car'])
+                                    ->dropDownList(ArrayHelper::map($carlist, 'A', 'B'), ['id' => 'car'])
                                     ->label('หัก 5 ส.') ?>
                             </div>
                             <div class="col-lg-3">
-                                <?php $model->losttire2 == '' ? $model->losttire2 = 0 : $model->losttire2 ?>
                                 <?= $form->field($model, 'dummy3')
                                     ->textInput(['maxlength' => 4, 'readonly' => 'true', 'style' => 'text-align: right', 'id' => 'dummy3', 'value' => '100'])
                                     ->label('หักเงิน') ?>
@@ -318,4 +316,5 @@ $this->registerJsFile($baseurl . '/js/chkkeypressnumber.js?Ver=0001', ['depends'
 $this->registerJsFile($baseurl . '/js/pibitube/newline.js?Ver=0001', ['depends' => JqueryAsset::className()]);
 $this->registerJsFile($baseurl . '/js/pibitube/newtube.js?Ver=0001', ['depends' => JqueryAsset::className()]);
 $this->registerJsFile($baseurl . '/js/pibitube/calculator.js?Ver=0001', ['depends' => JqueryAsset::className()]);
+$this->registerJsFile($baseurl . '/js/pibitube/editline.js?Ver=0001', ['depends' => JqueryAsset::className()]);
 ?>

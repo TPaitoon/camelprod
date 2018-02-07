@@ -53,7 +53,7 @@ class PibitubecalculatorSearch extends PIBITubeMaster
 
             $cnt = PIBITubeDetail::find()->where(['date' => date('Y-m-d', strtotime($item->date))])
                 ->andWhere(['shift' => $item->shift])
-                ->andFilterWhere(['empid' => $data->empid])
+                ->andFilterWhere(['empid' => ArrayHelper::getValue($data,'0.empid')])
                 ->count();
 
             array_push($array,[
@@ -61,7 +61,6 @@ class PibitubecalculatorSearch extends PIBITubeMaster
                 'date' => $item->date,
                 'shift' => $item->shift,
                 'cnt' => count($data) / $cnt,
-                'hour' => ArrayHelper::getValue($data,'0.hour'),
                 'status' => $item->status,
                 'role' => $this->role
             ]);
@@ -91,7 +90,7 @@ class PibitubecalculatorSearch extends PIBITubeMaster
 
             $cnt = PIBITubeDetail::find()->where(['date' => date('Y-m-d', strtotime($item->date))])
                 ->andWhere(['shift' => $item->shift])
-                ->andFilterWhere(['empid' => $data->empid])
+                ->andFilterWhere(['empid' => ArrayHelper::getValue($data,'0.empid')])
                 ->count();
 
             array_push($array,[
@@ -99,7 +98,6 @@ class PibitubecalculatorSearch extends PIBITubeMaster
                 'date' => $item->date,
                 'shift' => $item->shift,
                 'cnt' => count($data) / $cnt,
-                'hour' => ArrayHelper::getValue($data,'0.hour'),
                 'status' => $item->status,
                 'role' => $this->role
             ]);

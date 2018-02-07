@@ -14,7 +14,7 @@ use yii\helpers\ArrayHelper;
 class PIBITubeDetail extends \common\models\PIBITubeDetail
 {
 //    public $amount;
-    public $losttire1, $losttire2, $car;
+    public $losttube1, $losttube2, $car;
     public $listprice1, $listprice2, $listprice3;
     public $listid, $recid;
 
@@ -23,7 +23,7 @@ class PIBITubeDetail extends \common\models\PIBITubeDetail
     public function rules()
     {
         return ArrayHelper::merge(parent::rules(), [
-            [['losttire1', 'losttire2', 'car'], 'integer'],
+            [['losttube1', 'losttube2', 'car'], 'integer'],
             [['listprice1'], 'number'],
             [['listprice2', 'listprice3'], 'integer'],
             [['listid', 'recid'], 'string'],
