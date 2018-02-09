@@ -284,7 +284,8 @@ for ($i = 0; $i <= 1; $i++) {
                                     ->label('ค่าพิเศษ : คน') ?>
                             </div>
                             <div class="col-lg-3">
-                                <input hidden class="listid" name="listid[]" value="<?php echo $model->listid ?>">
+                                <input hidden class="listid" name="listid[]" value="<?= $model->listid ?>">
+                                <input hidden class="itemid" name="itemid[]" value="<?= $model->itemid ?>">
                             </div>
                         </div>
                         <div class="row">
@@ -317,4 +318,5 @@ $this->registerJsFile($baseurl . '/js/pibitube/newline.js?Ver=0001', ['depends' 
 $this->registerJsFile($baseurl . '/js/pibitube/newtube.js?Ver=0001', ['depends' => JqueryAsset::className()]);
 $this->registerJsFile($baseurl . '/js/pibitube/calculator.js?Ver=0001', ['depends' => JqueryAsset::className()]);
 $this->registerJsFile($baseurl . '/js/pibitube/editline.js?Ver=0001', ['depends' => JqueryAsset::className()]);
+$this->registerJsFile($baseurl . '/js/pibitube/edittube.js?Ver=0001', ['depends' => JqueryAsset::className()]);
 ?>

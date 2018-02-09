@@ -8,7 +8,7 @@ if ($(".listid").val() !== '') {
             var fLast = fBody.find("tr:last");
             var fLaststr = fLast.closest("tr");
             var fNew;
-            var cnt = $(".listemp").val();
+            var cnt = $(".listemp").length;
             var id = data[i].substr(0, 7);
             var name = data[i].substr(8, data[i].length);
             if (cnt <= 1) {

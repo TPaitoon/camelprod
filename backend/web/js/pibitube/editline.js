@@ -4,7 +4,7 @@ if (listid.val() !== "") {
     var cntline = 0;
     $.when(getEmpname(listid.val())).done(function (data) {
         setLine(cntline);
-
+        // alert("To Call : " + data);
         for (var i = 0; i < cntline; i++) {
 
             var fBody = $(".pibitubecalculator-form").find(".listemp");
@@ -21,9 +21,11 @@ if (listid.val() !== "") {
                     fLaststr.find(".empname").val(name);
                 } else {
                     fLast = fBody.find("tr:last");
-                    fLaststr.closest("tr");
+                    // fLaststr.closest("tr");
                     fNew = fLast.clone();
                     fLast.after(fNew);
+                    fLast = fBody.find("tr:last");
+                    fLaststr = fLast.closest("tr");
                     fNew.find("id input:text").each(function () {
                         $(this).val("");
                     });
@@ -32,9 +34,11 @@ if (listid.val() !== "") {
                 }
             } else {
                 fLast = fBody.find("tr:last");
-                fLaststr.closest("tr");
+                // fLaststr = fLast.closest("tr");
                 fNew = fLast.clone();
                 fLast.after(fNew);
+                fLast = fBody.find("tr:last");
+                fLaststr = fLast.closest("tr");
                 fNew.find("id input:text").each(function () {
                     $(this).val("");
                 });
@@ -53,6 +57,7 @@ function setLine(value) {
 
 function getEmpname(value) {
     var name = null;
+    // alert("First EMP : " + value);
     $.ajax({
         type: "post",
         url: "?r=pibitubecalculator/getempname",
@@ -63,6 +68,7 @@ function getEmpname(value) {
         success: function (data) {
             cntline = data.length;
             name = data;
+            // alert("After Query with Controller : " + data);
         }
     });
     return name;

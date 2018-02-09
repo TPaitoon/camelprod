@@ -87,7 +87,7 @@ class PibitubecalculatorController extends Controller
                             $pibitd->itemid = 93;
                             $pibitd->qty = $model->car;
                         }
-                        $dtl->refid = $mst->id;
+                        $pibitd->refid = $mst->id;
                         $pibitd->save(false);
                     }
                 }
@@ -121,7 +121,6 @@ class PibitubecalculatorController extends Controller
         $cnt = $clone->andWhere(['empid' => $_listid[0]])->count();
         $cloneall = $query;
         $datalist = $cloneall->orderBy(['itemid' => 4])->all();
-
         for ($z = 0; $z < $cnt; $z++) {
             $chk = (integer)$datalist[$z]->itemid;
             if ($chk !== 91 && $chk !== 92 && $chk !== 93) {
@@ -138,6 +137,7 @@ class PibitubecalculatorController extends Controller
             }
         }
         $listid = null;
+        sort($_listid, SORT_ASC);
         for ($lx = 0; $lx < count($_listid); $lx++) {
             if ($lx == 0) {
                 $listid = $_listid[$lx];
@@ -146,6 +146,7 @@ class PibitubecalculatorController extends Controller
             }
         }
         $itemid = null;
+        ArrayHelper::multisort($groupdatalist, ['group'], 4);
         for ($ix = 0; $ix < count($groupdatalist); $ix++) {
             if ($ix == 0) {
                 $itemid = $groupdatalist[$ix]["group"] . ":" . $groupdatalist[$ix]["value"];
@@ -159,7 +160,20 @@ class PibitubecalculatorController extends Controller
         $title = $mst->id;
 
         if ($model->load(Yii::$app->request->post())) {
-
+            $_tempquery = PIBITubeMaster::find()->select(['id'])->where(['date' => $model->date, 'shift' => $model->shift])->one();
+            $id = $_tempquery->id;
+            $master = $this->findModel($id);
+            $master->date = $model->date;
+            $master->shift = $model->shift;
+            $master->status = 0;
+            if ($master->save(false)) {
+                $req = Yii::$app->request;
+                $idlist = $req->post("empids");
+                $namelist = $req->post("empnames");
+                $grouplist = $req->post("groups");
+                $valuelist = $req->post("values");
+                /* wait edit */
+            }
         } else {
             return $this->render('update', ['model' => $model, 'title' => $title]);
         }
@@ -192,7 +206,6 @@ class PibitubecalculatorController extends Controller
             if (!empty($temp)) {
                 $_list = explode(",", $temp);
                 $temparray = [];
-                sort($_list, 4);
                 for ($i = 0; $i < count($_list); $i++) {
                     $query = EmpInfo::find()->select(["EMP_NAME", "EMP_SURNME"])
                         ->where(['PRS_NO' => $_list[$i]])->one();
@@ -202,6 +215,23 @@ class PibitubecalculatorController extends Controller
                     }
                 }
                 return Json::encode($temparray);
+            }
+        }
+    }
+
+    public function actionGetamount()
+    {
+        $req = Yii::$app->request;
+        if ($req->isAjax) {
+            $temp = $req->post("amount");
+            if (!empty($temp)) {
+                $_list = explode(",", $temp);
+                $_templist = [];
+                for ($_i = 0; $_i < count($_list); $_i++) {
+                    /* return $_templist :: XX:XXXX */
+                    array_push($_templist, $_list[$_i]);
+                }
+                return Json::encode($_templist);
             }
         }
     }

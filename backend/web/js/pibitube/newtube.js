@@ -58,9 +58,11 @@ $(".pibitubecalculator-form").each(function () {
             } else {
                 if (checkValue(groups) === 1) {
                     fLast = fBody.find("tr:last");
-                    fLaststr = fLast.closest("tr");
+                    // fLaststr = fLast.closest("tr");
                     fNew = fLast.clone();
                     fLast.after(fNew);
+                    fLast = fBody.find("tr:last");
+                    fLaststr = fLast.closest("tr");
                     fNew.find("id input:text").each(function () {
                         $(this).val("");
                     });
