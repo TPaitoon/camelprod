@@ -160,9 +160,13 @@ class PibitubecalculatorController extends Controller
         $title = $mst->id;
 
         if ($model->load(Yii::$app->request->post())) {
-            $_tempquery = PIBITubeMaster::find()->select(['id'])->where(['date' => $model->date, 'shift' => $model->shift])->one();
-            $id = $_tempquery->id;
-            $master = $this->findModel($id);
+//            return print_r($model->recid);
+            $_tempquery = $this->findModel($mst->id);
+//            $_recid = explode(",", $model->recid);
+            for ($r = 0; $r < count($model->recid); $r++) {
+                PIBITubeDetail::deleteAll(['id' => $model->recid[$r]]);
+            }
+            $master = $this->findModel($_tempquery->id);
             $master->date = $model->date;
             $master->shift = $model->shift;
             $master->status = 0;
@@ -172,8 +176,43 @@ class PibitubecalculatorController extends Controller
                 $namelist = $req->post("empnames");
                 $grouplist = $req->post("groups");
                 $valuelist = $req->post("values");
-                /* wait edit */
+
+                for ($i = 0; $i < count($idlist); $i++) {
+                    for ($x = 0; $x < count($grouplist); $x++) {
+                        $detail = new PIBITubeDetail();
+                        $detail->shift = $model->shift;
+                        $detail->empid = $idlist[$i];
+                        $detail->empname = $namelist[$i];
+                        $detail->date = $model->date;
+                        $detail->rate = $model->rate;
+                        $detail->itemid = $grouplist[$x];
+                        $detail->qty = $valuelist[$x];
+                        $detail->refid = $master->id;
+                        $detail->save(false);
+                    }
+                    for ($z = 0; $z <= 2; $z++) {
+                        $value = new PIBITubeDetail();
+                        $value->shift = $model->shift;
+                        $value->empid = $idlist[$i];
+                        $value->empname = $namelist[$i];
+                        $value->date = $model->date;
+                        $value->rate = $model->rate;
+                        if ($z == 0) {
+                            $value->itemid = 91;
+                            $value->qty = $model->losttube1;
+                        } elseif ($z == 1) {
+                            $value->itemid = 92;
+                            $value->qty = $model->losttube2;
+                        } elseif ($z == 2) {
+                            $value->itemid = 93;
+                            $value->qty = $model->car;
+                        }
+                        $value->refid = $master->id;
+                        $value->save(false);
+                    }
+                }
             }
+            return $this->redirect(['index']);
         } else {
             return $this->render('update', ['model' => $model, 'title' => $title]);
         }

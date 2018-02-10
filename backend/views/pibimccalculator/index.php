@@ -6,7 +6,7 @@ use yii\grid\GridView;
 use yii\helpers\ArrayHelper;
 use yii\web\JqueryAsset;
 
-$this->title = 'ค่าพิเศษประกอบยางนอกมตซ.';
+$this->title = 'ค่าพิเศษประกอบยางในมตซ.';
 $this->params['breadcrumbs'][] = $this->title;
 $res = Yii::$app->session->getFlash('res');
 ?>

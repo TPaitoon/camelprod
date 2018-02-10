@@ -96,6 +96,7 @@
                                 ['label' => 'เตรียมจุ๊บ', 'url' => '#', 'icon' => 'chevron-circle-right',
                                     'items' =>
                                         [
+                                            ['label' => 'จัดการพนักงาน', 'icon' => 'cog', 'url' => ['/pibitubeemplist']],
                                             ['label' => 'ค่าเพิเศษ', 'icon' => 'btc', 'url' => ['/pibitubecalculator']],
                                         ],
                                 ],
