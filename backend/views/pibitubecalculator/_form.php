@@ -314,9 +314,7 @@ $baseurl = Yii::$app->request->baseUrl;
 $this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => JqueryAsset::className()]);
 $this->registerCssFile($baseurl . '/css/pibitube/aligntext.css?Ver=0001', ['depends' => JqueryAsset::className()]);
 $this->registerJsFile($baseurl . '/js/chkkeypressnumber.js?Ver=0001', ['depends' => JqueryAsset::className()]);
-$this->registerJsFile($baseurl . '/js/pibitube/newline.js?Ver=0001', ['depends' => JqueryAsset::className()]);
 $this->registerJsFile($baseurl . '/js/pibitube/newtube.js?Ver=0001', ['depends' => JqueryAsset::className()]);
 $this->registerJsFile($baseurl . '/js/pibitube/calculator.js?Ver=0001', ['depends' => JqueryAsset::className()]);
-$this->registerJsFile($baseurl . '/js/pibitube/editline.js?Ver=0001', ['depends' => JqueryAsset::className()]);
 $this->registerJsFile($baseurl . '/js/pibitube/edittube.js?Ver=0001', ['depends' => JqueryAsset::className()]);
 ?>

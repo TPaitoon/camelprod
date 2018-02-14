@@ -1,7 +1,6 @@
-if (parseInt($("#xrate").val()) === 0) {
-    var cntgroupline = 0;
-    setGroupLine(cntgroupline);
-}
+var cntgroupline = 0;
+setGroupLine(cntgroupline);
+
 
 function setGroupLine(value) {
     document.getElementById("cline").innerHTML = value;
@@ -17,7 +16,7 @@ function checkGroupValue(value) {
     return 1;
 }
 
-$(".pibitubecalculator-form").each(function () {
+$(".pibitube-emplist-form").each(function () {
     var fBody = $(this).find(".listemp");
     var fLast = fBody.find("tr:last");
     var fLaststr = fLast.closest("tr");
@@ -65,12 +64,11 @@ $(".pibitubecalculator-form").each(function () {
             }
         }
         emplist.val("").trigger("change");
-        calculator();
     });
 });
 
 function removegroupline(e) {
-    var fBody = $(".pibitubecalculator-form").find(".listemp");
+    var fBody = $(".pibitube-emplist-formm").find(".listemp");
     var fLast = fBody.find("tr:last");
     var fLaststr = fLast.closest("tr");
     if ($("table.listemp >tbody >tr").length > 1) {
@@ -86,5 +84,12 @@ function removegroupline(e) {
             setGroupLine(cntgroupline);
         }
     }
-    calculator();
 }
+
+$("#pibiemplistsubmit").on("click",function (e) {
+    if (confirm("ต้องการบันทึกข้อมูล ?")) {
+        $("#pibitubeemplist").submit();
+    } else {
+        e.preventDefault();
+    }
+});
