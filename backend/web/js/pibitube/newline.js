@@ -16,7 +16,7 @@ function checkGroupValue(value) {
     return 1;
 }
 
-$(".pibitube-emplist-form").each(function () {
+$(".pibitubeemplist-form").each(function () {
     var fBody = $(this).find(".listemp");
     var fLast = fBody.find("tr:last");
     var fLaststr = fLast.closest("tr");
@@ -68,7 +68,7 @@ $(".pibitube-emplist-form").each(function () {
 });
 
 function removegroupline(e) {
-    var fBody = $(".pibitube-emplist-formm").find(".listemp");
+    var fBody = $(".pibitubeemplist-form").find(".listemp");
     var fLast = fBody.find("tr:last");
     var fLaststr = fLast.closest("tr");
     if ($("table.listemp >tbody >tr").length > 1) {
@@ -87,9 +87,7 @@ function removegroupline(e) {
 }
 
 $("#pibiemplistsubmit").on("click",function (e) {
-    if (confirm("ต้องการบันทึกข้อมูล ?")) {
-        $("#pibitubeemplist").submit();
-    } else {
+    if (!confirm("ต้องการบันทึกข้อมูล ?")) {
         e.preventDefault();
     }
 });

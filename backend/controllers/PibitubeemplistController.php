@@ -36,11 +36,13 @@ class PibitubeemplistController extends Controller
     public function actionIndex()
     {
         $searchModel = new PibitubeemplistSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider1 = $searchModel->searchg1();
+        $dataProvider2 = $searchModel->searchg2();
 
         return $this->render('index', [
             'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+            'dataProvider1' => $dataProvider1,
+            'dataProvider2' => $dataProvider2,
         ]);
     }
 
@@ -66,9 +68,22 @@ class PibitubeemplistController extends Controller
         $model = new PIBITubeEmplist();
 
         if ($model->load(Yii::$app->request->post())) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            if ($this->findModelAll($model->shift) !== null) {
+                PIBITubeEmplist::deleteAll(['shift' => $model->shift]);
+            }
+            $req = Yii::$app->request;
+            $emplist = $req->post('empids');
+            for ($i = 0; $i < count($emplist); $i++) {
+                $create = new PIBITubeEmplist();
+                $create->shift = $model->shift;
+                $create->date = $model->date;
+                $create->empid = $emplist[$i];
+                $create->save(false);
+            }
+
+            return $this->redirect(['pibitubeemplist/index']);
         } else {
-            return $this->renderAjax('create', [
+            return $this->render('create', [
                 'model' => $model,
             ]);
         }
@@ -119,6 +134,15 @@ class PibitubeemplistController extends Controller
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    private function findModelAll($shift)
+    {
+        if (($model = PIBITubeEmplist::find()->where(['shift' => $shift])) !== null) {
+            return $model;
+        } else {
+            return null;
         }
     }
 }

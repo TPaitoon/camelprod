@@ -15,11 +15,9 @@ use yii\widgets\ActiveForm;
 $shiftlist = ShiftList::find()->all();
 $emplist = EmpInfo::findAll(['Dept' => 'ฝ่ายผลิต', 'Sec' => 'ประกอบยางใน']);
 ?>
-    <div class="pibitube-emplist-form">
+    <div class="pibitubeemplist-form">
+        <?php $form = ActiveForm::begin() ?>
         <div class="row">
-            <?php $form = ActiveForm::begin([
-                'id' => 'pibitubeemplist'
-            ]); ?>
             <div class="col-lg-12">
                 <div class="col-lg-3">
                     <?= $form->field($model, 'shift')->dropDownList(ArrayHelper::map($shiftlist, "id", "shiftname"), ["id" => "shift"])->label("เลือกกะ") ?>
@@ -91,7 +89,7 @@ $emplist = EmpInfo::findAll(['Dept' => 'ฝ่ายผลิต', 'Sec' => 'ป
                                     <input type="text" name="empnames[]" class="form-control empname" readonly>
                                 </td>
                                 <td style="text-align: center">
-                                    <button type="button" class="btn btn-danger" onclick="">
+                                    <button type="button" class="btn btn-danger" onclick="removegroupline($(this))">
                                         <i class="fa fa-minus"></i>
                                     </button>
                                 </td>
@@ -130,8 +128,8 @@ $emplist = EmpInfo::findAll(['Dept' => 'ฝ่ายผลิต', 'Sec' => 'ป
                 </div>
             </div>
         </div>
+        <?php ActiveForm::end() ?>
     </div>
-<?php ActiveForm::end(); ?>
 <?php
 $baseurl = Yii::$app->request->baseUrl;
 $this->registerJsFile($baseurl . '/js/pibitube/newline.js?Ver=0001', ['depends' => JqueryAsset::className()]);

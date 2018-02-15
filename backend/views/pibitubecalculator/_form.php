@@ -39,28 +39,6 @@ for ($i = 0; $i <= 1; $i++) {
         <div class="row">
             <div class="col-lg-5" id="select-form">
                 <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <h5><b>เลือกรายชื่อพนักงาน</b></h5>
-                            </div>
-                            <div class="col-lg-10">
-                                <?= Select2::widget([
-                                    'name' => 'empselect',
-                                    'data' => ArrayHelper::map($emplist, 'PRS_NO', function ($data) {
-                                        return $data->PRS_NO . ' ' . $data->EMP_NAME . ' ' . $data->EMP_SURNME;
-                                    }),
-                                    'options' => [
-                                        'placeholder' => 'เลือกพนักงาน',
-                                        'id' => 'emplistselect'
-                                    ]
-                                ]) ?>
-                            </div>
-                            <div class="col-lg-2" style="text-align: center">
-                                <button type="button" class="btn btn-success addemp"><i class="fa fa-plus"></i></button>
-                            </div>
-                        </div>
-                    </div>
                     <div class="panel-body">
                         <table class="table table-bordered listemp">
                             <thead>
@@ -168,7 +146,15 @@ for ($i = 0; $i <= 1; $i++) {
                         <div class="row">
                             <div class="col-lg-3">
                                 <?= $form->field($model, 'shift')
-                                    ->dropDownList(ArrayHelper::map($shiftlist, 'id', 'shiftname'), ['id' => 'shift'])
+                                    ->widget(Select2::className(), [
+                                        'name' => 'shiftselect',
+                                        'data' => ArrayHelper::map($shiftlist, 'id', 'shiftname'),
+                                        'options' => [
+                                            'placeholder' => 'เลือกกะ',
+                                            'id' => 'shiftselect'
+                                        ],
+                                        'pluginOptions' => ['allowClear' => true]
+                                    ])
                                     ->label('เลือกกะ') ?>
                             </div>
                             <div class="col-lg-4">
@@ -317,4 +303,5 @@ $this->registerJsFile($baseurl . '/js/chkkeypressnumber.js?Ver=0001', ['depends'
 $this->registerJsFile($baseurl . '/js/pibitube/newtube.js?Ver=0001', ['depends' => JqueryAsset::className()]);
 $this->registerJsFile($baseurl . '/js/pibitube/calculator.js?Ver=0001', ['depends' => JqueryAsset::className()]);
 $this->registerJsFile($baseurl . '/js/pibitube/edittube.js?Ver=0001', ['depends' => JqueryAsset::className()]);
+$this->registerJsFile($baseurl . '/js/pibitube/shiftselectline.js?Ver=0001', ['depends' => JqueryAsset::className()]);
 ?>

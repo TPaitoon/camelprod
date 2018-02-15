@@ -6,6 +6,7 @@ use backend\models\PibitubecalculatorSearch;
 use backend\models\UserDirect;
 use backend\models\PIBITubeDetail;
 use common\models\EmpInfo;
+use common\models\PIBITubeEmplist;
 use common\models\PIBITubeMaster;
 use Yii;
 use yii\helpers\ArrayHelper;
@@ -241,18 +242,27 @@ class PibitubecalculatorController extends Controller
     {
         $req = Yii::$app->request;
         if ($req->isAjax) {
-            $temp = $req->post("empid");
-            if (!empty($temp)) {
-                $_list = explode(",", $temp);
-                $temparray = [];
-                for ($i = 0; $i < count($_list); $i++) {
-                    $query = EmpInfo::find()->select(["EMP_NAME", "EMP_SURNME"])
-                        ->where(['PRS_NO' => $_list[$i]])->one();
-                    if (!empty($query)) {
-                        $name = $_list[$i] . ' ' . $query->EMP_NAME . ' ' . $query->EMP_SURNME;
-                        array_push($temparray, $name);
-                    }
+//            $temp = $req->post("empid");
+            $id = $req->post("id");
+            if (!empty($id)) {
+                $_empid = PIBITubeEmplist::find()
+                    ->where(['shift' => $id])
+                    ->all();
+
+                $empid = [];
+                foreach ($_empid as $item) {
+                    array_push($empid, $item->empid);
                 }
+
+                $temparray = [];
+                for ($i = 0; $i < count($_empid); $i++) {
+                    $_query = EmpInfo::find()
+                        ->where(['PRS_NO' => $empid[$i]])
+                        ->one();
+                    $name = $empid[$i] . ' ' . $_query->EMP_NAME . ' ' . $_query->EMP_SURNME;
+                    array_push($temparray, $name);
+                }
+
                 return Json::encode($temparray);
             }
         }
