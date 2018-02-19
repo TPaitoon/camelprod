@@ -133,4 +133,5 @@ $emplist = EmpInfo::findAll(['Dept' => 'ฝ่ายผลิต', 'Sec' => 'ป
 <?php
 $baseurl = Yii::$app->request->baseUrl;
 $this->registerJsFile($baseurl . '/js/pibitube/newline-emplist.js?Ver=0001', ['depends' => JqueryAsset::className()]);
+$this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => JqueryAsset::className()]);
 ?>

@@ -130,32 +130,34 @@ function chkStatus() {
 
 $("#pibisubmit").on('click', function (e) {
     e.preventDefault();
-    if (chkStatus() === true) {
-        var shift = $("#shiftselect").val();
-        var date = $("#date").val();
-        $.ajax({
-            type: 'post',
-            url: '?r=pibitubecalculator/getcount',
-            data: {shift: shift, date: date},
-            success: function (data) {
-                if (parseInt(data) === 0) {
-                    $("#pibisubmit").submit();
-                } else if (parseInt(data) >= 1) {
-                    if ($(".listid").val() === "") {
-                        var txt;
-                        if (shift === '1') {
-                            txt = 'กลางวัน';
-                        } else {
-                            txt = 'กลางคืน';
-                        }
-                        alert("กะ " + txt  + " ของวันที่ " + date + " มีข้อมูลแล้ว ..");
-                    } else {
+    if (confirm("ต้องการบันทึกรายการ ?")) {
+        if (chkStatus() === true) {
+            var shift = $("#shiftselect").val();
+            var date = $("#date").val();
+            $.ajax({
+                type: 'post',
+                url: '?r=pibitubecalculator/getcount',
+                data: {shift: shift, date: date},
+                success: function (data) {
+                    if (parseInt(data) === 0) {
                         $("#pibisubmit").submit();
+                    } else if (parseInt(data) >= 1) {
+                        if ($(".listid").val() === "") {
+                            var txt;
+                            if (shift === '1') {
+                                txt = 'กลางวัน';
+                            } else {
+                                txt = 'กลางคืน';
+                            }
+                            alert("กะ " + txt  + " ของวันที่ " + date + " มีข้อมูลแล้ว ..");
+                        } else {
+                            $("#pibisubmit").submit();
+                        }
                     }
                 }
-            }
-        });
-    } else {
-        return alert('กรอกข้อมูลไม่ครบ ...');
+            });
+        } else {
+            return alert('กรอกข้อมูลไม่ครบ ...');
+        }
     }
 });
