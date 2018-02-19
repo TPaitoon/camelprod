@@ -27,15 +27,14 @@ $this->params['breadcrumbs'][] = $this->title;
             <h4>รายละเอียด</h4>
         </div>
         <div class="panel panel-body">
-            <?=
-            DetailView::widget([
+            <?= DetailView::widget([
                 'model' => $model,
                 'attributes' => [
                     [
                         'attribute' => 'listid',
                         'format' => 'raw',
                         'value' => function ($model) {
-                            $id = explode(",",ArrayHelper::getValue($model,'listid'));
+                            $id = explode(",", ArrayHelper::getValue($model, 'listid'));
                             $_temp = null;
                             for ($i = 0; $i < count($id); $i++) {
                                 if ($i == 0) {
@@ -87,8 +86,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'amount:raw:ยอดผลิต',
                     'rate:raw:ค่าพิเศษ : คน',
                 ]
-            ])
-            ?>
+            ]) ?>
         </div>
         <div class="panel panel-footer">
             <?= Html::a('หน้าหลัก', ['index'], ['class' => 'btn btn-info']) ?>

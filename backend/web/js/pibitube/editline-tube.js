@@ -1,11 +1,9 @@
 var listid = $(".listid");
 
 if (listid.val() !== "") {
-    var cntline = 0;
     $.when(getEmpname(listid.val())).done(function (data) {
-        setLine(cntline);
         // alert("To Call : " + data);
-        for (var i = 0; i < cntline; i++) {
+        for (var i = 0; i < cntgroupline; i++) {
 
             var fBody = $(".pibitubecalculator-form").find(".listemp");
             var fLast = fBody.find("tr:last");
@@ -51,8 +49,8 @@ if (listid.val() !== "") {
     calculator();
 }
 
-function setLine(value) {
-    document.getElementById("cline").innerHTML = value;
+function setGroupLine(val) {
+    document.getElementById("cline").innerText = val;
 }
 
 function getEmpname(value) {
@@ -66,7 +64,8 @@ function getEmpname(value) {
         cache: false,
         async: false,
         success: function (data) {
-            cntline = data.length;
+            cntgroupline = data.length;
+            setGroupLine(data.length);
             name = data;
             // alert("After Query with Controller : " + data);
         }

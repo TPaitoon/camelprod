@@ -6,6 +6,8 @@
  * Time: 11:17
  */
 
+use yii\web\JqueryAsset;
+
 /* @var $this yii\web\View */
 /* @var $model backend\models\PIBITubeDetail */
 
@@ -23,3 +25,8 @@ $this->params['breadcrumbs'][] = 'เพิ่มข้อมูล';
         </div>
     </div>
 </div>
+<?php
+$baseurl = Yii::$app->request->baseUrl;
+$this->registerJsFile($baseurl . '/js/pibitube/newtube.js?Ver=0001', ['depends' => JqueryAsset::className()]);
+$this->registerJsFile($baseurl . '/js/pibitube/shiftselectline-tube.js?Ver=0001', ['depends' => JqueryAsset::className()]);
+?>

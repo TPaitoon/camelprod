@@ -2,13 +2,13 @@ function calculator() {
     var xrate = $("#xrate");
     var  rate = $("#rate");
     setAmount(getValue());
-    var gline = parseInt(document.getElementById("gline").innerHTML);
+    var cline = parseInt(document.getElementById("cline").innerHTML);
     var aline = parseInt(document.getElementById("aline").innerHTML);
-    if (gline > 0 && aline > 0) {
+    if (cline > 0 && aline > 0) {
         if (parseInt(xrate.val()) > 0) {
             var deduct = $("#deduct");
             var cal = parseInt(xrate.val()) - parseInt(deduct.val());
-            var fcal = cal / gline;
+            var fcal = cal / cline;
             rate.val(Math.round(fcal));
         }
         if (aline >= 25000) {
@@ -115,3 +115,47 @@ function getValue() {
     setRate(rate);
     return cal;
 }
+
+function chkStatus() {
+    var status = true;
+    if ($("#shift").val() === '') {
+        status = false;
+    } else if (parseInt(document.getElementById("aline").innerHTML) < 1) {
+        status = false;
+    } else if (parseInt(document.getElementById("cline").innerHTML) < 1) {
+        status = false;
+    }
+    return status;
+}
+
+$("#pibisubmit").on('click', function (e) {
+    e.preventDefault();
+    if (chkStatus() === true) {
+        var shift = $("#shiftselect").val();
+        var date = $("#date").val();
+        $.ajax({
+            type: 'post',
+            url: '?r=pibitubecalculator/getcount',
+            data: {shift: shift, date: date},
+            success: function (data) {
+                if (parseInt(data) === 0) {
+                    $("#pibisubmit").submit();
+                } else if (parseInt(data) >= 1) {
+                    if ($(".listid").val() === "") {
+                        var txt;
+                        if (shift === '1') {
+                            txt = 'กลางวัน';
+                        } else {
+                            txt = 'กลางคืน';
+                        }
+                        alert("กะ " + txt  + " ของวันที่ " + date + " มีข้อมูลแล้ว ..");
+                    } else {
+                        $("#pibisubmit").submit();
+                    }
+                }
+            }
+        });
+    } else {
+        return alert('กรอกข้อมูลไม่ครบ ...');
+    }
+});

@@ -6,6 +6,8 @@
  * Time: 13:57
  */
 
+use yii\web\JqueryAsset;
+
 /* @var $model backend\models\PIBITubeDetail */
 /* @var $this yii\web\View */
 $this->title = "ข้อมูล : " . $title;
@@ -22,3 +24,8 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
+<?php
+$baseurl = Yii::$app->request->baseUrl;
+$this->registerJsFile($baseurl . '/js/pibitube/editline-tube.js?Ver=0001', ['depends' => JqueryAsset::className()]);
+$this->registerJsFile($baseurl . '/js/pibitube/edittube.js?Ver=0001', ['depends' => JqueryAsset::className()]);
+?>
