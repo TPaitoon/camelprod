@@ -160,4 +160,10 @@ $res = Yii::$app->session->getFlash('res');
 <?php
 $baseurl = Yii::$app->request->baseUrl;
 $this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => JqueryAsset::className()]);
+$this->registerJsFile($baseurl . '/js/pibitube/script-tube.js?Ver=0001', ['depends' => JqueryAsset::className()]);
+$this->registerJs('
+var txt = "' . $res . '";
+if (txt !== "") {
+    alert(txt);
+}', static::POS_END);
 ?>

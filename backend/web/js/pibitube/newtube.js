@@ -45,7 +45,7 @@ $(".pibitubecalculator-form").each(function () {
         fLast = fBody.find("tr:last");
         fLaststr = fLast.closest("tr");
         var cnt = $(".listqty").length;
-        var amounts = amount.val();
+        var amounts = parseInt(amount.val());
         var groups = grouplist.val();
         // alert(group);
         if (cnt <= 1) {
@@ -100,15 +100,20 @@ function removeline(e) {
 }
 
 var amount = $(".amount");
-amount.on("click",function () {
-    if ($(this).val() === "0"){
+amount.on("click", function () {
+    if ($(this).val() === "0") {
         $(this).val("");
     } else {
         $(this).select();
     }
 });
-amount.on("focusout",function () {
-    if ($(this).val() === ""){
+amount.on("focusout", function () {
+    if ($(this).val() === "") {
         $(this).val(0);
+    }
+});
+amount.on("keypress", function (e) {
+    if (e.which === 13) {
+        $(".adddetail").click();
     }
 });

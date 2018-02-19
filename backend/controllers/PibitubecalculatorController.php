@@ -8,6 +8,7 @@ use backend\models\PIBITubeDetail;
 use common\models\EmpInfo;
 use common\models\PIBITubeEmplist;
 use common\models\PIBITubeMaster;
+use Exception;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
@@ -219,6 +220,88 @@ class PibitubecalculatorController extends Controller
         }
     }
 
+    public function actionView($id)
+    {
+        $mst = $this->findModel($id);
+        $query = PIBITubeDetail::find()->where(['refid' => $mst->id]);
+        $model = new PIBITubeDetail();
+        $data = $query->all();
+        $_listid = [];
+        $recid = [];
+        $groupdatalist = [];
+
+        for ($i = 0; $i < count($data); $i++) {
+            array_push($recid, $data[$i]->id);
+            if ($i == 0) {
+                array_push($_listid, $data[$i]->empid . ' ' . $data[$i]->empname);
+            } elseif ($this->findArray($data[$i]->empid . ' ' . $data[$i]->empname, $_listid) == true) {
+                array_push($_listid, $data[$i]->empid . ' ' . $data[$i]->empname);
+            }
+        }
+
+        $empidz = [];
+        for ($z = 0; $z < count($_listid); $z++) {
+            $tempz = explode(" ", $_listid[$z]);
+            array_push($empidz, $tempz[0]);
+        }
+
+        $clone = $query;
+        $cnt = $clone->andWhere(['empid' => $empidz[0]])->count();
+        $cloneall = $query;
+        $datalist = $cloneall->orderBy(['itemid' => 4])->all();
+        for ($z = 0; $z < $cnt; $z++) {
+            $chk = (integer)$datalist[$z]->itemid;
+            if ($chk !== 91 && $chk !== 92 && $chk !== 93) {
+                array_push($groupdatalist, ['group' => $chk, 'value' => $datalist[$z]->qty]);
+            } elseif ($chk == 91) {
+                $model->losttube1 = $datalist[$z]->qty;
+            } elseif ($chk == 92) {
+                $model->losttube2 = $datalist[$z]->qty;
+            } elseif ($chk == 93) {
+                $model->car = $datalist[$z]->qty;
+                $model->shift = $datalist[$z]->shift;
+                $model->date = $datalist[$z]->date;
+                $model->rate = $datalist[$z]->rate;
+            }
+        }
+        $listid = null;
+        sort($_listid, SORT_ASC);
+        for ($lx = 0; $lx < count($_listid); $lx++) {
+            if ($lx == 0) {
+                $listid = $_listid[$lx];
+            } else {
+                $listid = $listid . "," . $_listid[$lx];
+            }
+        }
+        $itemid = null;
+        ArrayHelper::multisort($groupdatalist, ['group'], 4);
+        for ($ix = 0; $ix < count($groupdatalist); $ix++) {
+            if ($ix == 0) {
+                $itemid = $groupdatalist[$ix]["group"] . ":" . $groupdatalist[$ix]["value"];
+            } else {
+                $itemid = $itemid . "," . $groupdatalist[$ix]["group"] . ":" . $groupdatalist[$ix]["value"];
+            }
+        }
+        $model->listid = $listid;
+        $model->itemid = $itemid;
+        $model->recid = $recid;
+        $title = $mst->id;
+
+        return $this->render("view", ['model' => $model, 'title' => $title]);
+    }
+
+    public function actionDelete($id)
+    {
+        $master = $this->findModel($id);
+        if (!empty($master)) {
+            PIBITubeDetail::deleteAll(['refid' => $master->id]);
+            $this->findModel($id)->delete();
+            Yii::$app->session->setFlash('res', 'ลบข้อมูลเรียบร้อยแล้ว !');
+
+            return $this->redirect(['index']);
+        }
+    }
+
     private function findArray($valueofcheck, $valueofarray)
     {
         for ($i = 0; $i < count($valueofarray); $i++) {
@@ -264,6 +347,24 @@ class PibitubecalculatorController extends Controller
                 }
 
                 return Json::encode($temparray);
+            } else {
+                $eid = $req->post("empid");
+                if (!empty($eid)) {
+                    $listemp = explode(",", $eid);
+                    $temparray = [];
+
+                    for ($i = 0; $i < count($listemp); $i++) {
+                        $query = EmpInfo::find()->select(['EMP_NAME', 'EMP_SURNME'])
+                            ->where(['PRS_NO' => $listemp[$i]])->one();
+
+                        if (!empty($query)) {
+                            $name = $listemp[$i] . ' ' . $query->EMP_NAME . ' ' . $query->EMP_SURNME;
+                            array_push($temparray, $name);
+                        }
+                    }
+
+                    return Json::encode($temparray);
+                }
             }
         }
     }
@@ -282,6 +383,52 @@ class PibitubecalculatorController extends Controller
                 }
                 return Json::encode($_templist);
             }
+        }
+    }
+
+    public function actionGetcount()
+    {
+        $req = Yii::$app->request;
+        if ($req->isAjax) {
+            $shift = $req->post("shift");
+            $date = $req->post("date");
+
+            $cnt = PIBITubeMaster::find()->where(['shift' => $shift, 'date' => $date])->count();
+
+            if ($cnt > 0) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
+    }
+
+    public function actionSetapproved()
+    {
+        $ar = Yii::$app->request->post("data");
+        $ls = [];
+
+        if (!empty($ar)) {
+            for ($i = 0; $i < count($ar); $i++) {
+                if (strlen($ar[$i] === 1)) {
+                    continue;
+                } else {
+                    $temp = explode(":", $ar[$i]);
+                    array_push($ls, $temp[0]);
+                }
+            }
+
+            for ($x = 0; $x < count($ls); $x++) {
+                try {
+                    PIBITubeMaster::updateAll(["status" => 1], ["id" => $ls[$x]]);
+                } catch (Exception $exception) {
+                    return 0;
+                }
+            }
+
+            return 1;
+        } else {
+            return 0;
         }
     }
 }

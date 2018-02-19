@@ -85,9 +85,3 @@ function removegroupline(e) {
         }
     }
 }
-
-$("#pibiemplistsubmit").on("click",function (e) {
-    if (!confirm("ต้องการบันทึกข้อมูล ?")) {
-        e.preventDefault();
-    }
-});
