@@ -2,6 +2,7 @@
 /* @var $this yii\web\View */
 
 use yii\bootstrap\Html;
+use yii\bootstrap\Modal;
 use yii\grid\GridView;
 use yii\helpers\ArrayHelper;
 use yii\web\JqueryAsset;
@@ -9,6 +10,7 @@ use yii\web\JqueryAsset;
 $this->title = 'ค่าพิเศษพนักงานเตรียมจุ๊บ.';
 $this->params['breadcrumbs'][] = $this->title;
 $res = Yii::$app->session->getFlash('res');
+$req = null;
 ?>
     <input hidden class="role" value="<?php echo $role ?>">
     <div class="pibitubecalculator-index">
@@ -48,9 +50,14 @@ $res = Yii::$app->session->getFlash('res');
                                 'class' => 'text-center',
                                 'style' => 'width:5%'
                             ],
-                            'contentOptions' => [
-                                'class' => 'text-center'
-                            ],
+                            'contentOptions' => function ($model) {
+                                $query = ArrayHelper::getValue($model, "status");
+                                if ($query !== 0) {
+                                    return ["class" => "text-center", "style" => "visibility: hidden"];
+                                } else {
+                                    return ["class" => "text-center"];
+                                }
+                            },
                             'checkboxOptions' => function ($model) {
                                 $v = ArrayHelper::getValue($model, 'id') . ':';
                                 return ['value' => $v];
@@ -125,8 +132,12 @@ $res = Yii::$app->session->getFlash('res');
                             ],
                             'template' => '{view} {update} {delete}',
                             'buttons' => [
-                                'view' => function ($url) {
-                                    return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', $url, []);
+                                'view' => function ($url, $model) {
+                                    return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', 'javascript:void(0)', [
+                                        'id' => 'viewmodal',
+                                        'data-url' => $url,
+                                        'value' => ArrayHelper::getValue($model, "status") . ":" . ArrayHelper::getValue($model, "id"),
+                                    ]);
                                 },
                                 'update' => function ($url, $model) {
                                     $st = ArrayHelper::getValue($model, 'status');
@@ -158,12 +169,77 @@ $res = Yii::$app->session->getFlash('res');
         </div>
     </div>
 <?php
+Modal::begin([
+    "id" => "modal-view",
+    "header" => "<h4>รายละเอียด</h4>",
+    "size" => "modal-lg"
+]);
+echo '<div class="modalContent"></div>';
+echo '<div class="modal-footer" style="text-align: center">
+            <button type="button" class="btn btn-success approved" style="width: 300px">ยืนยันข้อมูล</button>
+     </div>';
+Modal::end();
+
 $baseurl = Yii::$app->request->baseUrl;
 $this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => JqueryAsset::className()]);
 $this->registerJsFile($baseurl . '/js/pibitube/script-tube.js?Ver=0001', ['depends' => JqueryAsset::className()]);
-$this->registerJs('
-var txt = "' . $res . '";
+$js = <<<JS
+var txt = "$res";
 if (txt !== "") {
     alert(txt);
-}', static::POS_END);
+}
+
+$(document).on("click","#viewmodal",function() {
+    var x = $(this).attr("value");
+    var str = x.split(":");
+    // alert(str[1]);
+    
+    var modalv = $("#modal-view");
+    if (modalv.hasClass("in")) {
+        modalv.find(".modalContent").load($(this).attr("data-url"));
+        if (str[0] !== '0') {
+            modalv.find(".modal-footer").hide();
+        } else {
+            modalv.find(".modal-footer").show();
+            modalv.find(".approved").val(str[1]);
+        }
+    } else {
+        modalv.modal("show").find(".modalContent").load($(this).attr("data-url"));
+        if (str[0] !== '0') {
+            modalv.find(".modal-footer").hide();
+        } else {
+            modalv.find(".modal-footer").show();
+            modalv.find(".approved").val(str[1]);
+        }
+    }
+});
+
+$(".approved").on("click",function(e) {
+    // alert($(this).attr("value"));
+    e.preventDefault();
+    var data = $(this).attr("value");
+    var rl = $(".role").val();
+    // alert(rl);
+    if (rl !== "1") {
+        alert("ไม่สามารถยืนยันได้เนื่องจากไม่มีสิทธิ์");
+    } else {
+        $.ajax({
+            type: "post",
+            url: "?r=pibitubecalculator/setapproved",
+            data: {id:data},
+            dataType: "json",
+            success: function(data) {
+                if (data === 0) {
+                    alert("บันทึกถูกยกเลิก");
+                } else {
+                    alert("บันทึกเรียบร้อยแล้ว");
+                    location = "?r=pibitubecalculator";
+                }
+            }
+        });
+    }
+});
+JS;
+
+$this->registerJs($js, static::POS_END);
 ?>

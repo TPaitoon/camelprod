@@ -277,17 +277,17 @@ class PibitubecalculatorController extends Controller
         ArrayHelper::multisort($groupdatalist, ['group'], 4);
         for ($ix = 0; $ix < count($groupdatalist); $ix++) {
             if ($ix == 0) {
-                $itemid = $groupdatalist[$ix]["group"] . ":" . $groupdatalist[$ix]["value"];
+                $itemid = $groupdatalist[$ix]["value"];
             } else {
-                $itemid = $itemid . "," . $groupdatalist[$ix]["group"] . ":" . $groupdatalist[$ix]["value"];
+                $itemid = $itemid + $groupdatalist[$ix]["value"];
             }
         }
         $model->listid = $listid;
         $model->itemid = $itemid;
         $model->recid = $recid;
-        $title = $mst->id;
+        $model->refid = $mst->id;
 
-        return $this->render("view", ['model' => $model, 'title' => $title]);
+        return $this->renderAjax("view", ['model' => $model]);
     }
 
     public function actionDelete($id)
@@ -425,10 +425,20 @@ class PibitubecalculatorController extends Controller
                     return 0;
                 }
             }
-
             return 1;
         } else {
-            return 0;
+            $req = Yii::$app->request;
+            $id = $req->post("id");
+            if (!empty($id)) {
+                try {
+                    PIBITubeMaster::updateAll(["status" => 1], ["id" => $id]);
+                } catch (Exception $exception) {
+                    return 0;
+                }
+                return 1;
+            } else {
+                return 0;
+            }
         }
     }
 }

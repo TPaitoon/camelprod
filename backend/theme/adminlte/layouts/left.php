@@ -96,7 +96,7 @@
                                 ['label' => 'เตรียมจุ๊บ', 'url' => '#', 'icon' => 'chevron-circle-right',
                                     'items' =>
                                         [
-                                            ['label' => 'จัดการพนักงาน', 'icon' => 'cog', 'url' => ['/pibitubeemplist']],
+                                            ['label' => 'จัดการพนักงาน', 'icon' => 'user', 'url' => ['/pibitubeemplist']],
                                             ['label' => 'ค่าเพิเศษ', 'icon' => 'btc', 'url' => ['/pibitubecalculator']],
                                         ],
                                 ],
@@ -104,6 +104,7 @@
                                     'items' =>
                                         [
                                             ['label' => 'ค่ามาตรฐาน', 'icon' => 'cog', 'url' => ['/pibistandard'], 'visible' => $edi],
+                                            ['label' => 'จัดการพนักงาน', 'icon' => 'user', 'url' => ['/pibimcemplist']],
                                             ['label' => 'ค่าพิเศษ', 'icon' => 'btc', 'url' => ['/pibicalculator']],
                                         ],
                                 ],
