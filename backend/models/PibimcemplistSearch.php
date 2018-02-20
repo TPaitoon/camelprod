@@ -2,10 +2,12 @@
 
 namespace backend\models;
 
+use common\models\EmpInfo;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\PIBIMCEmplist;
+use yii\data\ArrayDataProvider;
 
 /**
  * PibimcemplistSearch represents the model behind the search form about `common\models\PIBIMCEmplist`.
@@ -39,32 +41,44 @@ class PibimcemplistSearch extends PIBIMCEmplist
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function searchg1()
     {
-        $query = PIBIMCEmplist::find();
+        $query = PIBIMCEmplist::findAll(["shift" => 1]);
 
-        // add conditions that should always apply here
-
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
-
-        $this->load($params);
-
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
-            return $dataProvider;
+        $temp = [];
+        foreach ($query as $item) {
+            $nml = EmpInfo::findOne(["PRS_NO" => $item->empid]);
+            array_push($temp, [
+                "shift" => $item->shift,
+                "empid" => $nml->PRS_NO . ' ' . $nml->EMP_NAME . ' ' . $nml->EMP_SURNME,
+                "group" => $item->group
+            ]);
         }
 
-        // grid filtering conditions
-        $query->andFilterWhere([
-            'id' => $this->id,
-            'shift' => $this->shift,
-            'group' => $this->group,
+        $dataProvider = new ArrayDataProvider([
+            "allModels" => $temp
         ]);
 
-        $query->andFilterWhere(['like', 'empid', $this->empid]);
+        return $dataProvider;
+    }
+
+    public function searchg2()
+    {
+        $query = PIBIMCEmplist::findAll(["shift" => 2]);
+
+        $temp = [];
+        foreach ($query as $item) {
+            $nml = EmpInfo::findOne(["PRS_NO" => $item->empid]);
+            array_push($temp, [
+                "shift" => $item->shift,
+                "empid" => $nml->PRS_NO . ' ' . $nml->EMP_NAME . ' ' . $nml->EMP_SURNME,
+                "group" => $item->group
+            ]);
+        }
+
+        $dataProvider = new ArrayDataProvider([
+            "allModels" => $temp
+        ]);
 
         return $dataProvider;
     }

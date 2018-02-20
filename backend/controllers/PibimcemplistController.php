@@ -36,11 +36,12 @@ class PibimcemplistController extends Controller
     public function actionIndex()
     {
         $searchModel = new PibimcemplistSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProviderg1 = $searchModel->searchg1();
+        $dataProviderg2 = $searchModel->searchg2();
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+            'dataProviderg1' => $dataProviderg1,
+            'dataProviderg2' => $dataProviderg2,
         ]);
     }
 
@@ -65,8 +66,20 @@ class PibimcemplistController extends Controller
     {
         $model = new PIBIMCEmplist();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            if ($this->findModelAll($model->shift, $model->group) !== null) {
+                PIBIMCEmplist::deleteAll(["shift" => $model->shift, "group" => $model->group]);
+            }
+            $req = Yii::$app->request;
+            $emplist = $req->post("empids");
+            for ($i = 0; $i < count($emplist); $i++) {
+                $create = new PIBIMCEmplist();
+                $create->group = $model->group;
+                $create->shift = $model->shift;
+                $create->empid = $emplist[$i];
+                $create->save(false);
+            }
+            return $this->redirect(["index"]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -119,6 +132,15 @@ class PibimcemplistController extends Controller
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    private function findModelAll($shift, $group)
+    {
+        if (($model = PIBIMCEmplist::find()->where(["shift" => $shift, "group" => $group])) !== null) {
+            return $model;
+        } else {
+            return null;
         }
     }
 }
