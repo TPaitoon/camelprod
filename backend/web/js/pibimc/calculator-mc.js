@@ -165,38 +165,39 @@ losttube.on('focusout', function () {
 
 $("#pibimcsubmit").on('click', function (e) {
     e.preventDefault();
-    if (chkStatus() === true) {
-        // $(this).submit();
-        if ($(".listid").val() !== "") {
+    if (confirm("ต้องการบันทึกรายการ ?")) {
+        if (chkStatus() === true) {
+            if ($(".listid").val() !== "") {
 
-        }
-        var group = $("#group").val();
-        var shift = $("#shift").val();
-        var date = $("#date").val();
-        $.ajax({
-            type: 'post',
-            url: '?r=pibimccalculator/getcount',
-            data: {shift: shift, date: date, group: group},
-            success: function (data) {
-                // alert(data);
-                if (parseInt(data) === 0) {
-                    $("#pibimcsubmit").submit();
-                } else if (parseInt(data) >= 1) {
-                    if ($(".listid").val() === "") {
-                        var txt;
-                        if (shift === '1') {
-                            txt = 'กลางวัน';
-                        } else {
-                            txt = 'กลางคืน';
-                        }
-                        alert("กะ " + txt + " กลุ่มที่ " + group + " ของวันที่ " + date + " มีข้อมูลแล้ว ..");
-                    } else {
+            }
+            var group = $("#group").val();
+            var shift = $("#shift").val();
+            var date = $("#date").val();
+            $.ajax({
+                type: 'post',
+                url: '?r=pibimccalculator/getcount',
+                data: {shift: shift, date: date, group: group},
+                success: function (data) {
+                    // alert(data);
+                    if (parseInt(data) === 0) {
                         $("#pibimcsubmit").submit();
+                    } else if (parseInt(data) >= 1) {
+                        if ($(".listid").val() === "") {
+                            var txt;
+                            if (shift === '1') {
+                                txt = 'กลางวัน';
+                            } else {
+                                txt = 'กลางคืน';
+                            }
+                            alert("กะ " + txt + " กลุ่มที่ " + group + " ของวันที่ " + date + " มีข้อมูลแล้ว ..");
+                        } else {
+                            $("#pibimcsubmit").submit();
+                        }
                     }
                 }
-            }
-        });
-    } else {
-        return alert('กรอกข้อมูลไม่ครบ ...');
+            });
+        } else {
+            return alert('กรอกข้อมูลไม่ครบ ...');
+        }
     }
 });

@@ -104,7 +104,6 @@
                                     'items' =>
                                         [
                                             ['label' => 'ค่ามาตรฐาน', 'icon' => 'cog', 'url' => ['/pibistandard'], 'visible' => $edi],
-                                            ['label' => 'จัดการพนักงาน', 'icon' => 'user', 'url' => ['/pibimcemplist']],
                                             ['label' => 'ค่าพิเศษ', 'icon' => 'btc', 'url' => ['/pibicalculator']],
                                         ],
                                 ],
@@ -112,6 +111,7 @@
                                     'items' =>
                                         [
                                             ['label' => 'ค่ามาตรฐาน', 'icon' => 'cog', 'url' => ['/pibimcstandard'], 'visible' => $edi],
+                                            ['label' => 'จัดการพนักงาน', 'icon' => 'user', 'url' => ['/pibimcemplist']],
                                             ['label' => 'ค่าพิเศษ', 'icon' => 'btc', 'url' => ['/pibimccalculator']],
                                         ],
                                 ],

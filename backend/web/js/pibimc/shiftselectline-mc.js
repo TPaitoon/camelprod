@@ -6,16 +6,25 @@ function setGroupLine(val) {
 }
 
 function getGroupLine() {
-    return document.getElementById("cline").innerText;
+    return document.getElementById("cline").innerText
 }
 
+// alert($("#group").val());
+
 var shift = $("#shiftselect");
+var group = $("#group");
 shift.on("change", function () {
-    // alert(shift.val());
-    if (shift.val() !== "") {
-        $.when(getEmpname(shift.val())).done(function (data) {
-            // alert(data); //return empid:empname lastname
-            var fBody = $(".pibitubecalculator-form").find(".listemp");
+    setEmpname(shift.val(), group.val());
+});
+group.on("change", function () {
+    setEmpname(shift.val(), group.val());
+});
+
+function setEmpname(sh, gr) {
+    if (shift.val() !== "" && group.val() !== "") {
+        $.when(getEmpname(sh, gr)).done(function (data) {
+            // alert(data);
+            var fBody = $(".pibimccalculator-form").find(".listemp");
             var fLast = fBody.find("tr:last");
             var fLaststr = fLast.closest("tr");
             var fNew;
@@ -66,7 +75,7 @@ shift.on("change", function () {
             }
         });
     } else {
-        var fBody = $(".pibitubecalculator-form").find(".listemp");
+        var fBody = $(".pibimccalculator-form").find(".listemp");
         var fLast = fBody.find("tr:last");
         var fLaststr;
         var fNew;
@@ -83,29 +92,33 @@ shift.on("change", function () {
         cntgroupline = 0;
         setGroupLine(cntgroupline);
     }
-});
+}
 
-function getEmpname(id) {
+function getEmpname(sh, gr) {
     var x = null;
     $.ajax({
         type: "post",
-        url: "?r=pibitubecalculator/getempname",
-        data: {id: id},
+        url: "?r=pibimccalculator/getempname",
+        data: {shift: sh, group: gr},
         dataType: "json",
         cache: false,
         async: false,
         success: function (data) {
             // alert(data);
-            x = data;
-            cntgroupline = data.length;
-            setGroupLine(data.length);
+            if (data === 0) {
+                alert("ไม่มีข้อมูลพนักงาน");
+            } else {
+                x = data;
+                cntgroupline = data.length;
+                setGroupLine(data.length);
+            }
         }
     });
     return x;
 }
 
-function removegroupline(e) {
-    var fBody = $(".pibitubecalculator-form").find(".listemp");
+function removeline(e) {
+    var fBody = $(".pibimccalculator-form").find(".listemp");
     var fLast = fBody.find("tr:last");
     var fLaststr = fLast.closest("tr");
     if ($("table.listemp >tbody >tr").length > 1) {

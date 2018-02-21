@@ -10,7 +10,6 @@ use yii\web\JqueryAsset;
 $this->title = 'ค่าพิเศษพนักงานเตรียมจุ๊บ.';
 $this->params['breadcrumbs'][] = $this->title;
 $res = Yii::$app->session->getFlash('res');
-$req = null;
 ?>
     <input hidden class="role" value="<?php echo $role ?>">
     <div class="pibitubecalculator-index">

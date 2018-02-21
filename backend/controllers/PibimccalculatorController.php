@@ -6,6 +6,7 @@ use backend\models\PibimccalculatorSearch;
 use backend\models\UserDirect;
 use backend\models\PIBIMCDetail;
 use common\models\EmpInfo;
+use common\models\PIBIMCEmplist;
 use common\models\PIBIMCMaster;
 use common\models\PIBIMCStandardDetail;
 use Yii;
@@ -119,7 +120,7 @@ class PibimccalculatorController extends Controller
         }
         $model->recid = $master->id . ',' . $recid;
 
-        return $this->render('view', ['model' => $model]);
+        return $this->renderAjax('view', ['model' => $model]);
     }
 
     public function actionUpdate($id)
@@ -208,7 +209,7 @@ class PibimccalculatorController extends Controller
         if (!empty($master)) {
             PIBIMCDetail::deleteAll(['shiftid' => $master->shift, 'groupid' => $master->group, 'date' => date('Y-m-d', strtotime($master->date))]);
             $this->findModel($id)->delete();
-            Yii::$app->session->setFlash('res','ลบข้อมูลเรียบร้อยแล้ว !');
+            Yii::$app->session->setFlash('res', 'ลบข้อมูลเรียบร้อยแล้ว !');
 
             return $this->redirect(['index']);
         }
@@ -290,10 +291,20 @@ class PibimccalculatorController extends Controller
                     return 0;
                 }
             }
-
             return 1;
         } else {
-            return 0;
+            $req = Yii::$app->request;
+            $id = $req->post("id");
+            if (!empty($id)) {
+                try {
+                    PIBIMCMaster::updateAll(["status" => 1], ["id" => $id]);
+                } catch (Exception $exception) {
+                    return 0;
+                }
+                return 1;
+            } else {
+                return 0;
+            }
         }
     }
 
@@ -326,6 +337,33 @@ class PibimccalculatorController extends Controller
                 }
 
                 return Json::encode($temparray);
+            } else {
+                $req = Yii::$app->request;
+                $sh = $req->post("shift");
+                $gr = $req->post("group");
+
+                if (!empty($sh) && !empty($gr)) {
+                    $_empid = PIBIMCEmplist::findAll(["shift" => $sh, "group" => $gr]);
+                    if (!empty($_empid)) {
+                        $empid = [];
+                        foreach ($_empid as $item) {
+                            array_push($empid, $item->empid);
+                        }
+
+                        $temparray = [];
+                        for ($i = 0; $i < count($_empid); $i++) {
+                            $_query = EmpInfo::findOne(["PRS_NO" => $empid[$i]]);
+                            $name = $empid[$i] . ' ' . $_query->EMP_NAME . ' ' . $_query->EMP_SURNME;
+                            array_push($temparray, $name);
+                        }
+
+                        return Json::encode($temparray);
+                    } else {
+                        return 0;
+                    }
+                } else {
+                    return 0;
+                }
             }
         }
     }
@@ -337,7 +375,7 @@ class PibimccalculatorController extends Controller
         $group = $req->post('group');
         $date = $req->post('date');
 
-        $cnt = PIBIMCMaster::find()->where(['shift' => $shift, 'group' => $group, 'date' => date('Y-m-d',strtotime($date))])->count();
+        $cnt = PIBIMCMaster::find()->where(['shift' => $shift, 'group' => $group, 'date' => date('Y-m-d', strtotime($date))])->count();
         return $cnt;
     }
 }

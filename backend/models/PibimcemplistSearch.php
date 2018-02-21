@@ -39,7 +39,7 @@ class PibimcemplistSearch extends PIBIMCEmplist
      *
      * @param array $params
      *
-     * @return ActiveDataProvider
+     * @return ArrayDataProvider
      */
     public function searchg1()
     {
@@ -49,17 +49,21 @@ class PibimcemplistSearch extends PIBIMCEmplist
         foreach ($query as $item) {
             $nml = EmpInfo::findOne(["PRS_NO" => $item->empid]);
             array_push($temp, [
+                "id" => $item->id,
                 "shift" => $item->shift,
                 "empid" => $nml->PRS_NO . ' ' . $nml->EMP_NAME . ' ' . $nml->EMP_SURNME,
                 "group" => $item->group
             ]);
         }
 
-        $dataProvider = new ArrayDataProvider([
-            "allModels" => $temp
+        $dataProviderg1 = new ArrayDataProvider([
+            "allModels" => $temp,
+            "pagination" => [
+                "pageSize" => 5
+            ]
         ]);
 
-        return $dataProvider;
+        return $dataProviderg1;
     }
 
     public function searchg2()
@@ -70,16 +74,20 @@ class PibimcemplistSearch extends PIBIMCEmplist
         foreach ($query as $item) {
             $nml = EmpInfo::findOne(["PRS_NO" => $item->empid]);
             array_push($temp, [
+                "id" => $item->id,
                 "shift" => $item->shift,
                 "empid" => $nml->PRS_NO . ' ' . $nml->EMP_NAME . ' ' . $nml->EMP_SURNME,
                 "group" => $item->group
             ]);
         }
 
-        $dataProvider = new ArrayDataProvider([
-            "allModels" => $temp
+        $dataProviderg2 = new ArrayDataProvider([
+            "allModels" => $temp,
+            "pagination" => [
+                "pageSize" => 5
+            ]
         ]);
 
-        return $dataProvider;
+        return $dataProviderg2;
     }
 }
