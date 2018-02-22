@@ -239,7 +239,7 @@ class PibimccalculatorController extends Controller
                 if (!empty($data)) {
                     $ex = ((int)$amount - $data->amount) * 0.2917;
                     $cal = $data->rate + $ex;
-                    return Json::encode(round($cal));
+                    return Json::encode($cal);
                 } else {
                     return Json::encode(0);
                 }
@@ -256,7 +256,7 @@ class PibimccalculatorController extends Controller
         if (!empty($_data)) {
             $ex = ((int)$amount - $_data->amount) * 0.2917;
             $cal = $_data->rate + $ex;
-            return Json::encode(round($cal));
+            return Json::encode($cal);
         } else {
             $_data = $FindQuery->andFilterWhere(['hour' => $hour - 1, 'refid' => $std])
                 ->andFilterWhere(['<=', 'amount', $amount])

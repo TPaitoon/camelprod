@@ -7,6 +7,7 @@
  */
 
 use yii\helpers\ArrayHelper;
+use yii\web\JqueryAsset;
 
 /* @var $model backend\models\PIBIMCDetail */
 /* @var $this yii\web\View */
@@ -26,3 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
+<?php
+$baseurl = Yii::$app->request->baseUrl;
+$this->registerJsFile($baseurl . "/js/pibimc/editline-mc.js?Ver=0001", ["depends" => JqueryAsset::className()]);
+?>

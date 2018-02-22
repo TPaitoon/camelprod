@@ -167,11 +167,8 @@ $("#pibimcsubmit").on('click', function (e) {
     e.preventDefault();
     if (confirm("ต้องการบันทึกรายการ ?")) {
         if (chkStatus() === true) {
-            if ($(".listid").val() !== "") {
-
-            }
             var group = $("#group").val();
-            var shift = $("#shift").val();
+            var shift = $("#shiftselect").val();
             var date = $("#date").val();
             $.ajax({
                 type: 'post',

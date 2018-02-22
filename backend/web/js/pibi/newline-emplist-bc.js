@@ -1,32 +1,31 @@
 var cntgroupline = 0;
 setGroupLine(cntgroupline);
 
-
-function setGroupLine(value) {
-    document.getElementById("cline").innerHTML = value;
+function setGroupLine(val) {
+    document.getElementById("cline").innerHTML = val;
 }
 
-function checkGroupValue(value) {
+function checkGroupValue(val) {
     var chkloop = document.getElementsByName("empids[]");
     for (var i = 0; i < chkloop.length; i++) {
-        if (chkloop[i].value === value) {
+        if (chkloop[i].value === val) {
             return 0;
         }
     }
     return 1;
 }
 
-function getGroupValue(value) {
-    var chkloop = document.getElementsByName("empids[]");
-    for (var i = 0; i < chkloop.length; i++) {
-        if (chkloop[i].value === "") {
+function getGroupLength() {
+    var chklenght = document.getElementsByName("empids[]");
+    for (var i = 0; i < chklenght.length; i++) {
+        if (chklenght[i].value === "") {
             return 0;
         }
     }
     return 1;
 }
 
-$(".pibitubeemplist-form").each(function () {
+$(".pibibcemplist-form").each(function () {
     var fBody = $(this).find(".listemp");
     var fLast = fBody.find("tr:last");
     var fLaststr = fLast.closest("tr");
@@ -37,7 +36,7 @@ $(".pibitubeemplist-form").each(function () {
     }
     setGroupLine(cntgroupline);
 
-    $(".addemp", $(this)).on('click', function () {
+    $(".addemp", $(this)).on("click", function () {
         var emplist = $("#emplistselect");
         var str = emplist.select2("data")[0].text;
         if (!isNaN(parseInt(str.substr(0, 1)))) {
@@ -55,7 +54,6 @@ $(".pibitubeemplist-form").each(function () {
                 } else {
                     if (checkGroupValue(id) === 1) {
                         fLast = fBody.find("tr:last");
-                        // fLaststr = fLast.closest("tr");
                         fNew = fLast.clone();
                         fLast.after(fNew);
                         fLast = fBody.find("tr:last");
@@ -68,7 +66,7 @@ $(".pibitubeemplist-form").each(function () {
                         cntgroupline++;
                         setGroupLine(cntgroupline);
                     } else {
-                        alert('รหัสพนักงาน : ' + id + ' มีรายชื่อแล้ว');
+                        alert("รหัสพนักงาน : " + id + " มีรายชื่อแล้ว");
                     }
                 }
             }
@@ -78,7 +76,7 @@ $(".pibitubeemplist-form").each(function () {
 });
 
 function removegroupline(e) {
-    var fBody = $(".pibitubeemplist-form").find(".listemp");
+    var fBody = $(".pibibcemplist-form").find(".listemp");
     var fLast = fBody.find("tr:last");
     var fLaststr = fLast.closest("tr");
     if ($("table.listemp >tbody >tr").length > 1) {
@@ -96,11 +94,13 @@ function removegroupline(e) {
     }
 }
 
-$("#pibimcemplistsubmit").on("click", function (e) {
+$("#pibibcemplistsubmit").on("click", function (e) {
     if (confirm("ต้องการบันทึกรายการ ?")) {
-        if (getGroupValue() === 0) {
+        if (getGroupLength() === 0) {
             alert("กรอกข้อมูลไม่ครบ ...");
             e.preventDefault();
         }
+    } else {
+        e.preventDefault();
     }
 });

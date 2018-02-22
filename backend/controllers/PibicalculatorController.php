@@ -7,6 +7,7 @@ use backend\models\PibicalculatorSearch;
 use backend\models\PIBIDetail;
 use backend\models\UserDirect;
 use common\models\EmpInfo;
+use common\models\PIBIBCEmplist;
 use common\models\PIBIMaster;
 use common\models\PIBIStandardDetail;
 use Yii;
@@ -134,7 +135,7 @@ class PibicalculatorController extends Controller
         }
         $model->recid = $master->id . ',' . $recid;
 
-        return $this->render('view', ['model' => $model]);
+        return $this->renderAjax('view', ['model' => $model]);
     }
 
     public function actionUpdate($id)
@@ -224,7 +225,7 @@ class PibicalculatorController extends Controller
     {
         $master = $this->findModel($id);
         if (!empty($master)) {
-            PIBIDetail::deleteAll(['Shiftid' => $master->shift, 'Groupid' => $master->group, 'Date' => date('Y-m-d', strtotime($master->date))]);
+            PIBIDetail::deleteAll(['Refid' => $master->id]);
             $this->findModel($id)->delete();
         }
         $session = Yii::$app->session;
@@ -267,7 +268,7 @@ class PibicalculatorController extends Controller
                 if (!empty($data)) {
                     $ex = ((int)$amount - $data->amount) * 0.2917;
                     $cal = $data->rate + $ex;
-                    return Json::encode(round($cal));
+                    return Json::encode($cal);
                 } else {
                     return Json::encode(0);
                 }
@@ -284,7 +285,7 @@ class PibicalculatorController extends Controller
         if (!empty($data)) {
             $ex = ((int)$amount - $data->amount) * 0.2917;
             $cal = $data->rate + $ex;
-            return Json::encode(round($cal));
+            return Json::encode($cal);
         } else {
             $data = $FindQuery->andWhere(['hour' => $hour - 1, 'refid' => $std])
                 ->andFilterWhere(['<=', 'amount', $amount])
@@ -311,19 +312,27 @@ class PibicalculatorController extends Controller
                     array_push($ls, $_temp[0]);
                 }
             }
-
             for ($x = 0; $x < count($ls); $x++) {
                 try {
                     PIBICalculator::updateAll(['status' => 1], ['id' => $ls[$x]]);
                 } catch (Exception $exception) {
                     return 0;
-                    break;
                 }
             }
-
             return 1;
         } else {
-            return 0;
+            $req = Yii::$app->request;
+            $id = $req->post("id");
+            if (!empty($id)) {
+                try {
+                    PIBIMaster::updateAll(["status" => 1],["id" => $id]);
+                } catch (Exception $exception) {
+                    return 0;
+                }
+                return 1;
+            } else {
+                return 0;
+            }
         }
     }
 
@@ -345,8 +354,33 @@ class PibicalculatorController extends Controller
                         array_push($_temp, $name);
                     }
                 }
-
                 return Json::encode($_temp);
+            } else {
+                $req = Yii::$app->request;
+                $sh = $req->post("shift");
+                $gr = $req->post("group");
+
+                if (!empty($sh) && !empty($gr)) {
+                    $_empid = PIBIBCEmplist::findAll(["shift" => $sh, "group" => $gr]);
+                    if (!empty($_empid)) {
+                        $empid = [];
+                        foreach ($_empid as $item) {
+                            array_push($empid, $item->empid);
+                        }
+
+                        $temparray = [];
+                        for ($i = 0; $i < count($_empid); $i++) {
+                            $_query = EmpInfo::findOne(["PRS_NO" => $empid[$i]]);
+                            $name = $empid[$i] . ' ' . $_query->EMP_NAME . ' ' . $_query->EMP_SURNME;
+                            array_push($temparray, $name);
+                        }
+                        return Json::encode($temparray);
+                    } else {
+                        return 0;
+                    }
+                } else {
+                    return 0;
+                }
             }
         }
     }
@@ -359,10 +393,6 @@ class PibicalculatorController extends Controller
         $date = $req->post('date');
 
         $cnt = PIBIMaster::find()->where(['shift' => $shift, 'group' => $group, 'date' => $date])->count();
-        if (!empty($cnt)) {
-            return $cnt;
-        } else {
-            return 0;
-        }
+        return $cnt;
     }
 }

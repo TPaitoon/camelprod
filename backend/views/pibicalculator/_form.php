@@ -36,28 +36,6 @@ for ($i = 1; $i <= 15; $i++) {
         <?php $form = ActiveForm::begin() ?>
         <div class="col-lg-5" id="select-form">
             <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <h5><b>เลือกรายชื่อพนักงาน</b></h5>
-                        </div>
-                        <div class="col-lg-10">
-                            <?= Select2::widget([
-                                'name' => 'empselect',
-                                'data' => ArrayHelper::map($emplist, 'PRS_NO', function ($data) {
-                                    return $data->PRS_NO . ' ' . $data->EMP_NAME . ' ' . $data->EMP_SURNME;
-                                }),
-                                'options' => [
-                                    'placeholder' => 'เลือกพนักงาน',
-                                    'id' => 'emplistselect'
-                                ]
-                            ]) ?>
-                        </div>
-                        <div class="col-lg-1">
-                            <button type="button" class="btn btn-success addemp"><i class="fa fa-plus"></i></button>
-                        </div>
-                    </div>
-                </div>
                 <div class="panel-body">
                     <table class="table table-bordered listemp">
                         <thead>
@@ -106,12 +84,32 @@ for ($i = 1; $i <= 15; $i++) {
                     <div class="row">
                         <div class="col-lg-3">
                             <?= $form->field($model, 'Shiftid')
-                                ->dropDownList(ArrayHelper::map($shiftlist, 'id', 'shiftname'),['id' => 'shift'])
+                                ->widget(Select2::className(), [
+                                    'name' => 'shiftselect',
+                                    'data' => ArrayHelper::map($shiftlist, 'id', 'shiftname'),
+                                    'options' => [
+                                        'placeholder' => 'เลือกกะ',
+                                        'id' => 'shiftselect'
+                                    ],
+                                    'pluginOptions' => [
+                                        'allowClear' => true
+                                    ]
+                                ])
                                 ->label('เลือกกะ') ?>
                         </div>
                         <div class="col-lg-2">
                             <?= $form->field($model, 'Groupid')
-                                ->dropDownList(ArrayHelper::map($grouplist, 'A', 'A'),['id' => 'group'])
+                                ->widget(Select2::className(), [
+                                    'name' => 'groupselect',
+                                    'data' => ArrayHelper::map($grouplist, 'A', 'A'),
+                                    'options' => [
+                                        'placeholder' => 'เลือกกลุ่ม',
+                                        'id' => 'group'
+                                    ],
+                                    'pluginOptions' => [
+                                        'allowClear' => true
+                                    ]
+                                ])
                                 ->label('กลุ่ม') ?>
                         </div>
                         <div class="col-lg-4">
@@ -265,12 +263,9 @@ for ($i = 1; $i <= 15; $i++) {
         <?php ActiveForm::end() ?>
     </div>
 </div>
-
 <?php
 $baseurl = Yii::$app->request->baseUrl;
 $this->registerJsFile($baseurl . '/js/chkkeypressnumber.js?Ver=0001', ['depends' => JqueryAsset::className()]);
-$this->registerJsFile($baseurl . '/js/pibi/newline.js?Ver=0001', ['depends' => JqueryAsset::className()]);
 $this->registerJsFile($baseurl . '/js/pibi/calculator.js?Ver=0001', ['depends' => JqueryAsset::className()]);
 $this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => JqueryAsset::className()]);
-$this->registerJsFile($baseurl . '/js/pibi/editline.js?Ver=0001', ['depends' => JqueryAsset::className()]);
 ?>

@@ -8,15 +8,20 @@ $this->title = 'ข้อมูล : ' . $id[0];
 $this->params['breadcrumbs'][] = ['label' => 'ค่าพิเศษประกอบยางในจกย.', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="pibicalculator-update">
-    <div class="panel">
-        <div class="panel panel-heading">
-            <h4>แก้ไขข้อมูล</h4>
-        </div>
-        <div class="panel panel-body">
-            <?= $this->render("_form",[
-                'model' => $model
-            ]) ?>
+    <div class="pibicalculator-update">
+        <div class="panel">
+            <div class="panel panel-heading">
+                <h4>แก้ไขข้อมูล</h4>
+            </div>
+            <div class="panel panel-body">
+                <?= $this->render("_form", [
+                    'model' => $model
+                ]) ?>
+            </div>
         </div>
     </div>
-</div>
+<?php
+/* @var $this yii\web\View */
+$baseurl = Yii::$app->request->baseUrl;
+$this->registerJsFile($baseurl . "/js/pibi/editline.js?Ver=0001", ["depends" => JqueryAsset::className()]);
+?>

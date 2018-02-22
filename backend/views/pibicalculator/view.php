@@ -22,12 +22,8 @@ $this->title = 'ข้อมูล : ' . $id[0];
 $this->params['breadcrumbs'][] = ['label' => 'ค่าพิเศษประกอบยางในจกย.', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="pibicalculator-view">
-    <div class="panel">
-        <div class="panel panel-heading">
-            <h4>รายละเอียด</h4>
-        </div>
-        <div class="panel panel-body">
+    <div class="pibicalculator-view">
+        <div class="panel">
             <?=
             DetailView::widget([
                 'model' => $model,
@@ -36,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attribute' => 'listid',
                         'format' => 'raw',
                         'value' => function ($model) {
-                            $id = explode(",",ArrayHelper::getValue($model,'listid'));
+                            $id = explode(",", ArrayHelper::getValue($model, 'listid'));
                             $_temp = null;
                             for ($i = 0; $i < count($id); $i++) {
                                 if ($i == 0) {
@@ -91,12 +87,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ])
             ?>
         </div>
-        <div class="panel panel-footer">
-            <?= Html::a('หน้าหลัก', ['index'], ['class' => 'btn btn-info']) ?>
-            <?= Html::a('ย้อนกลับ', Yii::$app->request->referrer, ['class' => 'btn btn-danger']) ?>
-        </div>
     </div>
-</div>
 <?php
 $baseurl = Yii::$app->request->baseUrl;
 $this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => JqueryAsset::className()]);

@@ -104,6 +104,7 @@
                                     'items' =>
                                         [
                                             ['label' => 'ค่ามาตรฐาน', 'icon' => 'cog', 'url' => ['/pibistandard'], 'visible' => $edi],
+                                            ['label' => 'จัดการพนักงาน', 'icon' => 'user', 'url' => ['/pibibcemplist']],
                                             ['label' => 'ค่าพิเศษ', 'icon' => 'btc', 'url' => ['/pibicalculator']],
                                         ],
                                 ],

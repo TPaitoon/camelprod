@@ -24,7 +24,7 @@ function setEmpname(sh, gr) {
     if (shift.val() !== "" && group.val() !== "") {
         $.when(getEmpname(sh, gr)).done(function (data) {
             // alert(data);
-            var fBody = $(".pibimccalculator-form").find(".listemp");
+            var fBody = $(".pibicalculator-form").find(".listemp");
             var fLast = fBody.find("tr:last");
             var fLaststr = fLast.closest("tr");
             var fNew;
@@ -59,6 +59,8 @@ function setEmpname(sh, gr) {
                         });
                         fLaststr.find(".empid").val(id);
                         fLaststr.find(".empname").val(name);
+                        calDeduct();
+                        calculator();
                     }
                 } else {
                     fLast = fBody.find("tr:last");
@@ -71,11 +73,13 @@ function setEmpname(sh, gr) {
                     });
                     fLaststr.find(".empid").val(id);
                     fLaststr.find(".empname").val(name);
+                    calDeduct();
+                    calculator();
                 }
             }
         });
     } else {
-        var fBody = $(".pibimccalculator-form").find(".listemp");
+        var fBody = $(".pibicalculator-form").find(".listemp");
         var fLast = fBody.find("tr:last");
         var fLaststr;
         var fNew;
@@ -91,6 +95,8 @@ function setEmpname(sh, gr) {
 
         cntgroupline = 0;
         setGroupLine(cntgroupline);
+        calDeduct();
+        calculator();
     }
 }
 
@@ -98,7 +104,7 @@ function getEmpname(sh, gr) {
     var x = null;
     $.ajax({
         type: "post",
-        url: "?r=pibimccalculator/getempname",
+        url: "?r=pibicalculator/getempname",
         data: {shift: sh, group: gr},
         dataType: "json",
         cache: false,
@@ -118,7 +124,7 @@ function getEmpname(sh, gr) {
 }
 
 function removeline(e) {
-    var fBody = $(".pibimccalculator-form").find(".listemp");
+    var fBody = $(".pibicalculator-form").find(".listemp");
     var fLast = fBody.find("tr:last");
     var fLaststr = fLast.closest("tr");
     if (getGroupLine() > 1) {
@@ -126,7 +132,6 @@ function removeline(e) {
         cntgroupline--;
         setGroupLine(cntgroupline);
     } else {
-
         if (fLaststr.find(".empid").val() !== "") {
             fLaststr.find(".empid").val("");
             fLaststr.find(".empname").val("");

@@ -165,32 +165,38 @@ losttube.on('focusout', function () {
 
 $("#pibisubmit").on('click', function (e) {
     e.preventDefault();
-    if (chkStatus() === true) {
-        // $(this).submit();
-        var group = $("#group").val();
-        var shift = $("#shift").val();
-        var date = $("#date").val();
-        $.ajax({
-            type: 'post',
-            url: '?r=pibicalculator/getcount',
-            cache: false,
-            async: false,
-            data: {shift: shift, date: date, group: group},
-            success: function (data) {
-                if (parseInt(data) === 0) {
-                    $("#pibisubmit").submit();
-                } else {
-                    var txt;
-                    if (shift === '1') {
-                        txt = 'กลางวัน';
-                    } else {
-                        txt = 'กลางคืน';
+    if (confirm("ต้องการบันทึกรายการ ?")) {
+        if (chkStatus() === true) {
+            // $(this).submit();
+            var group = $("#group").val();
+            var shift = $("#shiftselect").val();
+            var date = $("#date").val();
+            $.ajax({
+                type: 'post',
+                url: '?r=pibicalculator/getcount',
+                cache: false,
+                async: false,
+                data: {shift: shift, date: date, group: group},
+                success: function (data) {
+                    if (parseInt(data) === 0) {
+                        $("#pibisubmit").submit();
+                    } else if (parseInt(data) >= 1) {
+                        if ($(".listid").val() === "") {
+                            var txt;
+                            if (shift === '1') {
+                                txt = 'กลางวัน';
+                            } else {
+                                txt = 'กลางคืน';
+                            }
+                            alert("กะ " + txt + " กลุ่มที่ " + group + " ของวันที่ " + date + " มีข้อมูลแล้ว ..");
+                        } else {
+                            $("#pibisubmit").submit();
+                        }
                     }
-                    alert("กะ " + txt + " กลุ่มที่ " + group + " ของวันที่ " + date + " มีข้อมูลแล้ว ..");
                 }
-            }
-        });
-    } else {
-        return alert('กรอกข้อมูลไม่ครบ ...');
+            });
+        } else {
+            return alert('กรอกข้อมูลไม่ครบ ...');
+        }
     }
 });

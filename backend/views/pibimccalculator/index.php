@@ -206,6 +206,7 @@ Modal::end();
 $baseurl = Yii::$app->request->baseUrl;
 $this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => JqueryAsset::className()]);
 $this->registerJsFile($baseurl . '/js/pibimc/script-mc.js?Ver=0001', ['depends' => JqueryAsset::className()]);
+
 $js = <<<JS
 var txt = "$res";
 if(txt !== "") { alert(txt); }

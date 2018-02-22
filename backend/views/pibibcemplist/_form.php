@@ -9,7 +9,7 @@ use yii\web\JqueryAsset;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\PIBIMCEmplist */
+/* @var $model common\models\PIBIBCEmplist */
 /* @var $form yii\widgets\ActiveForm */
 $shiftlist = ShiftList::find()->all();
 $emplist = EmpInfo::findAll(["Dept" => "ฝ่ายผลิต", "Sec" => "ประกอบยางใน"]);
@@ -18,7 +18,7 @@ for ($i = 1; $i <= 15; $i++) {
     array_push($grouplist, ['A' => $i]);
 }
 ?>
-    <div class="pibimcemplist-form">
+    <div class="pibibcemplist-form">
         <?php $form = ActiveForm::begin(); ?>
         <div class="row">
             <div class="col-lg-12">
@@ -112,7 +112,7 @@ for ($i = 1; $i <= 15; $i++) {
         <div class="row">
             <div class="col-lg-12">
                 <div class="pull-left">
-                    <?= Html::submitButton("บันทึก", ["id" => "pibimcemplistsubmit", "class" => "btn btn-success"]) ?>
+                    <?= Html::submitButton("บันทึก", ["id" => "pibibcemplistsubmit", "class" => "btn btn-success"]) ?>
                 </div>
                 <div class="pull-right">
                     <?= Html::a("หน้าหลัก", ["index"], ["class" => "btn btn-info"]) ?>
@@ -126,5 +126,5 @@ for ($i = 1; $i <= 15; $i++) {
 <?php
 $baseurl = Yii::$app->request->baseUrl;
 $this->registerCssFile($baseurl . "/css/panel.css?Ver=0001", ["depends" => JqueryAsset::className()]);
-$this->registerJsFile($baseurl . "/js/pibimc/newline-emplist-mc.js?Ver=0001", ["depends" => JqueryAsset::className()]);
+$this->registerJsFile($baseurl . "/js/pibi/newline-emplist-bc.js?Ver=0001", ["depends" => JqueryAsset::className()]);
 ?>

@@ -15,6 +15,16 @@ function checkGroupValue(val) {
     return 1;
 }
 
+function getGroupLength() {
+    var chklenght = document.getElementsByName("empids[]");
+    for (var i = 0; i < chklenght.length; i++) {
+        if (chklenght[i].value === "") {
+            return 0;
+        }
+    }
+    return 1;
+}
+
 $(".pibimcemplist-form").each(function () {
     var fBody = $(this).find(".listemp");
     var fLast = fBody.find("tr:last");
@@ -83,3 +93,14 @@ function removegroupline(e) {
         }
     }
 }
+
+$("#pibimcemplistsubmit").on("click", function (e) {
+    if (confirm("ต้องการบันทึกรายการ ?")) {
+        if (getGroupLength() === 0) {
+            alert("กรอกข้อมูลไม่ครบ ...");
+            e.preventDefault();
+        }
+    } else {
+        e.preventDefault();
+    }
+});
