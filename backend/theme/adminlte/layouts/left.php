@@ -93,11 +93,17 @@
                     ['label' => 'ประกอบยางใน', 'url' => '#', 'icon' => 'home', 'visible' => $pibi,
                         'items' =>
                             [
+                                ['label' => 'ออกยางแทน', 'url' => '#', 'icon' => 'chevron-circle-right',
+                                    'items' =>
+                                        [
+                                            ['label' => 'ค่าพิเศษ', 'icon' => 'btc', 'url' => ['/pibitireout']],
+                                        ],
+                                ],
                                 ['label' => 'เตรียมจุ๊บ', 'url' => '#', 'icon' => 'chevron-circle-right',
                                     'items' =>
                                         [
                                             ['label' => 'จัดการพนักงาน', 'icon' => 'user', 'url' => ['/pibitubeemplist']],
-                                            ['label' => 'ค่าเพิเศษ', 'icon' => 'btc', 'url' => ['/pibitubecalculator']],
+                                            ['label' => 'ค่าพิเศษ', 'icon' => 'btc', 'url' => ['/pibitubecalculator']],
                                         ],
                                 ],
                                 ['label' => 'จักรยาน', 'url' => '#', 'icon' => 'chevron-circle-right',
