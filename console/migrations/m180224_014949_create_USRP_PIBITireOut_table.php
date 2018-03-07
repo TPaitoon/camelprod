@@ -17,6 +17,7 @@ class m180224_014949_create_USRP_PIBITireOut_table extends Migration
             'empid' => $this->string(),
             'empname' => $this->string(),
             'shift' => $this->integer(),
+            'date' => $this->date(),
             'qty' => $this->integer(),
             'status' => $this->integer(),
         ]);

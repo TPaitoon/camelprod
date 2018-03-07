@@ -129,6 +129,8 @@
                             [
                                 ['label' => 'User Info', 'icon' => 'cog', 'url' => ['/userinfo'], 'visible' => $it],
                                 ['label' => 'Log History', 'icon' => 'cog', 'url' => ['/loginhistory'], 'visible' => $it],
+                                ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii'], 'visible' => $it],
+                                ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug'], 'visible' => $it],
                             ],
                     ],
                 ],

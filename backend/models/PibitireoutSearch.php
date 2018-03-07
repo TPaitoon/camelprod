@@ -19,7 +19,7 @@ class PibitireoutSearch extends PIBITireOut
     {
         return [
             [['id', 'shift', 'qty', 'status'], 'integer'],
-            [['empid', 'empname'], 'safe'],
+            [['empid', 'empname', 'date'], 'safe'],
         ];
     }
 
@@ -61,6 +61,7 @@ class PibitireoutSearch extends PIBITireOut
         $query->andFilterWhere([
             'id' => $this->id,
             'shift' => $this->shift,
+            'date' => $this->date,
             'qty' => $this->qty,
             'status' => $this->status,
         ]);

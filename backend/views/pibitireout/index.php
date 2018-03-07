@@ -1,5 +1,6 @@
 <?php
 
+use yii\bootstrap\Modal;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -14,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="pibitireout-index">
     <div class="panel">
         <div class="panel panel-heading">
-            <?php /* wait */ ?>
+            <?= Html::a("เพิ่มข้อมูล", ["create"], ["class" => "btn btn-success bcreate"]) ?>
         </div>
         <div class="panel panel-body">
             <?= GridView::widget([
@@ -26,8 +27,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     'empid',
                     'empname',
                     'shift',
+                    'date',
                     'qty',
-                    // 'status',
+                    'status',
 
                     ['class' => 'yii\grid\ActionColumn'],
                 ],
@@ -35,3 +37,27 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
+<?php
+Modal::begin([
+    "id" => "create-modal",
+    "size" => "modal-lg",
+    "header" => "<h4>เพิ่มข้อมูล</h4>",
+]);
+echo "<div class='modalContent'></div>";
+Modal::end();
+
+$modaljs = <<<JS
+$(document).on("click",".bcreate",function(e) {
+    e.preventDefault();
+    // alert();
+    var cmodal = $("#create-modal");
+    
+    if (cmodal.hasClass("in")) {
+        cmodal.find(".modalContent").load($(this).attr("href"));
+    } else {
+        cmodal.modal("show",{backdrop:"static",keyboard:true}).find(".modalContent").load($(this).attr("href"));       
+    }
+});
+JS;
+$this->registerJs($modaljs, static::POS_END);
+?>

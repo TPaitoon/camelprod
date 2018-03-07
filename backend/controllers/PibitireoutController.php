@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\EmpInfo;
 use Yii;
 use common\models\PIBITireOut;
 use backend\models\PibitireoutSearch;
@@ -65,10 +66,12 @@ class PibitireoutController extends Controller
     {
         $model = new PIBITireOut();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->status = 0;
+            $model->save();
+            return $this->redirect(['index']);
         } else {
-            return $this->render('create', [
+            return $this->renderAjax('create', [
                 'model' => $model,
             ]);
         }
@@ -119,6 +122,29 @@ class PibitireoutController extends Controller
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    public function actionGetempname($id)
+    {
+        if (!empty($id)) {
+            $emp = EmpInfo::findOne(["PRS_NO" => $id]);
+            if (!empty($emp)) {
+                return $emp->EMP_NAME . ' ' . $emp->EMP_SURNME;
+            } else {
+                return "";
+            }
+        }
+    }
+
+    public function actionCountmodel()
+    {
+        $req = Yii::$app->request;
+        $date = $req->post("date");
+        $empid = $req->post("empid");
+        if (!empty($date) && !empty($empid)) {
+            $model = PIBITireOut::findAll(["empid" => $empid,"date" => $date]);
+            return count($model);
         }
     }
 }

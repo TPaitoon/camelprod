@@ -226,7 +226,7 @@ $(document).on("click","#viewmodal",function() {
             modalv.find(".approved").val(str[1]);
         }
     } else {
-modalv.modal("show").find(".modalContent").load($(this).attr("data-url"));
+        modalv.modal("show").find(".modalContent").load($(this).attr("data-url"));
         if (str[0] !== '0') {
             modalv.find(".modal-footer").hide();
         } else {
