@@ -15,6 +15,7 @@
         $edi = false;
         $pibi = false;
         $it = false;
+        $ptbm = false;
 
         if (count($usr) > 0) {
             if ($usr === 'PSPS') {
@@ -35,8 +36,11 @@
                 $sbw = true;
                 $edi = true;
                 $pibi = true;
+                $ptbm = true;
             } elseif ($usr === 'PIBI') {
                 $pibi = true;
+            } elseif ($usr === 'PTBM') {
+                $ptbm = true;
             }
         }
 
@@ -88,6 +92,12 @@
                                             ['label' => 'ค่าพิเศษ', 'icon' => 'btc', 'url' => ['/bicycleinfo']],
                                         ],
                                 ],
+                                ['label' => 'มอเตอร์ไซต์', 'url' => '#', 'icon' => 'chevron-circle-right',
+                                    'items' =>
+                                        [
+                                            ['label' => 'ใบสั่งประกอบยาง','icon' => 'btc','url' => ['/ptbmplanning'], 'visible' => $ptbm]
+                                        ]
+                                ]
                             ],
                     ],
                     ['label' => 'ประกอบยางใน', 'url' => '#', 'icon' => 'home', 'visible' => $pibi,

@@ -6,20 +6,24 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\PIBITireOut;
+use yii\data\ArrayDataProvider;
+use yii\helpers\ArrayHelper;
 
 /**
  * PibitireoutSearch represents the model behind the search form about `common\models\PIBITireOut`.
  */
 class PibitireoutSearch extends PIBITireOut
 {
+    public $startdate, $enddate, $role;
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id', 'shift', 'qty', 'status'], 'integer'],
-            [['empid', 'empname', 'date'], 'safe'],
+            [['id', 'shift', 'qty', 'status', 'role'], 'integer'],
+            [['empid', 'empname', 'date', 'startdate', 'enddate'], 'safe'],
         ];
     }
 
@@ -41,33 +45,43 @@ class PibitireoutSearch extends PIBITireOut
      */
     public function search($params)
     {
-        $query = PIBITireOut::find();
-
-        // add conditions that should always apply here
-
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
+        if (empty($this->startdate) && empty($this->enddate)) {
+            $this->startdate && $this->enddate = date('Y-m-d');
+        }
 
         $this->load($params);
 
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
-            return $dataProvider;
+        $query = PIBITireOut::find()
+            ->andFilterWhere(['and',
+                ['like', 'shift', $this->shift],
+                ['like','empid',$this->empid],
+                ['>=', 'date', $this->startdate],
+                ['<=', 'date', $this->enddate]
+            ])
+            ->all();
+
+        $chk = new UserDirect();
+        $usr = $chk->ChkusrForPIBIMaster();
+        $usr == 'ITIT' || $usr == 'PSPS' ? $this->role = 1 : $this->role = 0;
+        $array = [];
+
+        foreach ($query as $item) {
+            array_push($array,[
+                'id' => $item->id,
+                'empid' => $item->empid,
+                'empname' => $item->empname,
+                'shift' => $item->shift,
+                'date' => $item->date,
+                'qty' => $item->qty,
+                'status' => $item->status,
+                'role' => $this->role
+            ]);
         }
 
-        // grid filtering conditions
-        $query->andFilterWhere([
-            'id' => $this->id,
-            'shift' => $this->shift,
-            'date' => $this->date,
-            'qty' => $this->qty,
-            'status' => $this->status,
+        ArrayHelper::multisort($array,['date','empid'],4);
+        $dataProvider = new ArrayDataProvider([
+            'allModels' => $array
         ]);
-
-        $query->andFilterWhere(['like', 'empid', $this->empid])
-            ->andFilterWhere(['like', 'empname', $this->empname]);
 
         return $dataProvider;
     }

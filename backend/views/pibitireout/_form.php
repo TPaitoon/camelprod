@@ -21,7 +21,6 @@ for ($i = 0; $i < 4; $i++) {
     $i == 0 ? array_push($value, ["A" => 60]) : $i == 1 ? array_push($value, ["A" => 90]) : $i == 2 ? array_push($value, ["A" => 120]) : $i == 3 ? array_push($value, ["A" => 180]) : null;
 }
 ?>
-
     <div class="pibitireout-form">
         <?php $form = ActiveForm::begin(); ?>
         <div class="row">

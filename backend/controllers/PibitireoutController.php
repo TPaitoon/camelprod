@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\UserDirect;
 use common\models\EmpInfo;
 use Yii;
 use common\models\PIBITireOut;
@@ -36,12 +37,18 @@ class PibitireoutController extends Controller
      */
     public function actionIndex()
     {
+        $chk = new UserDirect();
+        $usr = $chk->ChkusrForPIBIMaster();
+
+        $usr == 'ITIT' || $usr == 'PSPS' ? $role = 1 : $role = 0;
+
         $searchModel = new PibitireoutSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'role' => $role
         ]);
     }
 
