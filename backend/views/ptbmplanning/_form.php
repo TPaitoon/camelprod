@@ -7,18 +7,19 @@
  * Time: 10:18
  */
 
-use common\models\USRMPD04;
+use common\models\ItemData;
 use kartik\date\DatePicker;
 use kartik\datetime\DateTimePicker;
 use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 date_default_timezone_set("Asia/Bangkok");
 /* @var $this yii\web\View */
 /* @var $model common\models\PTBMPlanning */
 /* @var $form yii\widgets\ActiveForm */
-$itemid = USRMPD04::findAll(["ITEMBUYERGROUPID" => "PTBM"]);
+$itemid = ItemData::findAll(["ITEMBUYERGROUPID" => "PTBM"]);
 ?>
     <div class="ptbmplanning-form">
         <?php $form = ActiveForm::begin() ?>
@@ -69,7 +70,7 @@ $itemid = USRMPD04::findAll(["ITEMBUYERGROUPID" => "PTBM"]);
                 ])->label("รหัสวัตถุดิบ") ?>
             </div>
             <div class="col-lg-3">
-                <?= $form->field($model, 'qty')->textInput(["onkeypress" => "return chknumber(event);"])
+                <?= $form->field($model, 'qty')->textInput(["onkeypress" => "return chknumber(event);", "value" => 0, "id" => "qty"])
                     ->label("จำนวนผลิต") ?>
             </div>
         </div>
@@ -118,6 +119,9 @@ $itemid = USRMPD04::findAll(["ITEMBUYERGROUPID" => "PTBM"]);
         <div class="row">
             <hr>
         </div>
+        <div class="form-group">
+            <?= Html::submitButton("บันทึก", ["class" => "btn btn-success", "id" => "btnsave"]) ?>
+        </div>
         <?php ActiveForm::end() ?>
     </div>
 <?php
@@ -133,14 +137,41 @@ function chknumber(event) {
     return true;
 }
 
-function getId(id) {
+function getcId(id) {
     var x = null;
     $.ajax({
         type: "post",
-        url: "?r=ptbmplanning/getid",
+        url: "?r=ptbmplanning/getcid",
         data: {id:id},
         async: false,
         dataType: "json",
+        success: function(data) {
+            x = data;
+        }
+    });
+    return x;
+}
+function getDesc(id) {
+    var x = null;
+    $.ajax({
+        type: "post",
+        url: "?r=ptbmplanning/getdesc",
+        data: {id:id},
+        async: false,
+        dataType: "json",
+        success: function(data) {
+            x = data;
+        }
+    });
+    return x;
+}
+function getCount(id,date) {
+    var x = null;
+    $.ajax({
+        type: "post",
+        url: "?r=ptbmplanning/getcount",
+        data: {id:id,date:date},
+        async: false,
         success: function(data) {
             x = data;
         }
@@ -155,16 +186,95 @@ $(document).ready(function() {
         assyF.val(0);
         assyW.val(0);
     }
-    // alert(getId(1));
+    // alert($("#date").val());
 });
+var itemid = $("#itemid");
+var btnsave = $("#btnsave");
 
-$("#itemid").select2()
+itemid.select2()
 .on("select2:opening",function() {
     $("#create-modal").removeAttr("tabindex","-1");
 })
 .on("select2:close",function() {
     $("#create-modal").attr("tabindex","1");
 });
+itemid.on("change",function() {
+    // alert(itemid.val());
+    if (itemid.val() !== "") {
+        // alert(getId(itemid.val()));
+        $.when(getcId(itemid.val())).done(function(data) {
+            // alert(data.length);
+            var fBody = $(".ptbmplanning-form").find(".listitemid");
+            var fLast = fBody.find("tr:last");
+            var fLaststr = fLast.closest("tr");
+            var fNew;
+            
+            if (data.length > 0) {
+                fLast = fBody.find("tr:last");
+                fNew = fLast.clone();
+                $(".listitemid >tbody >tr").empty();
+                fLast.after(fNew);
+                fLast = fBody.find("tr:last");
+                fLaststr = fLast.closest("tr");
+                fLaststr.find(".itemid").val("");
+                fLaststr.find(".description").val("");
+            }
+            
+            // alert(data);
+            var id, desc;
+            for (var i = 0; i < data.length; i++) {
+                var cut = data[i].split(":");
+                id = cut[0];
+                desc = cut[1];
+                // alert(id + ":" + desc);
+                if (fLaststr.find(".itemid").val() === "") {
+                    fLaststr.find(".itemid").val(id);
+                    fLaststr.find(".description").val(desc);
+                } else {
+                    fLast = fBody.find("tr:last");
+                    fNew = fLast.clone();
+                    fLast.after(fNew);
+                    fLast = fBody.find("tr:last");
+                    fLaststr = fLast.closest("tr");
+                    fNew.find("id input:text").each(function () {
+                        $(this).val("");
+                    });
+                    fLaststr.find(".itemid").val(id);
+                    fLaststr.find(".description").val(desc);
+                }
+            }
+        });
+        $.when(getDesc(itemid.val())).done(function(data) {
+            // alert(data);
+            var obj = data.split(":");
+            $("#desc").val(obj[0]);
+            $("#assyF").val(obj[1]);
+            $("#assyFD").val(parseInt(obj[1]) + 20);
+            $("#assyW").val(obj[2]);
+        });
+    } else {
+        var fBody = $(".ptbmplanning-form").find(".listitemid");
+        var fLast = fBody.find("tr:last");
+        var fLaststr, fNew;
+        fLast = fBody.find("tr:last");
+        fNew = fLast.clone();
+        $(".listitemid >tbody >tr").empty();
+        fLast.after(fNew);
+        fLast = fBody.find("tr:last");
+        fLaststr = fLast.closest("tr");
+        fLaststr.find(".itemid").val("");
+        fLaststr.find(".description").val("");
+    }
+});
+
+btnsave.on("click",function(e) {
+    if (confirm("ต้องการบันทึกข้อมูล ?")) {
+        $.when(getCount($("#itemid").val(),$("#date").val())).done(function(data) {
+            alert(data);
+            e.preventDefault(); // wait edit
+        });
+    }
+})
 JS;
 $this->registerJs($scriptjs, static::POS_END);
 ?>

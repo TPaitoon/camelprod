@@ -19,6 +19,7 @@ use Yii;
  * @property double $assy_Weight
  * @property integer $qty
  * @property integer $status
+ * @property string $child_desc
  */
 class PTBMPlanning extends \yii\db\ActiveRecord
 {
@@ -38,7 +39,7 @@ class PTBMPlanning extends \yii\db\ActiveRecord
         return [
             [['wrno', 'itemid', 'child_itemid', 'assy_Frame', 'qty', 'status'], 'integer'],
             [['date'], 'safe'],
-            [['asset', 'group', 'desc'], 'string'],
+            [['asset', 'group', 'desc', 'child_desc'], 'string'],
             [['assy_Weight'], 'number'],
         ];
     }
@@ -61,6 +62,7 @@ class PTBMPlanning extends \yii\db\ActiveRecord
             'assy_Weight' => 'Assy  Weight',
             'qty' => 'Qty',
             'status' => 'Status',
+            'child_desc' => 'Child Desc',
         ];
     }
 }

@@ -21,7 +21,7 @@ use Yii;
  * @property string $MODIFIEDDATETIME
  * @property string $Desc2
  */
-class USRMBOM1 extends \yii\db\ActiveRecord
+class BOM1 extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
