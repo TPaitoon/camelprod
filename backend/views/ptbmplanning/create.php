@@ -9,5 +9,5 @@
 /* @var $this yii\web\View */
 ?>
 <div class="ptbmplanning-create">
-    <?= $this->render('_form', ['model' => $model]) ?>
+    <?= $this->render('_form', ['model' => $model,'statusinfo' => $statusinfo]) ?>
 </div>

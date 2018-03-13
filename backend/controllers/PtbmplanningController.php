@@ -23,7 +23,32 @@ class PtbmplanningController extends Controller
     {
         $model = new PTBMPlanning();
 
-        return $this->renderAjax('create', ['model' => $model]);
+        if ($model->load(Yii::$app->request->post())) {
+//            print_r($model);
+//            print_r(Yii::$app->request->post("itemid"));
+//            print_r(Yii::$app->request->post("desc"));
+            $c_itemid = Yii::$app->request->post("itemid");
+            $c_desc = Yii::$app->request->post("desc");
+            for ($i = 0; $i < count($c_itemid); $i++) {
+                $cr = new PTBMPlanning();
+                $cr->wrno = $model->wrno;
+                $cr->date = $model->date;
+                $cr->asset = $model->asset;
+                $cr->group = $model->group;
+                $cr->itemid = $model->itemid;
+                $cr->child_itemid = $c_itemid[$i];
+                $cr->child_desc = $c_desc[$i];
+                $cr->desc = $model->desc;
+                $cr->assy_Frame = $model->assy_Frame;
+                $cr->assy_Weight = $model->assy_Weight;
+                $cr->qty = $model->qty;
+                $cr->status = 0;
+                $cr->save(false);
+            }
+            return $this->redirect(['index']);
+        } else {
+            return $this->renderAjax('create', ['model' => $model, 'statusinfo' => 0]);
+        }
     }
 
     public function actionGetcid()
@@ -57,8 +82,8 @@ class PtbmplanningController extends Controller
         $id = $req->post("id");
         $date = $req->post("date");
         if (!empty($id) && !empty($date)) {
-            $cnt = PTBMPlanning::findAll(["itemid" => $id, "cast(date as date)" => $date]);
-            return count($cnt);
+            $query = PTBMPlanning::findAll(["itemid" => $id, "convert(date,date)" => date('Y-m-d',strtotime($date))]);
+            return count($query);
         }
     }
 }

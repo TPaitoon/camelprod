@@ -18,15 +18,18 @@ use yii\widgets\ActiveForm;
 date_default_timezone_set("Asia/Bangkok");
 /* @var $this yii\web\View */
 /* @var $model common\models\PTBMPlanning */
+/* @var $statusinfo */
 /* @var $form yii\widgets\ActiveForm */
 $itemid = ItemData::findAll(["ITEMBUYERGROUPID" => "PTBM"]);
+//print $statusinfo;
 ?>
     <div class="ptbmplanning-form">
+        <input hidden class="statusinfo" value="<?= $statusinfo ?>">
         <?php $form = ActiveForm::begin() ?>
         <div class="row">
             <div class="col-lg-2">
                 <?php $model->wrno == "" ? $model->wrno = date('dmy') : $model->wrno ?>
-                <?= $form->field($model, 'wrno')->textInput(['readonly' => true])->label("เลขที่") ?>
+                <?= $form->field($model, 'wrno')->textInput(['readonly' => true, 'id' => 'wrno'])->label("เลขที่") ?>
             </div>
             <div class="col-lg-3">
                 <?php $model->date == "" ? $model->date = date('Y-m-d H:i:s') : $model->date ?>
@@ -39,7 +42,7 @@ $itemid = ItemData::findAll(["ITEMBUYERGROUPID" => "PTBM"]);
                         "id" => "date"
                     ],
                     "pluginOptions" => [
-                        "format" => "yyyy-mm-dd H:i:ss",
+                        "format" => "yyyy-mm-dd HH:ii:ss",
                         "autoclose" => true,
                         "todayHighlight" => true
                     ]
@@ -55,14 +58,14 @@ $itemid = ItemData::findAll(["ITEMBUYERGROUPID" => "PTBM"]);
         </div>
         <div class="row">
             <div class="col-lg-2">
-                <?= $form->field($model, 'asset')->textInput()->label("รหัสเครื่องจักร") ?>
+                <?= $form->field($model, 'asset')->textInput(["id" => "asset"])->label("รหัสเครื่องจักร") ?>
             </div>
             <div class="col-lg-3">
                 <?= $form->field($model, 'itemid')->widget(Select2::className(), [
                     "data" => ArrayHelper::map($itemid, "ITEMID", "ITEMID"),
                     "options" => [
                         "placeholder" => "เลือกรหัสวัตถุดิบ",
-                        "id" => "itemid"
+                        "id" => "itemids"
                     ],
                     "pluginOptions" => [
                         "allowClear" => true
@@ -109,7 +112,7 @@ $itemid = ItemData::findAll(["ITEMBUYERGROUPID" => "PTBM"]);
                             <input type="text" name="itemid[]" class="form-control itemid" readonly>
                         </td>
                         <td>
-                            <input type="text" class="form-control description" readonly>
+                            <input type="text" name="desc[]" class="form-control description" readonly>
                         </td>
                     </tr>
                     </tbody>
@@ -136,7 +139,6 @@ function chknumber(event) {
     }
     return true;
 }
-
 function getcId(id) {
     var x = null;
     $.ajax({
@@ -178,6 +180,17 @@ function getCount(id,date) {
     });
     return x;
 }
+function pad(num) {
+    var x;
+    if (num < 10) {
+        x = "0" + num;
+    } else if (num.toString().length > 2) {
+        x = num.toString().substr(-2);
+    } else {
+        x = num.toString();
+    }
+    return x;
+}
 
 $(document).ready(function() {
     var assyF = $("#assyF");
@@ -188,8 +201,11 @@ $(document).ready(function() {
     }
     // alert($("#date").val());
 });
-var itemid = $("#itemid");
+var itemid = $("#itemids");
 var btnsave = $("#btnsave");
+var date = $("#date");
+var asset = $("#asset");
+var qty = $("#qty");
 
 itemid.select2()
 .on("select2:opening",function() {
@@ -208,7 +224,7 @@ itemid.on("change",function() {
             var fLast = fBody.find("tr:last");
             var fLaststr = fLast.closest("tr");
             var fNew;
-            
+
             if (data.length > 0) {
                 fLast = fBody.find("tr:last");
                 fNew = fLast.clone();
@@ -219,7 +235,7 @@ itemid.on("change",function() {
                 fLaststr.find(".itemid").val("");
                 fLaststr.find(".description").val("");
             }
-            
+
             // alert(data);
             var id, desc;
             for (var i = 0; i < data.length; i++) {
@@ -264,17 +280,39 @@ itemid.on("change",function() {
         fLaststr = fLast.closest("tr");
         fLaststr.find(".itemid").val("");
         fLaststr.find(".description").val("");
+        $("#assyF").val(0);
+        $("#assyFD").val(0);
+        $("#assyW").val(0);
+        $("#desc").val("");
     }
+});
+
+date.on("change",function() {
+    var d = new Date(date.val());
+    $("#wrno").val(pad(d.getDate()) + pad(d.getMonth() +1) + pad(d.getFullYear()));
 });
 
 btnsave.on("click",function(e) {
     if (confirm("ต้องการบันทึกข้อมูล ?")) {
-        $.when(getCount($("#itemid").val(),$("#date").val())).done(function(data) {
-            alert(data);
-            e.preventDefault(); // wait edit
+        $.when(getCount($("#itemids").val(),$("#date").val())).done(function(data) {
+            // alert(data);
+            // alert("statusinfo : " + $(".statusinfo").val());
+            // e.preventDefault(); // wait edit
+            if (itemid.val() !== "" && qty.val() !== "" && asset.val() !== "" && qty.val() !== 0) {
+                if (parseInt($(".statusinfo").val()) === 0 && parseInt(data) > 0) {
+                    alert("มีข้อมูลแล้ว ...");
+                    e.preventDefault();
+                } else {
+                    $("#btnsave").submit();
+                    // e.preventDefault();
+                }
+            } else {
+                alert("ข้อมูลไม่ครบ ...");
+                e.preventDefault();
+            }
         });
     }
-})
+});
 JS;
 $this->registerJs($scriptjs, static::POS_END);
 ?>
