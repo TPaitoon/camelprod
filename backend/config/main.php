@@ -47,7 +47,10 @@ return [
         ],
         'formatter' => [
             'dateFormat' => 'dd/MM/yyyy',
+            'datetimeFormat' => 'dd/MM/yyyy H:i:s',
+            'timeFormat' => 'H:i:s',
             'timeZone' => 'Asia/Bangkok',
+            'defaultTimeZone' => 'Asia/Bangkok'
         ],
         /*'urlManager' => [
             'enablePrettyUrl' => true,

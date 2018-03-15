@@ -20,8 +20,8 @@ function del(e) {
         type: 'post',
         url: link,
         async: false,
-        cache: false,
-    })
+        cache: false
+    });
 }
 
 $("#binfo").on("click", function (e) {

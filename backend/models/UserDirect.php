@@ -91,4 +91,14 @@ class UserDirect
         }
         return $usr;
     }
+
+    public function ChkusrForPTBMOnly()
+    {
+        $app = Yii::$app;
+        $usr = $this->Chkusr();
+        if ($usr !== 'PTBM' && $usr !== 'ITIT') {
+            return $app->response->redirect($app->homeUrl);
+        }
+        return $usr;
+    }
 }

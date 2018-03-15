@@ -2,6 +2,8 @@
 
 namespace backend\controllers;
 
+use backend\models\PtbmplanningSearch;
+use backend\models\UserDirect;
 use common\models\BOM1;
 use common\models\ItemData;
 use common\models\PRODSPECTIREASSY;
@@ -9,6 +11,7 @@ use common\models\PTBMPlanning;
 use Yii;
 use yii\helpers\Json;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 
 class PtbmplanningController extends Controller
 {
@@ -16,7 +19,16 @@ class PtbmplanningController extends Controller
 
     public function actionIndex()
     {
-        return $this->render('index');
+        $chk = new UserDirect();
+        $usr = $chk->ChkusrForPTBMOnly();
+
+        $searchModel = new PtbmplanningSearch();
+        $dataProvider = $searchModel->searchcreated();
+
+        return $this->render('index', [
+            'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel
+        ]);
     }
 
     public function actionCreate()
@@ -51,6 +63,23 @@ class PtbmplanningController extends Controller
         }
     }
 
+    public function actionDelete($id)
+    {
+        $obj = $this->findModel($id);
+        PTBMPlanning::deleteAll(["date" => $obj->date,"itemid" => $obj->itemid]);
+        Yii::$app->session->setFlash("res","ลบข้อมูลเรียบร้อยแล้ว");
+        return $this->redirect(["index"]);
+    }
+
+    private function findModel($id)
+    {
+        if (($model = PTBMPlanning::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException("The requested page does not exist.");
+        }
+    }
+
     public function actionGetcid()
     {
         $id = Yii::$app->request->post("id");
@@ -82,7 +111,7 @@ class PtbmplanningController extends Controller
         $id = $req->post("id");
         $date = $req->post("date");
         if (!empty($id) && !empty($date)) {
-            $query = PTBMPlanning::findAll(["itemid" => $id, "convert(date,date)" => date('Y-m-d',strtotime($date))]);
+            $query = PTBMPlanning::findAll(["itemid" => $id, "convert(date,date)" => date('Y-m-d', strtotime($date))]);
             return count($query);
         }
     }

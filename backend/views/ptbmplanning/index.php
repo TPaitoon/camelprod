@@ -1,17 +1,161 @@
 <?php
 /* @var $this yii\web\View */
 
+/* @var $dataProvider yii\data\ArrayDataProvider */
+
+use common\models\CheckStatusInfo;
 use yii\bootstrap\Html;
 use yii\bootstrap\Modal;
+use yii\grid\GridView;
+use yii\helpers\ArrayHelper;
 use yii\web\JqueryAsset;
 
+//print Yii::$app->getTimeZone();
 $this->title = "ใบสั่งจ่ายงาน";
 $this->params['breadcrumbs'][] = $this->title;
+$res = Yii::$app->session->getFlash("res");
 ?>
 <div class="ptbmplanning-index">
     <div class="panel">
         <div class="panel panel-heading">
-            <?= Html::a("เพิ่มข้อมูล", ["create"], ["class" => "btn btn-success bcreate"]) ?>
+            <?= $this->render("_search", ["model" => $searchModel]) ?>
+        </div>
+        <div class="panel panel-body">
+            <?= GridView::widget([
+                "dataProvider" => $dataProvider,
+                "pager" => [
+                    'firstPageLabel' => '<i class="fa fa-angle-double-left" aria-hidden="true"></i>',
+                    'nextPageLabel' => '<i class="fa fa-angle-right" aria-hidden="true"></i>',
+                    'lastPageLabel' => '<i class="fa fa-angle-double-right" aria-hidden="true"></i>',
+                    'prevPageLabel' => '<i class="fa fa-angle-left" aria-hidden="true"></i>'
+                ],
+                "options" => [
+                    "id" => "grid"
+                ],
+                "rowOptions" => function ($model) {
+                    return ["id" => ArrayHelper::getValue($model, "status")];
+                },
+                "columns" => [
+                    [
+                        "class" => "yii\grid\SerialColumn",
+                        "headerOptions" => [
+                            "class" => "text-center",
+                            "style" => "width:5%",
+                        ],
+                        "contentOptions" => [
+                            "class" => "text-center"
+                        ],
+                    ],
+                    [
+                        "class" => "yii\grid\CheckboxColumn",
+                        "headerOptions" => [
+                            "class" => "text-center",
+                            "style" => "width:5%",
+                        ],
+                        "contentOptions" => function ($model) {
+                            $id = ArrayHelper::getValue($model, "status");
+                            if ($id !== 0) {
+                                return ["class" => "text-center", "style" => "visibility: hidden"];
+                            } else {
+                                return ["class" => "text-center"];
+                            }
+                        }
+                    ],
+//                    "id:raw:id",
+                    [
+                        "attribute" => "wrno",
+                        "format" => "raw",
+                        "contentOptions" => [
+                            "class" => "text-center"
+                        ],
+                        "headerOptions" => [
+                            "class" => "text-center",
+                            "style" => "width:15%"
+                        ],
+                        "label" => "เลขที่"
+                    ],
+                    [
+                        "attribute" => "date",
+                        "format" => "datetime",
+                        "contentOptions" => [
+                            "class" => "text-center"
+                        ],
+                        "headerOptions" => [
+                            "class" => "text-center",
+                            "style" => "width:15%"
+                        ],
+                        "label" => "วันที่"
+                    ],
+                    [
+                        "attribute" => "itemid",
+                        "format" => "raw",
+                        "contentOptions" => [
+                            "class" => "text-center"
+                        ],
+                        "headerOptions" => [
+                            "class" => "text-center",
+                            "style" => "width:15%"
+                        ],
+                        "label" => "รหัสวัตถุดิบ"
+                    ],
+                    [
+                        "attribute" => "qty",
+                        "format" => "raw",
+                        "headerOptions" => [
+                            "class" => "text-center",
+                            "style" => "width:15%"
+                        ],
+                        "contentOptions" => [
+                            "class" => "text-center"
+                        ],
+                        "label" => "จำนวน"
+                    ],
+                    [
+                        "attribute" => "status",
+                        "format" => "raw",
+                        'headerOptions' => [
+                            'style' => 'width:10%',
+                            'class' => 'text-center'
+                        ],
+                        'contentOptions' => [
+                            'class' => 'text-center status'
+                        ],
+                        "value" => function ($model) {
+                            $id = ArrayHelper::getValue($model, "status");
+                            if ($id === 1) {
+                                $dis = "label label-primary";
+                            } else {
+                                $dis = "label label-warning";
+                            }
+                            $obj = CheckStatusInfo::findOne(["statusid" => $id]);
+                            return '<label class="' . $dis . '">' . $obj->name . '</label>';
+                        },
+                        "label" => "สถานะ"
+                    ],
+                    [
+                        "class" => "yii\grid\ActionColumn",
+                        "headerOptions" => [
+                            "class" => "text-center",
+                            "style" => "width:10%"
+                        ],
+                        "contentOptions" => [
+                            "class" => "text-center"
+                        ],
+                        "template" => "{update}{delete}",
+                        "buttons" => [
+                            "update" => function ($url, $model) {
+                                return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, []);
+                            },
+                            "delete" => function ($url) {
+                                return Html::a('<span class="glyphicon glyphicon-trash" onclick="checkDel($(this))"></span>', 'javascript:void(0)', ["data-url" => $url]);
+                            }
+                        ],
+                        "urlCreator" => function ($action, $model) {
+                            return "?r=ptbmplanning/" . $action . "&id=" . ArrayHelper::getValue($model, "id");
+                        }
+                    ],
+                ],
+            ]) ?>
         </div>
     </div>
 </div>
@@ -37,6 +181,20 @@ $(document).on("click",".bcreate",function(e) {
         cmodal.modal("show",{backdrop:"static",keyboard:true}).find(".modalContent").load($(this).attr("href"));
     }
 });
+
+function checkDel(e) {
+    if (confirm("ต้องการลบข้อมูล ?")) {
+        $.ajax({
+            type: "post",
+            url: e.parent().attr("data-url"),
+            async: false,
+            cache: false
+        });
+    }
+}
+
+var txt = "$res";
+if (txt !== "") { alert(txt); }
 JS;
 $this->registerJs($modeljs, static::POS_END);
 ?>
