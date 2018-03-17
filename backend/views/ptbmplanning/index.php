@@ -3,6 +3,9 @@
 
 /* @var $dataProvider yii\data\ArrayDataProvider */
 
+/* @var $searchModel PtbmplanningSearch */
+
+use backend\models\PtbmplanningSearch;
 use common\models\CheckStatusInfo;
 use yii\bootstrap\Html;
 use yii\bootstrap\Modal;
@@ -14,6 +17,31 @@ use yii\web\JqueryAsset;
 $this->title = "ใบสั่งจ่ายงาน";
 $this->params['breadcrumbs'][] = $this->title;
 $res = Yii::$app->session->getFlash("res");
+
+$datear = [];
+$itemar = [];
+$o = \common\models\PTBMPlanning::findAll(["status" => 0]);
+$c = 0;
+foreach ($o as $item) {
+    for ($i = 0; $i < count($o); $i++) {
+        if (empty($datear) && empty($itemar)) {
+            array_push($datear, $item->date);
+            array_push($itemar, $item->itemid);
+        } else {
+            if (!in_array($item->date, $datear) && !in_array($item->itemid, $itemar)) {
+                array_push($datear, $item->date);
+                array_push($itemar, $item->itemid);
+            }
+        }
+    }
+}
+
+for ($z = 0; $z < count($datear); $z++) {
+    $base = \common\models\PTBMPlanning::find()->where(["itemid" => $itemar[$z], "date" =>$datear[$z]])->count();
+    print $base;
+}
+print_r($datear);
+print_r($itemar);
 ?>
 <div class="ptbmplanning-index">
     <div class="panel">
@@ -143,8 +171,11 @@ $res = Yii::$app->session->getFlash("res");
                         ],
                         "template" => "{update}{delete}",
                         "buttons" => [
-                            "update" => function ($url, $model) {
-                                return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, []);
+                            "update" => function ($url) {
+                                return Html::a('<span class="glyphicon glyphicon-pencil"></span>', 'javascript:void(0)', [
+                                    "class" => "bupdate",
+                                    "data-url" => $url
+                                ]);
                             },
                             "delete" => function ($url) {
                                 return Html::a('<span class="glyphicon glyphicon-trash" onclick="checkDel($(this))"></span>', 'javascript:void(0)', ["data-url" => $url]);
@@ -171,6 +202,14 @@ Modal::begin([
 echo "<div class='modalContent'></div>";
 Modal::end();
 
+Modal::begin([
+    "id" => "update-modal",
+    "size" => "modal-lg",
+    "header" => "<h4>แก้ไขข้อมูล</h4>"
+]);
+echo "<div class='modalContent'></div>";
+Modal::end();
+
 $modeljs = <<<JS
 $(document).on("click",".bcreate",function(e) {
     e.preventDefault();
@@ -179,6 +218,16 @@ $(document).on("click",".bcreate",function(e) {
         cmodal.find(".modalContent").load($(this).attr("href"));
     } else {
         cmodal.modal("show",{backdrop:"static",keyboard:true}).find(".modalContent").load($(this).attr("href"));
+    }
+});
+$(document).on("click",".bupdate",function() {
+    // e.preventDefault();
+    // alert($(this).attr("data-url"));
+    var cmodal = $("#update-modal");
+    if (cmodal.hasClass("in")) {
+        cmodal.find(".modalContent").load($(this).attr("data-url"));
+    } else {
+        cmodal.modal("show",{backdrop:"static",keyboard:true}).find(".modalContent").load($(this).attr("data-url"));
     }
 });
 

@@ -22,8 +22,13 @@ class PtbmplanningController extends Controller
         $chk = new UserDirect();
         $usr = $chk->ChkusrForPTBMOnly();
 
+        $req = Yii::$app->request;
         $searchModel = new PtbmplanningSearch();
-        $dataProvider = $searchModel->searchcreated();
+        if ($req->isGet && isset($req->queryParams["PtbmplanningSearch"]["startdate"])) {
+            $dataProvider = $searchModel->search($req->queryParams);
+        } else {
+            $dataProvider = $searchModel->searchcreated();
+        }
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
@@ -63,11 +68,64 @@ class PtbmplanningController extends Controller
         }
     }
 
+    public function actionUpdate($id)
+    {
+        $obj = $this->findModel($id);
+        $query = PTBMPlanning::findAll(["date" => $obj->date, "itemid" => $obj->itemid]);
+        $model = new PTBMPlanning();
+        $cnt = 0;
+        $recid = null;
+        $citemidesc = null;
+        foreach ($query as $item) {
+            $recid == "" ? $recid = $recid . $item->id : $recid = $recid . "," . $item->id;
+            $citemidesc == "" ? $citemidesc = $citemidesc . $item->child_itemid . ":" . $item->child_desc : $citemidesc = $citemidesc . "," . $item->child_itemid . ":" . $item->child_desc;
+            $cnt++;
+            if ($cnt === count($obj)) {
+                $model->wrno = $item->wrno;
+                $model->date = $item->date;
+                $model->asset = $item->asset;
+                $model->group = $item->group;
+                $model->itemid = $item->itemid;
+                $model->desc = $item->desc;
+                $model->assy_Weight = $item->assy_Weight;
+                $model->assy_Frame = $item->assy_Frame;
+                $model->qty = $item->qty;
+            }
+        }
+        $model->c_itemiddesc = $citemidesc;
+        $model->recid = $recid;
+        if ($model->load(Yii::$app->request->post())) {
+            $rid = explode(",", $model->recid);
+            $citemid = Yii::$app->request->post("itemid");
+            $cdesc = Yii::$app->request->post("desc");
+            for ($i = 0; $i < count($rid); $i++) {
+                $up = PTBMPlanning::findOne(["id" => $rid[$i]]);
+                $up->wrno = $model->wrno;
+                $up->date = $model->date;
+                $up->asset = $model->asset;
+                $up->group = $model->group;
+                $up->itemid = $model->itemid;
+                $up->child_itemid = $citemid[$i];
+                $up->child_desc = $cdesc[$i];
+                $up->desc = $model->desc;
+                $up->assy_Frame = $model->assy_Frame;
+                $up->assy_Weight = $model->assy_Weight;
+                $up->qty = $model->qty;
+                $up->status = 0;
+                $up->save(false);
+            }
+            return $this->redirect(["index"]);
+//            print_r($model);
+        } else {
+            return $this->renderAjax("update", ["model" => $model, "statusinfo" => 1]);
+        }
+    }
+
     public function actionDelete($id)
     {
         $obj = $this->findModel($id);
-        PTBMPlanning::deleteAll(["date" => $obj->date,"itemid" => $obj->itemid]);
-        Yii::$app->session->setFlash("res","ลบข้อมูลเรียบร้อยแล้ว");
+        PTBMPlanning::deleteAll(["date" => $obj->date, "itemid" => $obj->itemid]);
+        Yii::$app->session->setFlash("res", "ลบข้อมูลเรียบร้อยแล้ว");
         return $this->redirect(["index"]);
     }
 

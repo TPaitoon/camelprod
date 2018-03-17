@@ -22,16 +22,19 @@ date_default_timezone_set("Asia/Bangkok");
 /* @var $form yii\widgets\ActiveForm */
 $itemid = ItemData::findAll(["ITEMBUYERGROUPID" => "PTBM"]);
 //print $statusinfo;
+//print_r($model);
 ?>
     <div class="ptbmplanning-form">
         <input hidden class="statusinfo" value="<?= $statusinfo ?>">
+        <input hidden class="c_itemddesc" value="<?= ArrayHelper::getValue($model, 'c_itemiddesc') ?>">
+        <input hidden class="recid" value="<?= ArrayHelper::getValue($model, 'recid') ?>">
         <?php $form = ActiveForm::begin() ?>
         <div class="row">
             <div class="col-lg-2">
                 <?php $model->wrno == "" ? $model->wrno = date('dmy') : $model->wrno ?>
                 <?= $form->field($model, 'wrno')->textInput(['readonly' => true, 'id' => 'wrno'])->label("เลขที่") ?>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-4">
                 <?php $model->date == "" ? $model->date = date('Y-m-d H:i:s') : $model->date ?>
                 <?= $form->field($model, 'date')->widget(DateTimePicker::className(), [
                     "name" => "datepk",
@@ -73,7 +76,8 @@ $itemid = ItemData::findAll(["ITEMBUYERGROUPID" => "PTBM"]);
                 ])->label("รหัสวัตถุดิบ") ?>
             </div>
             <div class="col-lg-3">
-                <?= $form->field($model, 'qty')->textInput(["onkeypress" => "return chknumber(event);", "value" => 0, "id" => "qty"])
+                <?php $model->qty == "" ? $model->qty = 0 : $model->qty ?>
+                <?= $form->field($model, 'qty')->textInput(["onkeypress" => "return chknumber(event);", "id" => "qty"])
                     ->label("จำนวนผลิต") ?>
             </div>
         </div>
@@ -206,7 +210,13 @@ var btnsave = $("#btnsave");
 var date = $("#date");
 var asset = $("#asset");
 var qty = $("#qty");
+var statusinfo = $(".statusinfo");
 
+qty.on("click",function() {
+    if ($(this).val() === "0") { $(this).val(""); } else { $(this).select(); }
+}).on("focusout",function() {
+    if ($(this).val() === "") { $(this).val(0); }
+});
 itemid.select2()
 .on("select2:opening",function() {
     $("#create-modal").removeAttr("tabindex","-1");
@@ -270,7 +280,7 @@ itemid.on("change",function() {
         });
     } else {
         var fBody = $(".ptbmplanning-form").find(".listitemid");
-        var fLast = fBody.find("tr:last");
+        var fLast;
         var fLaststr, fNew;
         fLast = fBody.find("tr:last");
         fNew = fLast.clone();
@@ -286,6 +296,36 @@ itemid.on("change",function() {
         $("#desc").val("");
     }
 });
+
+if (parseInt(statusinfo.val()) === 1) {
+    $("#assyFD").val(parseInt($("#assyF").val()) + 20);
+    var cdesc = $(".c_itemddesc");
+    // alert(cdesc.val());
+    var fstr = cdesc.val().split(",");
+    for (var i = 0; i < fstr.length; i++) {
+        // alert(fstr[i]);
+        var sstr = fstr[i].split(":");
+        var fBody = $(".ptbmplanning-form").find(".listitemid");
+        var fLast = fBody.find("tr:last");
+        var fLaststr = fLast.closest("tr");
+        var fNew;
+        if (fLaststr.find(".itemid").val() === "") {
+            fLaststr.find(".itemid").val(sstr[0]);
+            fLaststr.find(".description").val(sstr[1]);
+        } else {
+            fLast = fBody.find("tr:last");
+            fNew = fLast.clone();
+            fLast.after(fNew);
+            fLast = fBody.find("tr:last");
+            fLaststr = fLast.closest("tr");
+            fNew.find("id input:text").each(function() {
+                $(this).val();
+            });
+            fLaststr.find(".itemid").val(sstr[0]);
+            fLaststr.find(".description").val(sstr[1]);
+        }
+    }
+}
 
 date.on("change",function() {
     var d = new Date(date.val());

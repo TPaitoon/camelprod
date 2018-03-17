@@ -22,6 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 <?php
 /* @var $this yii\web\View */
+/* @var $model \backend\models\PIBIDetail */
 $baseurl = Yii::$app->request->baseUrl;
 $this->registerJsFile($baseurl . "/js/pibi/editline.js?Ver=0001", ["depends" => JqueryAsset::className()]);
 ?>

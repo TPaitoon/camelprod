@@ -23,6 +23,8 @@ use Yii;
  */
 class PTBMPlanning extends \yii\db\ActiveRecord
 {
+    public $c_itemiddesc, $recid;
+
     /**
      * @inheritdoc
      */
@@ -39,7 +41,7 @@ class PTBMPlanning extends \yii\db\ActiveRecord
         return [
             [['wrno', 'itemid', 'child_itemid', 'assy_Frame', 'qty', 'status'], 'integer'],
             [['date'], 'safe'],
-            [['asset', 'group', 'desc', 'child_desc'], 'string'],
+            [['asset', 'group', 'desc', 'child_desc', 'c_itemdesc', 'c_itemid', 'recid'], 'string'],
             [['assy_Weight'], 'number'],
         ];
     }

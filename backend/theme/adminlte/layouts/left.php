@@ -100,7 +100,7 @@
                                 ]
                             ],
                     ],
-                    ['label' => 'ประกอบยางใน', 'url' => '#', 'icon' => 'home', 'visible' => $pibi,
+                    ['label' => 'ประกอบยางใน', 'url' => '#', 'icon' => 'home', 'visible' => $it,
                         'items' =>
                             [
                                 ['label' => 'ออกยางแทน', 'url' => '#', 'icon' => 'chevron-circle-right',

@@ -46,9 +46,29 @@ class PtbmplanningSearch extends PTBMPlanning
         $temp = [];
         $cnt = 0;
 
+        $datear = [];
+        $itemar = [];
+
+        foreach ($query as $item) {
+            for ($i = 0; $i < count($query); $i++) {
+                if (empty($datear) && empty($itemar)) {
+                    array_push($datear, $item->date);
+                    array_push($itemar, $item->itemid);
+                } else {
+                    if (!in_array($item->date, $datear) && !in_array($item->itemid, $itemar)) {
+                        array_push($datear, $item->date);
+                        array_push($itemar, $item->itemid);
+                    }
+                }
+            }
+        }
+
+//        for ($i =0; $i < count($datear); $i++) {
+//            $base = PTBMPlanning::find()->where(["itemid" => $itemar[$i], "date" =>$item->date])->count();
+//        }
         foreach ($query as $item) {
             $cnt++;
-            if ($cnt === 4) {
+            if ($cnt === $base) {
                 array_push($temp, [
                     "id" => $item->id,
                     "wrno" => $item->wrno,
@@ -73,14 +93,15 @@ class PtbmplanningSearch extends PTBMPlanning
             $this->startdate && $this->enddate = date('Y-m-d');
         }
         $this->load($params);
-        $query = PTBMPlanning::findAll([["like", "itemid", $this->itemid], [">=", "convert(date,date)", $this->startdate], ["<=", "convert(date,date)", $this->enddate]]);
+        $query = PTBMPlanning::find()->andFilterWhere(["and", [">=", "convert(date,date)", $this->startdate], ["<=", "convert(date,date)", $this->enddate], ["like", "itemid", $this->itemid]])->all();
         $temp = [];
         $cnt = 0;
+        $base = 0;
         foreach ($query as $item) {
             $cnt++;
-            if ($cnt === 4) {
+            if ($cnt === $base) {
                 array_push($temp, [
-                    "id" => $item->itemid,
+                    "id" => $item->id,
                     "wrno" => $item->wrno,
                     "date" => $item->date,
                     "itemid" => $item->itemid,
@@ -92,5 +113,15 @@ class PtbmplanningSearch extends PTBMPlanning
         }
         $dataProvider = new ArrayDataProvider(["allModels" => $temp]);
         return $dataProvider;
+    }
+
+    private function findArrayData($id, $type)
+    {
+        $obj = PTBMPlanning::findOne(["id" => $id]);
+        if ($type === 1) {
+            return $obj->itemid;
+        } else if ($type === 2) {
+            return $obj->date;
+        }
     }
 }
