@@ -48,27 +48,9 @@ class PtbmplanningSearch extends PTBMPlanning
 
         $datear = [];
         $itemar = [];
-
-        foreach ($query as $item) {
-            for ($i = 0; $i < count($query); $i++) {
-                if (empty($datear) && empty($itemar)) {
-                    array_push($datear, $item->date);
-                    array_push($itemar, $item->itemid);
-                } else {
-                    if (!in_array($item->date, $datear) && !in_array($item->itemid, $itemar)) {
-                        array_push($datear, $item->date);
-                        array_push($itemar, $item->itemid);
-                    }
-                }
-            }
-        }
-
-//        for ($i =0; $i < count($datear); $i++) {
-//            $base = PTBMPlanning::find()->where(["itemid" => $itemar[$i], "date" =>$item->date])->count();
-//        }
         foreach ($query as $item) {
             $cnt++;
-            if ($cnt === $base) {
+            if ($cnt === 4) {
                 array_push($temp, [
                     "id" => $item->id,
                     "wrno" => $item->wrno,
