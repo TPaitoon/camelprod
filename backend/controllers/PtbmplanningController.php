@@ -8,6 +8,7 @@ use common\models\BOM1;
 use common\models\ItemData;
 use common\models\PRODSPECTIREASSY;
 use common\models\PTBMPlanning;
+use Exception;
 use Yii;
 use yii\helpers\Json;
 use yii\web\Controller;
@@ -171,6 +172,33 @@ class PtbmplanningController extends Controller
         if (!empty($id) && !empty($date)) {
             $query = PTBMPlanning::findAll(["itemid" => $id, "convert(date,date)" => date('Y-m-d', strtotime($date))]);
             return count($query);
+        }
+    }
+
+    public function actionSetapproved()
+    {
+        $getData = Yii::$app->request->post("data");
+        $ls = [];
+        if (!empty($getData)) {
+            for ($i = 0; $i < count($getData); $i++) {
+                if (strlen($getData[$i]) == 1) {
+                    continue;
+                } else {
+                    $temp = explode(":", $getData[$i]);
+                    array_push($ls, $temp[0]);
+                }
+            }
+            for ($x = 0; $x < count($ls); $x++) {
+                try {
+                    $obj = PTBMPlanning::findOne(["id" => $ls[$x]]);
+                    PTBMPlanning::updateAll(["status" => 2], ["itemid" => $obj->itemid, "date" => $obj->date]);
+                } catch (Exception $exception) {
+                    return 0;
+                }
+            }
+            return 1;
+        } else {
+            return 0;
         }
     }
 }

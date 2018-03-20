@@ -17,31 +17,6 @@ use yii\web\JqueryAsset;
 $this->title = "ใบสั่งจ่ายงาน";
 $this->params['breadcrumbs'][] = $this->title;
 $res = Yii::$app->session->getFlash("res");
-
-$datear = [];
-$itemar = [];
-$o = \common\models\PTBMPlanning::findAll(["status" => 0]);
-$c = 0;
-foreach ($o as $item) {
-    for ($i = 0; $i < count($o); $i++) {
-        if (empty($datear) && empty($itemar)) {
-            array_push($datear, $item->date);
-            array_push($itemar, $item->itemid);
-        } else {
-            if (!in_array($item->date, $datear) && !in_array($item->itemid, $itemar)) {
-                array_push($datear, $item->date);
-                array_push($itemar, $item->itemid);
-            }
-        }
-    }
-}
-
-for ($z = 0; $z < count($datear); $z++) {
-    $base = \common\models\PTBMPlanning::find()->where(["itemid" => $itemar[$z], "date" =>$datear[$z]])->count();
-    print $base;
-}
-print_r($datear);
-print_r($itemar);
 ?>
 <div class="ptbmplanning-index">
     <div class="panel">
@@ -87,6 +62,10 @@ print_r($itemar);
                             } else {
                                 return ["class" => "text-center"];
                             }
+                        },
+                        "checkboxOptions" => function ($model) {
+                            $id = ArrayHelper::getValue($model, "id").":";
+                            return ["value" => $id];
                         }
                     ],
 //                    "id:raw:id",
@@ -150,8 +129,8 @@ print_r($itemar);
                         ],
                         "value" => function ($model) {
                             $id = ArrayHelper::getValue($model, "status");
-                            if ($id === 1) {
-                                $dis = "label label-primary";
+                            if ($id === 2) {
+                                $dis = "label label-success";
                             } else {
                                 $dis = "label label-warning";
                             }
@@ -227,8 +206,15 @@ $(document).on("click",".bupdate",function() {
     if (cmodal.hasClass("in")) {
         cmodal.find(".modalContent").load($(this).attr("data-url"));
     } else {
-        cmodal.modal("show",{backdrop:"static",keyboard:true}).find(".modalContent").load($(this).attr("data-url"));
+        cmodal.modal({backdrop:'static',keyboard:false, show:true}).find(".modalContent").load($(this).attr("data-url"));
     }
+});
+
+$("#create-modal").on("hidden.bs.modal", function(){
+    location.reload();
+});
+$("#update-modal").on("hidden.bs.modal", function(){
+    location.reload();
 });
 
 function checkDel(e) {
@@ -241,6 +227,30 @@ function checkDel(e) {
         });
     }
 }
+
+$("#binfo").on("click",function(e) {
+    e.preventDefault();
+    var dataar = $("input[type=checkbox]:checked").map(function() {
+        return $(this).val();
+    }).get();
+    // alert(dataar);
+    if (confirm("ยืนยันข้อมูล ?")) {
+        $.ajax({
+            type: "post",
+            url: "?r=ptbmplanning/setapproved",
+            data: {data: dataar},
+            dataType: "json",
+            success: function(data) {
+                if (data === 0) {
+                    alert("บันทึกถูกยกเลิก");
+                } else {
+                    alert("บันทึกเรียบร้อยแล้ว");
+                    location = "?r=ptbmplanning";
+                }
+            }
+        });
+    }
+});
 
 var txt = "$res";
 if (txt !== "") { alert(txt); }

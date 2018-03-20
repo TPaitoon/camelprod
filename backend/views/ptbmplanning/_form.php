@@ -338,7 +338,7 @@ btnsave.on("click",function(e) {
             // alert(data);
             // alert("statusinfo : " + $(".statusinfo").val());
             // e.preventDefault(); // wait edit
-            if (itemid.val() !== "" && qty.val() !== "" && asset.val() !== "" && qty.val() !== 0) {
+            if (itemid.val() !== "" && qty.val() !== "" && qty.val() !== 0) {
                 if (parseInt($(".statusinfo").val()) === 0 && parseInt(data) > 0) {
                     alert("มีข้อมูลแล้ว ...");
                     e.preventDefault();
