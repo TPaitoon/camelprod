@@ -117,7 +117,7 @@ class BominfoController extends Controller
                 $model->listid = $recid;
             }
         }
-        return $this->render('view', ['model' => $model]);
+        return $this->renderAjax('view', ['model' => $model]);
     }
 
     /**

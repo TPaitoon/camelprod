@@ -45,31 +45,14 @@ class PtbmplanningSearch extends PTBMPlanning
         $query = PTBMPlanning::findAll(["status" => 0]);
         $temp = [];
 
-        $datear = [];
-        $itemar = [];
         foreach ($query as $item) {
-            for ($i = 0; $i < count($query); $i++) {
-                if (empty($datear) && empty($itemar)) {
-                    array_push($datear, $item->date);
-                    array_push($itemar, $item->itemid);
-                } else {
-                    if (!in_array($item->date, $datear) && !in_array($item->itemid, $itemar)) {
-                        array_push($datear, $item->date);
-                        array_push($itemar, $item->itemid);
-                    }
-                }
-            }
-        }
-
-        for ($z = 0; $z < count($datear); $z++) {
-            $base = PTBMPlanning::findOne(["itemid" => $itemar[$z], "date" => $datear[$z]]);
             array_push($temp, [
-                "id" => $base->id,
-                "wrno" => $base->wrno,
-                "date" => $base->date,
-                "itemid" => $base->itemid,
-                "qty" => $base->qty,
-                "status" => $base->status,
+                "id" => $item->id,
+                "wrno" => $item->wrno,
+                "date" => $item->date,
+                "itemid" => $item->itemid,
+                "qty" => $item->qty,
+                "status" => $item->status,
             ]);
         }
 
@@ -87,32 +70,14 @@ class PtbmplanningSearch extends PTBMPlanning
         $this->load($params);
         $query = PTBMPlanning::find()->andFilterWhere(["and", [">=", "convert(date,date)", $this->startdate], ["<=", "convert(date,date)", $this->enddate], ["like", "itemid", $this->itemid]])->all();
         $temp = [];
-        $cnt = 0;
-        $datear = [];
-        $itemar = [];
         foreach ($query as $item) {
-            for ($i = 0; $i < count($query); $i++) {
-                if (empty($datear) && empty($itemar)) {
-                    array_push($datear, $item->date);
-                    array_push($itemar, $item->itemid);
-                } else {
-                    if (!in_array($item->date, $datear) && !in_array($item->itemid, $itemar)) {
-                        array_push($datear, $item->date);
-                        array_push($itemar, $item->itemid);
-                    }
-                }
-            }
-        }
-
-        for ($z = 0; $z < count($datear); $z++) {
-            $base = PTBMPlanning::findOne(["itemid" => $itemar[$z], "date" => $datear[$z]]);
             array_push($temp, [
-                "id" => $base->id,
-                "wrno" => $base->wrno,
-                "date" => $base->date,
-                "itemid" => $base->itemid,
-                "qty" => $base->qty,
-                "status" => $base->status,
+                "id" => $item->id,
+                "wrno" => $item->wrno,
+                "date" => $item->date,
+                "itemid" => $item->itemid,
+                "qty" => $item->qty,
+                "status" => $item->status,
             ]);
         }
         $dataProvider = new ArrayDataProvider(["allModels" => $temp]);

@@ -1,6 +1,7 @@
 <?php
 
 use backend\models\CheckDebug;
+use yii\bootstrap\Modal;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\grid\GridView;
@@ -164,7 +165,11 @@ if ($Role == 'ITIT' || $Role == 'PSPS') {
                             'template' => '{view} {update} {delete}',
                             'buttons' => [
                                 'view' => function ($url, $model) {
-                                    return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', $url, []);
+                                    return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', 'javascript:void(0)', [
+                                        'id' => 'viewmodal',
+                                        'data-url' => $url,
+                                        'value' => ArrayHelper::getValue($model, 'role') . ":" . ArrayHelper::getValue($model, 'empid') . "|" . ArrayHelper::getValue($model, 'date') . '|' . ArrayHelper::getValue($model, 'stoveid')
+                                    ]);
                                 },
                                 'update' => function ($url, $model) {
                                     if (ArrayHelper::getValue($model, 'check') == 'Created') {
@@ -199,11 +204,53 @@ if ($Role == 'ITIT' || $Role == 'PSPS') {
         </div>
     </div>
 <?php
+Modal::begin([
+    "id" => "modal-view",
+    "size" => "modal-lg",
+    "header" => "<h4>รายละเอียด</h4>"
+]);
+echo "<div class='modalContent'></div>";
+echo "<div class='modal-footer' style='text-align: center'>
+            <button type='button' class='btn btn-success approved' style='width: 300px'>ยืนยันข้อมูล</button>
+</div>";
+Modal::end();
+
 $baseurl = Yii::$app->request->baseUrl;
 $this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => JqueryAsset::className()]);
-$this->registerJs('
-var txt = "' . $res . '";
-if (txt !== ""){
-alert(txt);
-}', static::POS_END);
+$js = <<<JS
+    var txt = "$res";
+    if (txt !== "") {
+        alert(txt);
+    }
+    
+    $(document).on("click","#viewmodal",function() {
+        // alert(1234567890);
+        var x = $(this).attr("value");
+        var str = x.split(":");
+        var modalv = $("#modal-view");
+        if (modalv.hasClass("in")) {
+            modalv.find(".modalContent").load($(this).attr("data-url"));
+            if (str[0] !== '0') {
+                modalv.find(".modal-footer").hide();
+            } else {
+                modalv.find(".modal-footer").show();
+                modalv.find(".approved").val(str[1]);
+            }
+        } else {
+            modalv.modal("show").find(".modalContent").load($(this).attr("data-url"));
+            if (str[0] !== '0') {
+                modalv.find(".modal-footer").hide();
+            } else {
+                modalv.find(".modal-footer").show();
+                modalv.find(".approved").val(str[1]);
+            }
+        }
+    });
+    
+    $("#modal-view").on("hidden.bs.modal",function() {
+        location.reload();
+    });
+
+JS;
+$this->registerJs($js, static::POS_END);
 ?>

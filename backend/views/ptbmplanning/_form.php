@@ -26,8 +26,6 @@ $itemid = ItemData::findAll(["ITEMBUYERGROUPID" => "PTBM"]);
 ?>
     <div class="ptbmplanning-form">
         <input hidden class="statusinfo" value="<?= $statusinfo ?>">
-        <input hidden class="c_itemddesc" value="<?= ArrayHelper::getValue($model, 'c_itemiddesc') ?>">
-        <input hidden class="recid" value="<?= ArrayHelper::getValue($model, 'recid') ?>">
         <?php $form = ActiveForm::begin() ?>
         <div class="row">
             <div class="col-lg-2">
@@ -86,16 +84,16 @@ $itemid = ItemData::findAll(["ITEMBUYERGROUPID" => "PTBM"]);
         </div>
         <div class="row">
             <div class="col-lg-3">
-                <?= $form->field($model, 'desc')->textInput(["readonly" => true, "id" => "desc"])->label("ลักษณะยาง") ?>
+                <?= $form->field($model, 'desc')->textInput(["readonly" => true, "id" => "desc", "value" => ""])->label("ลักษณะยาง") ?>
             </div>
             <div class="col-lg-3">
-                <?= $form->field($model, 'assy_Frame')->textInput(["readonly" => true, "id" => "assyF"])->label("ขนาดวงล้อ (+/- 2 mm)") ?>
+                <?= $form->field($model, 'assy_Frame')->textInput(["readonly" => true, "id" => "assyF", "value" => 0])->label("ขนาดวงล้อ (+/- 2 mm)") ?>
             </div>
             <div class="col-lg-3">
                 <?= $form->field($model, 'assy_FrameDummy')->textInput(["readonly" => true, "id" => "assyFD", "value" => 0])->label("ประกอบเสร็จ (+/- 2 mm)") ?>
             </div>
             <div class="col-lg-3">
-                <?= $form->field($model, 'assy_Weight')->textInput(["readonly" => true, "id" => "assyW"])->label("น้ำหนักรวม (+/- 0.06kg)") ?>
+                <?= $form->field($model, 'assy_Weight')->textInput(["readonly" => true, "id" => "assyW", "value" => 0])->label("น้ำหนักรวม (+/- 0.06kg)") ?>
             </div>
         </div>
         <div class="row">
@@ -184,49 +182,8 @@ function getCount(id,date) {
     });
     return x;
 }
-function pad(num) {
-    var x;
-    if (num < 10) {
-        x = "0" + num;
-    } else if (num.toString().length > 2) {
-        x = num.toString().substr(-2);
-    } else {
-        x = num.toString();
-    }
-    return x;
-}
-
-$(document).ready(function() {
-    var assyF = $("#assyF");
-    var assyW = $("#assyW");
-    if (assyF.val() === "" && assyW.val() === "") {
-        assyF.val(0);
-        assyW.val(0);
-    }
-    // alert($("#date").val());
-});
-var itemid = $("#itemids");
-var btnsave = $("#btnsave");
-var date = $("#date");
-var asset = $("#asset");
-var qty = $("#qty");
-var statusinfo = $(".statusinfo");
-
-qty.on("click",function() {
-    if ($(this).val() === "0") { $(this).val(""); } else { $(this).select(); }
-}).on("focusout",function() {
-    if ($(this).val() === "") { $(this).val(0); }
-});
-itemid.select2()
-.on("select2:opening",function() {
-    $("#create-modal").removeAttr("tabindex","-1");
-})
-.on("select2:close",function() {
-    $("#create-modal").attr("tabindex","1");
-});
-itemid.on("change",function() {
-    // alert(itemid.val());
-    if (itemid.val() !== "") {
+function getDetail(status) {
+    if (status === 0) {
         // alert(getId(itemid.val()));
         $.when(getcId(itemid.val())).done(function(data) {
             // alert(data.length);
@@ -279,6 +236,7 @@ itemid.on("change",function() {
             $("#assyW").val(obj[2]);
         });
     } else {
+        alert(123456);
         var fBody = $(".ptbmplanning-form").find(".listitemid");
         var fLast;
         var fLaststr, fNew;
@@ -295,36 +253,54 @@ itemid.on("change",function() {
         $("#assyW").val(0);
         $("#desc").val("");
     }
+}
+function pad(num) {
+    var x;
+    if (num < 10) {
+        x = "0" + num;
+    } else if (num.toString().length > 2) {
+        x = num.toString().substr(-2);
+    } else {
+        x = num.toString();
+    }
+    return x;
+}
+
+$(document).ready(function() {
+    var assyF = $("#assyF");
+    var assyW = $("#assyW");
+    if (assyF.val() === "" && assyW.val() === "") {
+        assyF.val(0);
+        assyW.val(0);
+    }
+    // alert($("#date").val());
+});
+var itemid = $("#itemids");
+var btnsave = $("#btnsave");
+var date = $("#date");
+var asset = $("#asset");
+var qty = $("#qty");
+var statusinfo = $(".statusinfo");
+
+qty.on("click",function() {
+    if ($(this).val() === "0") { $(this).val(""); } else { $(this).select(); }
+}).on("focusout",function() {
+    if ($(this).val() === "") { $(this).val(0); }
+});
+itemid.select2()
+.on("select2:opening",function() {
+    $("#create-modal").removeAttr("tabindex","-1");
+})
+.on("select2:close",function() {
+    $("#create-modal").attr("tabindex","1");
+});
+itemid.on("change",function() {
+    // alert(itemid.val());
+    getDetail(0);
 });
 
-if (parseInt(statusinfo.val()) === 1) {
-    $("#assyFD").val(parseInt($("#assyF").val()) + 20);
-    var cdesc = $(".c_itemddesc");
-    // alert(cdesc.val());
-    var fstr = cdesc.val().split(",");
-    for (var i = 0; i < fstr.length; i++) {
-        // alert(fstr[i]);
-        var sstr = fstr[i].split(":");
-        var fBody = $(".ptbmplanning-form").find(".listitemid");
-        var fLast = fBody.find("tr:last");
-        var fLaststr = fLast.closest("tr");
-        var fNew;
-        if (fLaststr.find(".itemid").val() === "") {
-            fLaststr.find(".itemid").val(sstr[0]);
-            fLaststr.find(".description").val(sstr[1]);
-        } else {
-            fLast = fBody.find("tr:last");
-            fNew = fLast.clone();
-            fLast.after(fNew);
-            fLast = fBody.find("tr:last");
-            fLaststr = fLast.closest("tr");
-            fNew.find("id input:text").each(function() {
-                $(this).val();
-            });
-            fLaststr.find(".itemid").val(sstr[0]);
-            fLaststr.find(".description").val(sstr[1]);
-        }
-    }
+if (statusinfo.val() === "1" && itemid.val() !== "") {
+    getDetail(0);    
 }
 
 date.on("change",function() {

@@ -18,12 +18,7 @@ class m180309_024732_create_USRP_PTBMPlanning_table extends Migration
             'date' => $this->dateTime(),
             'asset' => $this->string(),
             'group' => $this->string(),
-            'itemid' => $this->integer(),
-            'child_itemid' => $this->integer(),
-            'child_desc' => $this->string(),
-            'desc' => $this->string(),
-            'assy_Frame' => $this->integer(),
-            'assy_Weight' => $this->float(),
+            'itemid' => $this->string(),
             'qty' => $this->integer(),
             'status' => $this->integer()
         ]);

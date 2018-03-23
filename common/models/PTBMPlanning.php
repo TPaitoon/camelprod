@@ -12,19 +12,12 @@ use Yii;
  * @property string $date
  * @property string $asset
  * @property string $group
- * @property integer $itemid
- * @property integer $child_itemid
- * @property string $desc
- * @property integer $assy_Frame
- * @property double $assy_Weight
+ * @property string $itemid
  * @property integer $qty
  * @property integer $status
- * @property string $child_desc
  */
 class PTBMPlanning extends \yii\db\ActiveRecord
 {
-    public $c_itemiddesc, $recid;
-
     /**
      * @inheritdoc
      */
@@ -39,10 +32,9 @@ class PTBMPlanning extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['wrno', 'itemid', 'child_itemid', 'assy_Frame', 'qty', 'status'], 'integer'],
+            [['wrno', 'qty', 'status'], 'integer'],
             [['date'], 'safe'],
-            [['asset', 'group', 'desc', 'child_desc', 'c_itemdesc', 'c_itemid', 'recid'], 'string'],
-            [['assy_Weight'], 'number'],
+            [['asset', 'group', 'itemid'], 'string'],
         ];
     }
 
@@ -58,13 +50,8 @@ class PTBMPlanning extends \yii\db\ActiveRecord
             'asset' => 'Asset',
             'group' => 'Group',
             'itemid' => 'Itemid',
-            'child_itemid' => 'Child Itemid',
-            'desc' => 'Desc',
-            'assy_Frame' => 'Assy  Frame',
-            'assy_Weight' => 'Assy  Weight',
             'qty' => 'Qty',
             'status' => 'Status',
-            'child_desc' => 'Child Desc',
         ];
     }
 }
