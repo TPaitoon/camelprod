@@ -168,7 +168,7 @@ if ($Role == 'ITIT' || $Role == 'PSPS') {
                                     return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', 'javascript:void(0)', [
                                         'id' => 'viewmodal',
                                         'data-url' => $url,
-                                        'value' => ArrayHelper::getValue($model, 'role') . ":" . ArrayHelper::getValue($model, 'empid') . "|" . ArrayHelper::getValue($model, 'date') . '|' . ArrayHelper::getValue($model, 'stoveid')
+                                        'value' => ArrayHelper::getValue($model, 'check') . ":" . ArrayHelper::getValue($model, 'empid') . "|" . ArrayHelper::getValue($model, 'date') . '|' . ArrayHelper::getValue($model, 'stoveid')
                                     ]);
                                 },
                                 'update' => function ($url, $model) {
@@ -238,7 +238,7 @@ $js = <<<JS
             }
         } else {
             modalv.modal("show").find(".modalContent").load($(this).attr("data-url"));
-            if (str[0] !== '0') {
+            if (str[0] !== 'Created') {
                 modalv.find(".modal-footer").hide();
             } else {
                 modalv.find(".modal-footer").show();
@@ -251,6 +251,26 @@ $js = <<<JS
         location.reload();
     });
 
+    $(".approved").on("click",function(e) {
+        e.preventDefault();
+        // var data = $(this).val();
+        // var aftersplit = data.split("|");
+        // alert(aftersplit[0] + " / " + aftersplit[1] + " / " + aftersplit[2]);
+        $.ajax({
+            type: "post",
+            url: "?r=bominfo/setapproved",
+            data: {obj:$(this).val()},
+            success: function(data) {
+                if (data == 0) {
+                    alert("บันทึกถูกยกเลิก");
+                    location = "?r=bominfo";
+                } else {
+                    alert("บันทึกเรียบร้อยแล้ว");
+                    location = "?r=bominfo";
+                }
+            }
+        });
+    });
 JS;
 $this->registerJs($js, static::POS_END);
 ?>

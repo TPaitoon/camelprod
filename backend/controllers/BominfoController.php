@@ -71,7 +71,7 @@ class BominfoController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($empid,$date,$stoveid)
+    public function actionView($empid, $date, $stoveid)
     {
         $bomquery = BOMInfo::find()->where(['empid' => $empid, 'stoveid' => $stoveid, 'date' => $date])->all();
         $losttime = '';
@@ -285,7 +285,7 @@ class BominfoController extends Controller
         //$this->findModel($id)->delete();
         BOMInfo::deleteAll(['empid' => $empid, 'date' => $date, 'stoveid' => $stoveid]);
         $session = Yii::$app->session;
-        $session->setFlash('res','ลบข้อมูลเรียบร้อยแล้ว !');
+        $session->setFlash('res', 'ลบข้อมูลเรียบร้อยแล้ว !');
         return $this->redirect(['index']);
     }
 
@@ -370,7 +370,7 @@ class BominfoController extends Controller
     public function actionSetapproved()
     {
         $dataar = Yii::$app->request->post('dataar');
-
+        $obj = Yii::$app->request->post('obj');
 //        print_r($dataar);return;
 
         if (!empty($dataar)) {
@@ -398,6 +398,8 @@ class BominfoController extends Controller
                 }
             }
             return 1;
+        } elseif (!empty($obj)) {
+            
         } else {
             return 0;
         }
