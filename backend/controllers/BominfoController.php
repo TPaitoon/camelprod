@@ -393,13 +393,22 @@ class BominfoController extends Controller
                 try {
                     BOMInfo::updateAll(['checkconfirm' => 1], ['empid' => $id[$x], 'date' => $date[$x], 'stoveid' => $stove[$x]]);
                 } catch (Exception $exception) {
+                    $session = Yii::$app->session;
+                    $session->setFlash('res', $exception);
                     return 0;
-                    break;
                 }
             }
             return 1;
         } elseif (!empty($obj)) {
-            
+            $objexplode = explode("|", $obj);
+            try {
+                BOMInfo::updateAll(['checkconfirm' => 1], ['empid' => $objexplode[0], 'date' => $objexplode[1], 'stoveid' => $objexplode[2]]);
+            } catch (\Exception $exception) {
+                $session = Yii::$app->session;
+                $session->setFlash('res', $exception);
+                return 0;
+            }
+            return 1;
         } else {
             return 0;
         }

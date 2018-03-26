@@ -264,9 +264,10 @@ $js = <<<JS
                 if (data == 0) {
                     alert("บันทึกถูกยกเลิก");
                     location = "?r=bominfo";
-                } else {
+                } else if (data == 1) {
                     alert("บันทึกเรียบร้อยแล้ว");
                     location = "?r=bominfo";
+                    // alert(data);
                 }
             }
         });
