@@ -92,7 +92,7 @@
                                             ['label' => 'ค่าพิเศษ', 'icon' => 'btc', 'url' => ['/bicycleinfo']],
                                         ],
                                 ],
-                                ['label' => 'มอเตอร์ไซต์', 'url' => '#', 'icon' => 'chevron-circle-right',
+                                ['label' => 'มอเตอร์ไซต์', 'url' => '#', 'icon' => 'chevron-circle-right', 'visible' => $it,
                                     'items' =>
                                         [
                                             ['label' => 'ใบสั่งประกอบยาง','icon' => 'btc','url' => ['/ptbmplanning'], 'visible' => $ptbm]

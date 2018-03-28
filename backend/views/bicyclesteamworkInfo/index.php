@@ -1,5 +1,6 @@
 <?php
 
+use yii\bootstrap\Modal;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\grid\GridView;
@@ -123,11 +124,11 @@ if ($Role == 'ITIT' || $Role == 'PSPS') {
                             }
                         ],
                         //'idsteamwork',
+                        'date:date:วันที่',
                         'empid:text:รหัสพนักงาน',
                         'empName:text:ชื่อ - นามสกุล',
                         'rank:text:ตำแหน่ง',
                         'Extra:integer:เงินพิเศษ',
-                        'date:date:วันที่',
                         //'confirms',
                         [
                             'attribute' => 'confirms',
@@ -148,10 +149,16 @@ if ($Role == 'ITIT' || $Role == 'PSPS') {
                             'buttons' => [
                                 'update' => function ($url, $model) {
                                     if (ArrayHelper::getValue($model, 'confirms') == '0') {
-                                        return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, []);
+                                        return Html::a('<span class="glyphicon glyphicon-pencil"></span>', 'javascript:void(0)', [
+                                            'id' => 'updatemodal',
+                                            'data-url' => $url
+                                        ]);
                                     } else {
                                         if (ArrayHelper::getValue($model, 'role') == '1') {
-                                            return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, []);
+                                            return Html::a('<span class="glyphicon glyphicon-pencil"></span>', 'javascript:void(0)', [
+                                                'id' => 'updatemodal',
+                                                'data-url' => $url
+                                            ]);
                                         } else {
                                             return '';
                                         }
@@ -175,9 +182,51 @@ if ($Role == 'ITIT' || $Role == 'PSPS') {
         </div>
     </div>
 <?php
+Modal::begin([
+    "id" => "modal-create",
+    "header" => "<h4>เพิ่มข้อมูล</h4>",
+    "size" => "modal-lg"
+]);
+echo '<div class="modalContent"></div>';
+Modal::end();
+
+Modal::begin([
+    "id" => "modal-update",
+    "header" => "<h4>เพิ่มข้อมูล</h4>",
+    "size" => "modal-lg"
+]);
+echo '<div class="modalContent"></div>';
+Modal::end();
+
 $baseurl = Yii::$app->request->baseUrl;
 $this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => JqueryAsset::className()]);
-$this->registerJs('
-var txt = "' . $res . '";
-if (txt !== "") { alert(txt); } ', static::POS_END);
+$alertjs = <<<JS
+    var txt = "$res";
+    if (txt !== "") { alert(txt); }
+JS;
+$this->registerJs($alertjs, static::POS_END);
+$modaljs = <<<JS
+    $(document).on("click","#updatemodal",function() {
+        // var x = $(this).attr("data-url");
+        // alert(x);
+        var modalu = $("#modal-update");
+        if (modalu.hasClass("in")) {
+            modalu.find(".modalContent").load($(this).attr("data-url"));
+        } else {
+            modalu.modal("show").find(".modalContent").load($(this).attr("data-url"));
+        }
+    });   
+
+    $(document).on("click","#createmodal",function(e) {
+        e.preventDefault();
+        // alert('');
+        var modalc = $("#modal-create");
+        if (modalc.hasClass("in")) {
+            modalc.find(".modalContent").load($(this).attr("data-url"));
+        } else {
+            modalc.modal("show").find(".modalContent").load($(this).attr("href"));
+        }
+    });
+JS;
+$this->registerJs($modaljs, static::POS_END);
 ?>

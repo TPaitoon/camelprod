@@ -78,7 +78,7 @@ $empmodel = EmpInfo::find()->where(['Dept' => 'ฝ่ายผลิต'])->andF
 
     <div class="form-group">
         <span id="search"><?= Html::submitButton('ค้นหา', ['id' => 'SearchSubmit', 'class' => 'btn btn-primary', 'onclick' => '']) ?></span>
-        <span id="create"><?= Html::a('เพิ่มข้อมูล', ['create'], ['class' => 'btn btn-success']) ?></span>
+        <span id="create"><?= Html::a('เพิ่มข้อมูล', ['create'], ['class' => 'btn btn-success','id' => 'createmodal']) ?></span>
         <span id="check"><?= Html::button('ยืนยันข้อมูล', ['id' => 'binfo', 'class' => 'btn btn-info pull-right']) ?></span>
     </div>
 
