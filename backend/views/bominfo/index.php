@@ -248,7 +248,7 @@ $js = <<<JS
     });
     
     $("#modal-view").on("hidden.bs.modal",function() {
-        location.reload();
+        // location.reload();
     });
 
     $(".approved").on("click",function(e) {

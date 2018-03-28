@@ -33,7 +33,6 @@ class BominfoController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
-                    'update' => ['GET'],
                 ],
             ],
         ];
@@ -161,7 +160,7 @@ class BominfoController extends Controller
                 $create->stoveid = $model->stoveid;
                 $create->standard = $model->standard;
                 $create->hour = $model->hour;
-                $create->checkconfirm = $chk;
+                $create->checkconfirm = 0;
                 $create->deduct = $model->deduct;
                 $create->totaltire = $model->totaltire;
                 $create->save(false);
