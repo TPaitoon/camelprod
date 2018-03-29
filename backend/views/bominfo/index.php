@@ -256,7 +256,12 @@ $js = <<<JS
         // var data = $(this).val();
         // var aftersplit = data.split("|");
         // alert(aftersplit[0] + " / " + aftersplit[1] + " / " + aftersplit[2]);
-        $.ajax({
+        var role = $(".role").val();
+        // alert(role);
+        if (role == 0) {
+            alert('ไม่สามารถยืนยันรายการได้เนื่องจากไม่มีสิทธิ์');
+        } else if (role == 1) {
+            $.ajax({
             type: "post",
             url: "?r=bominfo/setapproved",
             data: {obj:$(this).val()},
@@ -271,6 +276,7 @@ $js = <<<JS
                 }
             }
         });
+        }     
     });
 JS;
 $this->registerJs($js, static::POS_END);
