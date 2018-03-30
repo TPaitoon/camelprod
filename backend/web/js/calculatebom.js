@@ -4,7 +4,10 @@
 $(document).on('ready', function () {
     defaultload();
     $("#camount").on('change', function () {
-        calculatebom();
+        //alert($(this).val());
+        if ($(this).val() !== '0' || $(this).val() !== '') {
+            calculatebom();
+        }
     });
     $("#closttime").on('change', function () {
         calculatebom();
@@ -57,13 +60,12 @@ function defaultload() {
 }
 
 function calculatebom() {
-    if ($("#camount").val() == '0') {
+    if ($("#camount").val() == '0' || $("#camount").val() == '') {
         $("#ctotaltire").val(0);
         $("#crate").val(0);
         $("#cperpcs").val(0);
         $("#closttime").val(0);
         $("#cdeduct").val(0);
-        return;
     } else {
         var amount = $("#camount").val();
         var at = 0;
@@ -81,3 +83,43 @@ function calculatebom() {
         });
     }
 }
+
+var amount = $("#camount");
+var losttime = $("#closttime");
+var deduct = $("#cdeduct");
+
+amount.on("click", function () {
+    if (amount.val() == "" || amount.val() == 0) {
+        $(this).val("");
+    } else {
+        $(this).select();
+    }
+}).on("focusout", function () {
+    if (amount.val() == '') {
+        $(this).val(0);
+    }
+});
+
+losttime.on("click", function () {
+    if ($(this).val() == '' || $(this).val() == 0) {
+        $(this).val('');
+    } else {
+        $(this).select();
+    }
+}).on("focusout", function () {
+    if ($(this).val() == '') {
+        $(this).val(0);
+    }
+});
+
+deduct.on("click", function () {
+    if ($(this).val() == '' || $(this).val() == 0) {
+        $(this).val('');
+    } else {
+        $(this).select();
+    }
+}).on("focusout", function () {
+    if ($(this).val() == '') {
+        $(this).val(0);
+    }
+});

@@ -176,10 +176,10 @@ foreach ($hourarray as $item) {
                     <?= $form->field($model, 'hour')->dropDownList(ArrayHelper::map($hourlist, 'hour', 'hour'))->label('ชั่วโมง') ?>
                 </div>
                 <div class="col-md-3">
-                    <?= $form->field($model, 'amount')->textInput(['id' => 'camount', 'autocomplete' => 'off', 'onkeypress' => 'return event.charCode >= 48 && event.charCode <= 57'])->label('ยอดนึ่ง') ?>
+                    <?= $form->field($model, 'amount')->textInput(['id' => 'camount', 'autocomplete' => 'off', 'onkeypress' => 'return chknumber(event)'])->label('ยอดนึ่ง') ?>
                 </div>
                 <div class="col-md-2">
-                    <?= $form->field($model, 'losttime')->textInput(['id' => 'closttime', 'autocomplete' => 'off', 'onkeypress' => 'return event.charCode >= 48 && event.charCode <= 57'])->label('เสียเวลา : นาที') ?>
+                    <?= $form->field($model, 'losttime')->textInput(['id' => 'closttime', 'autocomplete' => 'off', 'onkeypress' => 'return chknumber(event)'])->label('เสียเวลา : นาที') ?>
                 </div>
             </div>
             <hr>
@@ -188,7 +188,7 @@ foreach ($hourarray as $item) {
                     <?= $form->field($model, 'deduct')->textInput([
                         'id' => 'cdeduct',
                         'autocomplete' => 'off',
-                        'onkeypress' => 'return event.charCode >= 48 && event.charCode <= 57'
+                        'onkeypress' => 'return chknumber(event)'
                     ])->label('หักเงิน') ?>
                 </div>
                 <div class="col-md-3">
@@ -205,7 +205,7 @@ foreach ($hourarray as $item) {
                 </div>
             </div>
         </div>
-        <div class="panel panel-footer">
+        <div class="panel-footer">
             <div class="row">
                 <div class="pull-left">
                     <?= Html::submitButton($model->isNewRecord ? 'บันทึก' : 'แก้ไข', ['id' => 'bomsubmit', 'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
@@ -223,4 +223,5 @@ foreach ($hourarray as $item) {
 <?php
 $baseurl = Yii::$app->request->baseUrl;
 $this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => JqueryAsset::className()]);
+$this->registerJsFile($baseurl . '/js/chkkeypressnumber.js?Ver=0001', ['depends' => JqueryAsset::className()]);
 ?>

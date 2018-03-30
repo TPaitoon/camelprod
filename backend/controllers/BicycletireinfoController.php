@@ -18,6 +18,7 @@ use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Session;
 
 /**
  * BicycletireinfoController implements the CRUD actions for BicycletireInfo model.
@@ -123,7 +124,7 @@ class BicycletireinfoController extends Controller
                 $z = 0;
             }
         }
-        return $this->render('view', [
+        return $this->renderAjax('view', [
             //'model' => $this->findModel($id),
             'model' => $model
         ]);
@@ -289,7 +290,7 @@ class BicycletireinfoController extends Controller
     {
         //$this->findModel($id)->delete();
         BicycletireInfo::deleteAll(['empid' => $empid, 'date' => $date]);
-        Yii::$app->session->setFlash('res','ลบข้อมูลเรียบร้อยแล้ว !');
+        Yii::$app->session->setFlash('res', 'ลบข้อมูลเรียบร้อยแล้ว !');
 
         return $this->redirect(['index']);
     }
@@ -480,9 +481,10 @@ class BicycletireinfoController extends Controller
     public function actionSetapproved()
     {
         $dataar = Yii::$app->request->post('dataar');
-
+        $obj = Yii::$app->request->post('obj');
+//        return $obj;
         if (!empty($dataar)) {
-
+//            return $dataar;
             $id = [];
             $date = [];
 
@@ -501,8 +503,18 @@ class BicycletireinfoController extends Controller
                     BicycletireInfo::updateAll(['checkconfirm' => 1], ['empid' => $id[$x], 'date' => $date[$x]]);
                 } catch (Exception $ex) {
                     return 0;
-                    break;
                 }
+            }
+            return 1;
+        } elseif (!empty($obj)) {
+//            return $obj;
+            $objexplode = explode("|", $obj);
+            try {
+                BicycletireInfo::updateAll(['checkconfirm' => 1], ['empid' => $objexplode[0], 'date' => $objexplode[1]]);
+            } catch (\Exception $exception) {
+                $session = Yii::$app->session;
+                $session->setFlash('res', $exception);
+                return 0;
             }
             return 1;
         } else {

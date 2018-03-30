@@ -1,5 +1,6 @@
 <?php
 
+use yii\bootstrap\Modal;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\grid\GridView;
@@ -107,9 +108,13 @@ if ($Role == 'ITIT' || $Role == 'PSPS') {
                             'headerOptions' => [
                                 'class' => 'text-center',
                             ],
-                            'contentOptions' => [
-                                'class' => 'text-center',
-                            ],
+                            'contentOptions' => function ($model) {
+                                if (ArrayHelper::getValue($model, 'check') !== 0) {
+                                    return ['class' => 'text-center', 'style' => 'visibility: hidden'];
+                                } else {
+                                    return ['class' => 'text-center'];
+                                }
+                            },
                             'checkboxOptions' => function ($model) {
                                 $data = ArrayHelper::getValue($model, 'empid') . "," . ArrayHelper::getValue($model, 'date');
                                 return ['value' => $data];
@@ -153,8 +158,12 @@ if ($Role == 'ITIT' || $Role == 'PSPS') {
                             ],
                             'template' => '{view} {update} {delete}',
                             'buttons' => [
-                                'view' => function ($url) {
-                                    return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', $url, []);
+                                'view' => function ($url, $model) {
+                                    return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', 'javascript:void(0)', [
+                                        "id" => "viewmodal",
+                                        "data-url" => $url,
+                                        "value" => ArrayHelper::getValue($model, 'check') . ":" . ArrayHelper::getValue($model, 'empid') . "|" . ArrayHelper::getValue($model, 'date'),
+                                    ]);
                                 },
                                 'update' => function ($url, $model) {
                                     if (ArrayHelper::getValue($model, 'check') == '0') {
@@ -190,7 +199,70 @@ if ($Role == 'ITIT' || $Role == 'PSPS') {
 $baseurl = Yii::$app->request->baseUrl;
 $this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => JqueryAsset::className()]);
 $res = Yii::$app->session->getFlash('res');
-$this->registerJs('
-var txt = "' . $res . '";
-if (txt !== "") { alert(txt); }', static::POS_END);
+
+Modal::begin([
+    "id" => "modal-view",
+    "header" => "<h4>รายละเอียด</h4>",
+    "size" => "modal-lg"
+]);
+echo '<div class="modalContent"></div>';
+echo '<div class="modal-footer" style="text-align: center">
+        <button type="button" class="btn btn-success approved" style="width: 300px">ยืนยันข้อมูล</button>
+</div>';
+Modal::end();
+
+$js = <<<JS
+var txt = "$res";
+if (txt !== "") { alert(txt); }
+
+$(document).on("click","#viewmodal",function() {
+    // alert($(this).attr("data-url"));
+    var x = $(this).attr("value");
+    var str = x.split(":");
+    var modalv = $("#modal-view");
+    if (modalv.hasClass("in")) {
+        modalv.find(".modalContent").load($(this).attr("data-url"));
+        if (str[0] !== '0') {
+            modalv.find(".modal-footer").hide();
+        } else {
+            modalv.find(".modal-footer").show();
+            modalv.find(".approved").val(str[1]);
+        }
+    } else {
+        modalv.modal("show").find(".modalContent").load($(this).attr("data-url"));
+        if (str[0] !== '0') {
+            modalv.find(".modal-footer").hide();
+        } else {
+            modalv.find(".modal-footer").show();
+            modalv.find(".approved").val(str[1]);
+        }
+    }
+});
+
+$(".approved").on("click",function(e) {
+    e.preventDefault();
+    // alert($(this).val());
+    // alert($(".role").val());
+    var role = $(".role").val();
+    if (role == 1) {
+        $.ajax({
+        type: 'post',
+        url: '?r=bicycletireinfo/setapproved',
+        data: {obj:$(this).val()},
+        success: function(data) {
+            if (data != 1) {
+                alert("บันทึกไม่สำเร็จ ...");
+                location.reload();
+            } else {
+                alert("บันทึกเรียบร้อย");
+                location.reload();
+            }
+        }
+        });
+    } else {
+        alert('ไม่สามารถยืนยันรายการได้เนื่องจากไม่มีสิทธิ์');
+    }
+});
+JS;
+$this->registerJs($js, static::POS_END);
 ?>
