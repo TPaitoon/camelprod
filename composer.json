@@ -22,7 +22,7 @@
         "kartik-v/yii2-widget-activeform": "1.4.8",
         "kartik-v/yii2-widget-select2": "2.0.9",
         "kartik-v/yii2-widget-datepicker": "1.4.2",
-        "kartik-v/yii2-detail-view": "1.7.4",
+        "kartik-v/yii2-detail-view": "1.7.1",
         "kartik-v/yii2-widget-datetimepicker": "1.4.2"
     },
     "require-dev": {

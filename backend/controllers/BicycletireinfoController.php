@@ -124,7 +124,7 @@ class BicycletireinfoController extends Controller
                 $z = 0;
             }
         }
-        return $this->renderAjax('view', [
+        return $this->renderAjax('view_2', [
             //'model' => $this->findModel($id),
             'model' => $model
         ]);
@@ -266,13 +266,78 @@ class BicycletireinfoController extends Controller
                 $model->hour = $i->hour;
                 $model->standard = $i->standard;
                 $model->totaltire = $i->totaltire;
-                $model->stickername = $i->stickername;
+                $skn = Standardsticker::findOne(['stickername' => $i->stickername]);
+                $model->stickername = $skn->stickerid;
                 $model->checkconfirm = $i->checkconfirm;
                 $z = 0;
             }
         }
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->tireid]);
+        $fdate = $model->date;
+        $fempid = $model->empid;
+        if ($model->load(Yii::$app->request->post())) {
+            BicycletireInfo::deleteAll(['empid' => $fempid,'date' => $fdate]);
+            $skn = Standardsticker::findOne($model->stickername);
+            //$debug = new CheckDebug();
+            //return $debug->printr($model,1);
+            for ($i = 1; $i <= 11; $i++) {
+                $create = new BicycletireInfo();
+                switch ($i) {
+                    case 1:
+                        $create->typeID = $i;
+                        $create->qty = $model->losttime;
+                        break;
+                    case 2:
+                        $create->typeID = $i;
+                        $create->qty = $model->tireamount1;
+                        break;
+                    case 3:
+                        $create->typeID = $i;
+                        $create->qty = $model->tireperpcs;
+                        break;
+                    case 4:
+                        $create->typeID = $i;
+                        $create->qty = $model->tirerate1;
+                        break;
+                    case 5:
+                        $create->typeID = $i;
+                        $create->qty = $model->tireamount2;
+                        break;
+                    case 6:
+                        $create->typeID = $i;
+                        $create->qty = $model->tirerate2;
+                        break;
+                    case 7:
+                        $create->typeID = $i;
+                        $create->qty = $model->stickeramount;
+                        break;
+                    case 8:
+                        $create->typeID = $i;
+                        $create->qty = $model->stickerperpcs;
+                        break;
+                    case 9:
+                        $create->typeID = $i;
+                        $create->qty = $model->stickerrate;
+                        break;
+                    case 10:
+                        $create->typeID = $i;
+                        $create->qty = $model->deduct;
+                        break;
+                    case 11:
+                        $create->typeID = $i;
+                        $create->qty = $model->totalrate;
+                        break;
+                }
+                $create->empid = $model->empid;
+                $create->empName = $model->empName;
+                $create->date = $model->date;
+                $create->standard = $model->standard;
+                $create->hour = $model->hour . ' ชั่วโมง';
+                $create->checkconfirm = 0;
+                $create->stickername = $skn->stickername;
+                $create->totaltire = $model->totaltire;
+                $create->save(false);
+            }
+            return $this->redirect(['index']);
         } else {
             return $this->render('update', [
                 'model' => $model,
