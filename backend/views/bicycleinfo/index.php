@@ -9,6 +9,7 @@ use yii\web\JqueryAsset;
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\BicycleinfoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $Role $this|mixed|string */
 
 $js = <<<JS
     
@@ -158,7 +159,6 @@ if ($Role == 'ITIT' || $Role == 'PSPS') {
 <?php
 Modal::begin([
     "id" => "modal-view",
-    "header" => "<h4>รายละเอียด</h4>",
     "size" => "modal-lg"
 ]);
 echo "<div class='modalContent'></div>";
@@ -196,6 +196,30 @@ $(document).on("click","#viewmodal",function() {
             modalv.find(".approved").val(str[1]);
         }
     }
+});
+
+$(".approved").on("click",function(e) {
+    e.preventDefault();
+    // alert($(this).val());
+    var role = $(".role").val();
+    if (role != 1) {
+        alert('ไม่สามารถยืนยันรายการได้เนื่องจากไม่มีสิทธิ์');
+    } else if (confirm('ยืนยันการทำรายการ ?')) {
+        $.ajax({
+        type:"post",
+        url:"?r=bicycleinfo/setapproved",
+        data:{obj:$(this).val()},
+        success: function(data) {
+            if (data != 1) {
+                alert("บันทึกถูกยกเลิก");
+                location.reload();
+            } else {
+                alert("บันทึกเรียบร้อยแล้ว");
+                location.reload();
+            } 
+        }
+        });
+    } 
 });
 JS;
 

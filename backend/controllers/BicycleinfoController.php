@@ -29,7 +29,7 @@ class BicycleinfoController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST', 'GET'],
+                    'delete' => ['POST'],
                 ],
             ],
         ];
@@ -100,7 +100,7 @@ class BicycleinfoController extends Controller
                 $model->listid = $recid;
             }
         }
-        return $this->renderAjax('view', [
+        return $this->renderAjax('view_2', [
             'model' => $model,
         ]);
     }
@@ -343,6 +343,8 @@ class BicycleinfoController extends Controller
                 }
             }
             return 1;
+        } elseif () {
+            /* Wait Edit */
         } else {
             return 0;
         }
