@@ -63,10 +63,45 @@ class BicycleinfoController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
+    public function actionView($empid, $date)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
+        $bicyclequery = BicycleInfo::find()->where(['empid' => $empid, 'date' => $date])->all();
+        $model = new BicycleInfo();
+        $recid = '';
+        $index = 0;
+        foreach ($bicyclequery as $value) {
+            switch ($value->typeid) {
+                case 1:
+                    $model->losttime = $value->qty;
+                    $recid = $recid . $value->id;
+                    break;
+                case 2:
+                    $model->amount = $value->qty;
+                    $recid = $recid . ',' . $value->id;
+                    break;
+                case 3:
+                    $model->perpcs = $value->qty;
+                    $recid = $recid . ',' . $value->id;
+                    break;
+                case 4:
+                    $model->rate = $value->qty;
+                    $recid = $recid . ',' . $value->id;
+                    break;
+            }
+            $index++;
+            if ($index == 4) {
+                $model->empid = $value->empid;
+                $model->empname = $value->empname;
+                $model->date = $value->date;
+                $model->tirename = $value->tirename;
+                $model->grouptire = $value->grouptire;
+                $model->minus = $value->minus;
+                $model->checks = $value->checks;
+                $model->listid = $recid;
+            }
+        }
+        return $this->renderAjax('view', [
+            'model' => $model,
         ]);
     }
 
@@ -207,7 +242,7 @@ class BicycleinfoController extends Controller
     public function actionDelete($empid, $date)
     {
         BicycleInfo::deleteAll(['empid' => $empid, 'date' => $date]);
-        Yii::$app->session->setFlash('res','ลบข้อมูลเรียบร้อยแล้ว !');
+        Yii::$app->session->setFlash('res', 'ลบข้อมูลเรียบร้อยแล้ว !');
 
         return $this->redirect(['index']);
     }

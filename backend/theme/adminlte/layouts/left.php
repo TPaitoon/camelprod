@@ -79,7 +79,7 @@
                                 ],
                             ],
                     ],
-                    ['label' => 'ประกอบยางนอก', 'url' => '#', 'icon' => 'home', 'visible' => $bce,
+                    ['label' => 'ประกอบยางนอก', 'url' => '#', 'icon' => 'home', 'visible' => $sbw,
                         'items' =>
                             [
                                 ['label' => 'จักรยาน', 'url' => '#', 'icon' => 'chevron-circle-right',

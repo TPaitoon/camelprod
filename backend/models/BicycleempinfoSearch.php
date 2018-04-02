@@ -2,10 +2,12 @@
 
 namespace backend\models;
 
+use common\models\User;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\BicycleEmpInfo;
+use yii\data\ArrayDataProvider;
 
 /**
  * BicycleempinfoSearch represents the model behind the search form about `common\models\BicycleEmpInfo`.
@@ -55,37 +57,64 @@ class BicycleempinfoSearch extends BicycleEmpInfo
 
         // add conditions that should always apply here
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
-
-
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
-            return $dataProvider;
+        $array = [];
+        foreach ($query->all() as $item) {
+            $chk = new UserDirect();
+            $usr = $chk->ChkusrForBicycletire();
+            $usr == 'ITIT' || $usr == 'PSPS' ? $sys = 1 : $sys = 0;
+            array_push($array, [
+                'id' => $item->id,
+                'empid' => $item->empid,
+                'empName' => $item->empName,
+                'rank' => $item->rank,
+                'Extra' => $item->Extra,
+                'date' => $item->date,
+                'confirms' => $item->confirms,
+                'role' => $sys
+            ]);
         }
-
+        $dataProvider = new ArrayDataProvider([
+            'allModels' => $array,
+            'sort' => [
+                'attributes' => ['empid', 'empName', 'date', 'confirms'],
+                'defaultOrder' => SORT_ASC,
+            ],
+            'pagination' => [
+                'pageSize' => 20
+            ]
+        ]);
         return $dataProvider;
     }
 
     public function showcreated()
     {
         $query = BicycleEmpInfo::find()->where(['confirms' => 0])->orderBy(['date' => SORT_ASC]);
-
-        // add conditions that should always apply here
-
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
-
-
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
-            return $dataProvider;
+        $array = [];
+        foreach ($query->all() as $item) {
+            $chk = new UserDirect();
+            $usr = $chk->ChkusrForBicycletire();
+            $usr == 'ITIT' || $usr == 'PSPS' ? $sys = 1 : $sys = 0;
+            array_push($array, [
+                'id' => $item->id,
+                'empid' => $item->empid,
+                'empName' => $item->empName,
+                'rank' => $item->rank,
+                'Extra' => $item->Extra,
+                'date' => $item->date,
+                'confirms' => $item->confirms,
+                'role' => $sys
+            ]);
         }
-
+        $dataProvider = new ArrayDataProvider([
+            'allModels' => $array,
+            'sort' => [
+                'attributes' => ['empid', 'empName', 'date', 'confirms'],
+                'defaultOrder' => SORT_ASC,
+            ],
+            'pagination' => [
+                'pageSize' => 20
+            ]
+        ]);
         return $dataProvider;
     }
 }

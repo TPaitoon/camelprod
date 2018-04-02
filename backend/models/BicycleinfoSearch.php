@@ -78,14 +78,6 @@ class BicycleinfoSearch extends BicycleInfo
             }
             $z++;
             if ($z == 4) {
-                $status = CheckStatusInfo::find()->select(['name'])->where(['statusid' => $value->checks])->one();
-                switch ($value->checks) {
-                    case 0:
-                        $text = '<span class="label label-info">' . $status->name . '</span>';
-                        break;
-                    case 1:
-                        $text = '<span class="label label-success">' . $status->name . '</span>';
-                }
                 array_push($array, [
                     'empid' => $value->empid,
                     'empname' => $value->empname,
@@ -97,7 +89,7 @@ class BicycleinfoSearch extends BicycleInfo
                     'minus' => $value->minus,
                     'perpcs' => $this->perpcs,
                     'rate' => $this->rate,
-                    'checks' => $text,
+                    'checks' => $value->checks,
                 ]);
                 $z = 0;
             }
@@ -145,14 +137,6 @@ class BicycleinfoSearch extends BicycleInfo
             }
             $z++;
             if ($z == 4) {
-                $status = CheckStatusInfo::find()->select(['name'])->where(['statusid' => $value->checks])->one();
-                switch ($value->checks) {
-                    case 0:
-                        $text = '<span class="label label-info">' . $status->name . '</span>';
-                        break;
-                    case 1:
-                        $text = '<span class="label label-success">' . $status->name . '</span>';
-                }
                 array_push($array, [
                     'empid' => $value->empid,
                     'empname' => $value->empname,
@@ -164,7 +148,7 @@ class BicycleinfoSearch extends BicycleInfo
                     'minus' => $value->minus,
                     'perpcs' => $this->perpcs,
                     'rate' => $this->rate,
-                    'checks' => $text,
+                    'checks' => $value->checks,
                 ]);
                 $z = 0;
             }

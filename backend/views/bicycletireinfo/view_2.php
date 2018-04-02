@@ -13,7 +13,7 @@ use kartik\detail\DetailView;
 <div class="bicycletireinfo-view2">
     <div class="panel panel-primary">
         <div class="panel-heading">
-            <h4>ข้อมูล : <?= $model->empid ?></h4>
+            <h4>ข้อมูล : <?= $model->empid ?> ชื่อ : <?= $model->empName ?></h4>
         </div>
         <div class="panel-body">
             <table class="table table-bordered">

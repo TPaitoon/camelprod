@@ -15,15 +15,8 @@ $this->params['breadcrumbs'][] = ['label' => 'ค่าเข้างานป�
 $this->params['breadcrumbs'][] = 'เพิ่มข้อมูล';
 ?>
 <div class="bicycle-emp-info-create">
-    <div class="panel">
-        <div class="panel panel-heading">
-            <h4>เพิ่มข้อมูล</h4>
-        </div>
-        <div class="panel panel-body">
-            <?= $this->render('_form', [
-                'model' => $model,
-                'chk' => $chk,
-            ]) ?>
-        </div>
-    </div>
+    <?= $this->render('_form', [
+        'model' => $model,
+        'chk' => $chk,
+    ]) ?>
 </div>

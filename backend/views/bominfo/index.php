@@ -207,7 +207,6 @@ if ($Role == 'ITIT' || $Role == 'PSPS') {
 Modal::begin([
     "id" => "modal-view",
     "size" => "modal-lg",
-    "header" => "<h4>รายละเอียด</h4>"
 ]);
 echo "<div class='modalContent'></div>";
 echo "<div class='modal-footer' style='text-align: center'>

@@ -40,7 +40,7 @@ $bicyclesec = StandardBicycle::find()->all();
     </div>
     <hr>
     <div class="row">
-        <div class="col-md-2">
+        <div class="col-md-3">
             <?php $model->date == '' ? $model->date = date('Y-m-d') : $model->date ?>
             <?= $form->field($model, 'date')->widget(DatePicker::className(), [
                 'options' => [
@@ -56,7 +56,7 @@ $bicyclesec = StandardBicycle::find()->all();
                 ]
             ])->label('วันที่ทำงาน') ?>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-4">
             <?= $form->field($model, 'rank')->widget(Select2::className(), [
                 'data' => ArrayHelper::map($bicyclesec, 'Section', 'Section'),
                 'options' => [
@@ -73,13 +73,7 @@ $bicyclesec = StandardBicycle::find()->all();
     </div>
     <hr>
     <div class="form-group">
-        <div class="pull-left">
-            <?= Html::submitButton($model->isNewRecord ? 'บันทึก' : 'แก้ไข', ['id' => 'bicycleemp-submit', 'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-        </div>
-        <div class="pull-right">
-            <?= Html::a('หน้าหลัก', ['index'], ['class' => 'btn btn-info']) ?>
-            <?= Html::a('ย้อนกลับ', Yii::$app->request->referrer, ['class' => 'btn btn-danger']); ?>
-        </div>
+        <?= Html::submitButton($model->isNewRecord ? 'บันทึก' : 'แก้ไข', ['id' => 'bicycleemp-submit', 'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
     <?php ActiveForm::end(); ?>
 </div>

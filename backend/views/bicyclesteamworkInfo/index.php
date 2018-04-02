@@ -192,7 +192,7 @@ Modal::end();
 
 Modal::begin([
     "id" => "modal-update",
-    "header" => "<h4>เพิ่มข้อมูล</h4>",
+    "header" => "<h4>แก้ไขข้อมูล</h4>",
     "size" => "modal-lg"
 ]);
 echo '<div class="modalContent"></div>';
@@ -222,7 +222,7 @@ $modaljs = <<<JS
         // alert('');
         var modalc = $("#modal-create");
         if (modalc.hasClass("in")) {
-            modalc.find(".modalContent").load($(this).attr("data-url"));
+            modalc.find(".modalContent").load($(this).attr("href"));
         } else {
             modalc.modal("show").find(".modalContent").load($(this).attr("href"));
         }

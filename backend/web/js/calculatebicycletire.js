@@ -165,3 +165,25 @@ function calculatesticker(amount) {
     });
     totalrate();
 }
+
+var bttireamount1 = $("#bttireamount1");
+var btlosttime = $("#btlosttime");
+var bttireamount2 = $("#bttireamount2");
+var bstickeramount = $("#btstickeramount");
+var btdeduct = $("#btdeduct");
+
+bttireamount1.on("click",function () {
+    $(this).select();
+});
+btlosttime.on("click",function () {
+   $(this).select();
+});
+bttireamount2.on("click",function () {
+   $(this).select();
+});
+bstickeramount.on("click",function () {
+   $(this).select();
+});
+btdeduct.on("click",function () {
+   $(this).select();
+});

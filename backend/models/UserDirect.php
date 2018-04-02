@@ -66,7 +66,7 @@ class UserDirect
     {
         $app = Yii::$app;
         $usr = $this->Chkusr();
-        if ($usr !== 'ITIT' && $usr !== 'PSPS' && $usr !== 'PTBT') {
+        if ($usr !== 'ITIT' && $usr !== 'PSPS' && $usr !== 'PTVT') {
             return $app->response->redirect($app->homeUrl);
         }
         return $usr;
