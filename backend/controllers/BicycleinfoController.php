@@ -343,7 +343,7 @@ class BicycleinfoController extends Controller
                 }
             }
             return 1;
-        } elseif () {
+        } elseif (true) {
             /* Wait Edit */
         } else {
             return 0;
