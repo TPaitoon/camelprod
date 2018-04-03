@@ -9,14 +9,16 @@ $('#bomsubmit').click(function (e) {
         $('#camount').focus();
         return;
     } else {
-        $.when(getcount()).done(function (data) {
-            if (data > 0) {
-                alert("วันที่ " + $('#cdate').val() + " รหัสพนักงาน " + $('#cempid').val() + " เตาที่ " + $('#cstoveid').val() + " มีข้อมูลแล้ว ...");
-                return;
-            } else {
-                $('#bomform').submit();
-            }
-        });
+        if (confirm('ยืนยันการทำรายการ ?')) {
+            $.when(getcount()).done(function (data) {
+                if (data > 0) {
+                    alert("วันที่ " + $('#cdate').val() + " รหัสพนักงาน " + $('#cempid').val() + " เตาที่ " + $('#cstoveid').val() + " มีข้อมูลแล้ว ...");
+                    return;
+                } else {
+                    $('#bomform').submit();
+                }
+            });
+        }
     }
 });
 

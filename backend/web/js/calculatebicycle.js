@@ -71,3 +71,12 @@ function getData(average, value) {
         }
     });
 }
+
+var amount = $("#bamount");
+var losttime = $("#blosttime");
+amount.on("click",function () {
+    amount.select();
+});
+losttime.on("click",function () {
+    losttime.select();
+});

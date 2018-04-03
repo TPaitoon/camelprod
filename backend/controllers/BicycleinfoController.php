@@ -318,12 +318,12 @@ class BicycleinfoController extends Controller
     public function actionSetapproved()
     {
         $daatar = Yii::$app->request->post('dataar');
+        $obj = Yii::$app->request->post('obj');
 
         $id = [];
         $date = [];
 
         if (!empty($daatar)) {
-
             for ($i = 0; $i < count($daatar); $i++) {
                 if ($daatar[$i] == 1) {
                     continue;
@@ -336,15 +336,20 @@ class BicycleinfoController extends Controller
 
             for ($x = 0; $x < count($id); $x++) {
                 try {
-                    BicycleInfo::updateAll(['checks = 1'], ['empid' => $id[$x], 'date' => $date[$x]]);
+                    BicycleInfo::updateAll(['checks' => 1], ['empid' => $id[$x], 'date' => $date[$x]]);
                 } catch (Exception $ex) {
                     return 0;
-                    break;
                 }
             }
             return 1;
-        } elseif (true) {
-            /* Wait Edit */
+        } elseif (!empty($obj)) {
+            $objexplode = explode("|", $obj);
+            try {
+                BicycleInfo::updateAll(['checks' => 1], ['empid' => $objexplode[0], 'date' => $objexplode[1]]);
+            } catch (\Exception $exception) {
+                return 0;
+            }
+            return 1;
         } else {
             return 0;
         }

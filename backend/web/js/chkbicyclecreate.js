@@ -4,14 +4,16 @@ $("#bicyclesubmit").on('click', function (e) {
         alert('ยอดผลิตห้ามต่ำกว่า 1');
         $("bamount").focus();
     } else {
-        $.when(getcount()).done(function (data) {
-            if (data > 0) {
-                alert('วันที่ ' + $("#bdate").val() + ' รหัสพนักงาน ' + $("#bempid").val() + ' มีข้อมูลแล้ว ...');
-                return;
-            } else {
-                $("#bicyclesubmit").submit();
-            }
-        });
+        if (confirm('ยืนยันการทำรายการ ?')) {
+            $.when(getcount()).done(function (data) {
+                if (data > 0) {
+                    alert('วันที่ ' + $("#bdate").val() + ' รหัสพนักงาน ' + $("#bempid").val() + ' มีข้อมูลแล้ว ...');
+                    return;
+                } else {
+                    $("#bicyclesubmit").submit();
+                }
+            });
+        }
     }
 });
 

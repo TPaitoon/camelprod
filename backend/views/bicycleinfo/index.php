@@ -13,8 +13,33 @@ use yii\web\JqueryAsset;
 
 $js = <<<JS
     
-    function chkdelete() {
-      return confirm('ต้องการลบข้อมูล ?');
+    function chkdelete(e) {
+        if (confirm('ต้องการลบข้อมูล ?')) {
+            // alert($(".role").val());
+            if ($(".role").val() != 1) {
+                var status = e.closest('tr').attr('id');
+                // alert(status);
+                if (status !== 0) {
+                    alert('ไม่สามารถลบข้อมูลได้เนื่องจากไม่มีสิทธิ์');
+                } else {
+                    var link = e.parent().attr('data-url');
+                    $.ajax({
+                        type: "post",
+                        url: link,
+                        async: false,
+                        cache: false
+                    });
+                }
+            } else {
+                var link = e.parent().attr('data-url');
+                $.ajax({
+                    type: "post",
+                    url: link,
+                    async: false,
+                    cache: false
+                });
+            }
+        } 
     }
     
      $("#binfo").on('click',function(e) {
@@ -31,9 +56,9 @@ $js = <<<JS
                 data: {dataar:dataar},
                 dataType: 'json',
                 success: function(data) {
-                    if (data === 0) {
-                        alert("บันทึกถูกยกเลิก");
-                    } else if(data === 1) {
+                    if (data != 1) {
+                        alert(data);
+                    } else {
                         alert("บันทึกเรียบร้อยแล้ว");
                         location.reload();
                     }
@@ -56,6 +81,7 @@ if ($Role == 'ITIT' || $Role == 'PSPS') {
 }
 
 ?>
+    <input hidden class="role" value="<?= $sys ?>">
     <div class="bicycle-info-index">
         <div class="panel">
             <div class="panel panel-body">
@@ -69,6 +95,9 @@ if ($Role == 'ITIT' || $Role == 'PSPS') {
                         'lastPageLabel' => '<i class="fa fa-angle-double-right" aria-hidden="true"></i>',
                         'prevPageLabel' => '<i class="fa fa-angle-left" aria-hidden="true"></i>'
                     ],
+                    'rowOptions' => function ($model) {
+                        return ['id' => ArrayHelper::getValue($model, 'checks')];
+                    },
                     //'filterModel' => $searchModel,
                     'columns' => [
                         ['class' => 'yii\grid\SerialColumn'],
@@ -131,7 +160,7 @@ if ($Role == 'ITIT' || $Role == 'PSPS') {
                                     return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, []);
                                 },
                                 'delete' => function ($url) {
-                                    return Html::a('<span class="glyphicon glyphicon-trash" onclick="return chkdelete()"></span>', $url, []);
+                                    return Html::a('<span class="glyphicon glyphicon-trash" onclick="return chkdelete($(this))"></span>', 'javascript:void(0)', ['data-url' => $url]);
                                 }
                             ],
                             'urlCreator' => function ($action, $model) {
@@ -202,6 +231,7 @@ $(".approved").on("click",function(e) {
     e.preventDefault();
     // alert($(this).val());
     var role = $(".role").val();
+    // alert(role);
     if (role != 1) {
         alert('ไม่สามารถยืนยันรายการได้เนื่องจากไม่มีสิทธิ์');
     } else if (confirm('ยืนยันการทำรายการ ?')) {
