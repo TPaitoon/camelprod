@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="pibitube-emplist-index">
         <div class="panel">
             <div class="panel panel-body">
-                <?= Html::a('เพิ่มข้อมูล', ['create'], ['class' => 'btn btn-success']) ?>
+                <?= Html::a('เพิ่มข้อมูล', ['create'], ['class' => 'btn btn-success createmodal']) ?>
             </div>
         </div>
         <div class="panel">
@@ -115,6 +115,31 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 <?php
+Modal::begin([
+    "id" => "create-modal",
+    "size" => "modal-lg",
+    "header" => "<h4>เพิ่มข้อมูล</h4>",
+]);
+echo '<div class="modalContent"></div>';
+Modal::end();
+
+$js = <<<JS
+$(document).on("click",".createmodal",function(e) {
+      e.preventDefault();
+      var cmodal = $("#create-modal");
+      if (cmodal.hasClass("in")) {
+          cmodal.find(".modalContent").load($(this).attr("data-url"));
+      } else {
+          cmodal.modal("show",{backdrop:"static",keyboard:true}).find(".modalContent").load($(this).attr("href"));          
+      } 
+});
+
+$("#create-modal").on("hidden.bs.modal",function() {
+    location.reload();  
+});
+
+JS;
 $baseurl = Yii::$app->request->baseUrl;
 $this->registerCssFile($baseurl . "/css/panel.css?Ver=0001", ['depends' => JqueryAsset::className()]);
+$this->registerJs($js, static::POS_END);
 ?>

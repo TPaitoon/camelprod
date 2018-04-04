@@ -137,8 +137,8 @@
                     ['label' => 'ผู้ดูแลระบบ', 'url' => '#', 'icon' => 'lock', 'visible' => $it,
                         'items' =>
                             [
-                                ['label' => 'User Info', 'icon' => 'cog', 'url' => ['/userinfo'], 'visible' => $it],
-                                ['label' => 'Log History', 'icon' => 'cog', 'url' => ['/loginhistory'], 'visible' => $it],
+                                ['label' => 'ข้อมูลผู้ใช้งาน', 'icon' => 'cog', 'url' => ['/userinfo'], 'visible' => $it],
+                                ['label' => 'ประวัติ', 'icon' => 'cog', 'url' => ['/loginhistory'], 'visible' => $it],
                                 ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii'], 'visible' => $it],
                                 ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug'], 'visible' => $it],
                             ],

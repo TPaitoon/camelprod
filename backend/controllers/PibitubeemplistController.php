@@ -83,7 +83,7 @@ class PibitubeemplistController extends Controller
 
             return $this->redirect(['pibitubeemplist/index']);
         } else {
-            return $this->render('create', [
+            return $this->renderAjax('create', [
                 'model' => $model,
             ]);
         }

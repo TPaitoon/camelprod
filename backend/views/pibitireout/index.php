@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="pibitireout-index">
     <div class="panel">
         <div class="panel panel-heading">
-            <?= $this->render('_search',['model' => $searchModel]) ?>
+            <?= $this->render('_search', ['model' => $searchModel]) ?>
         </div>
         <div class="panel panel-body">
             <?= GridView::widget([
@@ -173,9 +173,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                 $st = ArrayHelper::getValue($model, 'status');
                                 $rl = ArrayHelper::getValue($model, 'role');
                                 if ($st === 0) {
-                                    return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, []);
+                                    return Html::a('<span class="glyphicon glyphicon-pencil"></span>', 'javascript:void(0)', ['id' => 'updatemodal', 'data-url' => $url]);
                                 } elseif ($rl === 1) {
-                                    return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, []);
+                                    return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, ['id' => 'updatemodal', 'data-url' => $url]);
                                 } else {
                                     return '';
                                 }
@@ -205,8 +205,16 @@ Modal::begin([
 echo "<div class='modalContent'></div>";
 Modal::end();
 
+Modal::begin([
+    "id" => "update-modal",
+    "size" => "modal-lg",
+    "header" => "<h4>แก้ไขข้อมูล</h4>",
+]);
+echo "<div class='modalContent'></div>";
+Modal::end();
+
 $modaljs = <<<JS
-$(document).on("click",".bcreate",function(e) {
+$(document).on("click",".createmodal",function(e) {
     e.preventDefault();
     // alert();
     var cmodal = $("#create-modal");
@@ -215,6 +223,18 @@ $(document).on("click",".bcreate",function(e) {
         cmodal.find(".modalContent").load($(this).attr("href"));
     } else {
         cmodal.modal("show",{backdrop:"static",keyboard:true}).find(".modalContent").load($(this).attr("href"));       
+    }
+});
+
+$(document).on("click","#updatemodal",function(e) {
+    e.preventDefault();
+    // alert();
+    var umodal = $("#update-modal");
+    
+    if (umodal.hasClass("in")) {
+        umodal.find(".modalContent").load($(this).attr("data-url"));
+    } else {
+        umodal.modal("show",{backdrop:"static",keyboard:true}).find(".modalContent").load($(this).attr("data-url"));       
     }
 });
 JS;

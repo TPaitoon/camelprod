@@ -134,4 +134,12 @@ $emplist = EmpInfo::findAll(['Dept' => 'ฝ่ายผลิต', 'Sec' => 'ป
 $baseurl = Yii::$app->request->baseUrl;
 $this->registerJsFile($baseurl . '/js/pibitube/newline-emplist.js?Ver=0001', ['depends' => JqueryAsset::className()]);
 $this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => JqueryAsset::className()]);
+$js = <<<JS
+$("#emplistselect").select2().on("select2:opening",function() {
+    $("#create-modal").removeAttr("tabindex","-1");  
+}).on("select2:close",function() {
+    $("#create-modal").removeAttr("tabindex","1");    
+});
+JS;
+$this->registerJs($js,static::POS_END);
 ?>
