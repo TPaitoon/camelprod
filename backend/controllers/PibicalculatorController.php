@@ -36,9 +36,9 @@ class PibicalculatorController extends Controller
     public function actionIndex()
     {
         $chk = new UserDirect();
-        $usr = $chk->ChkusrForPIBIMaster();
+        $usr = $chk->ChkusrForPI();
 
-        $usr == 'ITIT' || $usr == 'PSPS' ? $role = 1 : $role = 0;
+        $usr == 'IT' || $usr == 'PS' ? $role = 1 : $role = 0;
 
         $app = Yii::$app->request;
         $searchModel = new PibicalculatorSearch();

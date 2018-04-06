@@ -34,11 +34,11 @@ class UserDirect
         }
     }
 
-    public function ChkusrForBOM()
+    public function ChkusrForPT()
     {
         $app = Yii::$app;
         $usr = $this->Chkusr();
-        if ($usr !== 'ITIT' && $usr !== 'PSPS' && $usr !== 'PTVT') {
+        if ($usr !== 'IT' && $usr !== 'PSP' && $usr !== 'PT') {
             return $app->response->redirect($app->homeUrl);
         }
         return $usr;
@@ -48,7 +48,7 @@ class UserDirect
     {
         $app = Yii::$app;
         $usr = $this->Chkusr();
-        if ($usr !== 'ITIT') {
+        if ($usr !== 'IT') {
             return $app->response->redirect($app->homeUrl);
         }
     }
@@ -57,46 +57,16 @@ class UserDirect
     {
         $app = Yii::$app;
         $usr = $this->Chkusr();
-        if ($usr !== 'ITIT' && $usr !== 'PSPS') {
+        if ($usr !== 'IT' && $usr !== 'PS') {
             return $app->response->redirect($app->homeUrl);
         }
     }
 
-    public function ChkusrForBicycle()
+    public function ChkusrForPI()
     {
         $app = Yii::$app;
         $usr = $this->Chkusr();
-        if ($usr !== 'ITIT' && $usr !== 'PSPS' && $usr !== 'PTVT') {
-            return $app->response->redirect($app->homeUrl);
-        }
-        return $usr;
-    }
-
-    public function ChkusrForBicycletire()
-    {
-        $app = Yii::$app;
-        $usr = $this->Chkusr();
-        if ($usr !== 'ITIT' && $usr !== 'PSPS' && $usr !== 'PTVT') {
-            return $app->response->redirect($app->homeUrl);
-        }
-        return $usr;
-    }
-
-    public function ChkusrForPIBIMaster()
-    {
-        $app = Yii::$app;
-        $usr = $this->Chkusr();
-        if ($usr !== 'ITIT' && $usr !== 'PSPS' && $usr !== 'PIBI') {
-            return $app->response->redirect($app->homeUrl);
-        }
-        return $usr;
-    }
-
-    public function ChkusrForPTBMOnly()
-    {
-        $app = Yii::$app;
-        $usr = $this->Chkusr();
-        if ($usr !== 'PTBM' && $usr !== 'ITIT') {
+        if ($usr !== 'IT' && $usr !== 'PS' && $usr !== 'PI') {
             return $app->response->redirect($app->homeUrl);
         }
         return $usr;

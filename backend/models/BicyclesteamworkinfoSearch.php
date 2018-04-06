@@ -57,8 +57,8 @@ class BicyclesteamworkinfoSearch extends BicyclesteamworkInfo
 
         foreach ($query->all() as $item) {
             $chk = new UserDirect();
-            $usr = $chk->ChkusrForBicycletire();
-            if ($usr == 'ITIT' || $usr == 'PSPS') {
+            $usr = $chk->ChkusrForPT();
+            if ($usr == 'IT' || $usr == 'PS') {
                 $sys = 1;
             } else {
                 $sys = 0;
@@ -111,8 +111,8 @@ class BicyclesteamworkinfoSearch extends BicyclesteamworkInfo
 
         foreach ($query->all() as $item) {
             $chk = new UserDirect();
-            $usr = $chk->ChkusrForBicycletire();
-            if ($usr == 'ITIT' || $usr == 'PSPS') {
+            $usr = $chk->ChkusrForPT();
+            if ($usr == 'IT' || $usr == 'PS') {
                 $sys = 1;
             } else {
                 $sys = 0;

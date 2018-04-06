@@ -61,8 +61,8 @@ class BicycletireinfoSearch extends BicycletireInfo
 
         foreach ($query->all() as $value) {
             $chk = new UserDirect();
-            $usr = $chk->ChkusrForBicycletire();
-            if ($usr == 'ITIT' || $usr == 'PSPS') {
+            $usr = $chk->ChkusrForPT();
+            if ($usr == 'IT' || $usr == 'PS') {
                 $sys = 1;
             } else {
                 $sys = 0;
@@ -160,8 +160,8 @@ class BicycletireinfoSearch extends BicycletireInfo
 
         foreach ($query->all() as $value) {
             $chk = new UserDirect();
-            $usr = $chk->ChkusrForBicycletire();
-            if ($usr == 'ITIT' || $usr == 'PSPS') {
+            $usr = $chk->ChkusrForPT();
+            if ($usr == 'IT' || $usr == 'PS') {
                 $sys = 1;
             } else {
                 $sys = 0;

@@ -40,8 +40,8 @@ class PibimccalculatorSearch extends PIBIMCMaster
         $this->load($params);
 
         $chk = new UserDirect();
-        $usr = $chk->ChkusrForPIBIMaster();
-        $usr == 'ITIT' || $usr == 'PSPS' ? $this->role = 1 : $this->role = 0;
+        $usr = $chk->ChkusrForPI();
+        $usr == 'IT' || $usr == 'PS' ? $this->role = 1 : $this->role = 0;
 
         $_temp = PIBIMCMaster::find()->andFilterWhere([
             'and', ['like', 'shift', $this->shift], ['>=', 'date', $this->startdate],
@@ -77,8 +77,8 @@ class PibimccalculatorSearch extends PIBIMCMaster
     public function searchcreated()
     {
         $chk = new UserDirect();
-        $usr = $chk->ChkusrForPIBIMaster();
-        $usr == 'ITIT' || $usr == 'PSPS' ? $this->role = 1 : $this->role = 0;
+        $usr = $chk->ChkusrForPI();
+        $usr == 'IT' || $usr == 'PS' ? $this->role = 1 : $this->role = 0;
 
         $_temp = PIBIMCMaster::find()->where(['status' => 0])->all();
         $_array = [];

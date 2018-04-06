@@ -9,39 +9,20 @@
         $chk = new UserDirect();
         $usr = $chk->Chkusr();
 
-        $bom = false;
-        $bce = false;
-        $sbw = false;
-        $edi = false;
-        $pibi = false;
+        $pt = false;
+        $pto = false;
+        $pi = false;
         $it = false;
-        $ptbm = false;
+        $ps = false;
 
-        if (count($usr) > 0) {
-            if ($usr === 'PSPS') {
-                $bom = true;
-                $bce = true;
-                $sbw = true;
-                $edi = true;
-                $pibi = true;
-            } elseif ($usr === 'PTBT') {
-                $bce = true;
-            } elseif ($usr === 'PTVT') {
-                $bom = true;
-                $sbw = true;
-            } elseif ($usr === 'ITIT') {
-                $it = true;
-                $bom = true;
-                $bce = true;
-                $sbw = true;
-                $edi = true;
-                $pibi = true;
-                $ptbm = true;
-            } elseif ($usr === 'PIBI') {
-                $pibi = true;
-            } elseif ($usr === 'PTBM') {
-                $ptbm = true;
-            }
+        if ($usr == 'IT') {
+            $it = true && $pt = true && $pi = true && $ps = true;
+        } elseif ($usr == 'PS') {
+            $pt = true && $pi = true && $ps = true;
+        } elseif ($usr == 'PT') {
+            $pt = true && $pto = true;
+        } elseif ($usr == 'PI') {
+            $pi = true;
         }
 
         ?>
@@ -56,14 +37,14 @@
 //                            ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug']],
 //                        ],
 //                    ],
-                    ['label' => 'นึ่งยางนอก', 'url' => '#', 'icon' => 'home', 'visible' => $bom,
+                    ['label' => 'นึ่งยางนอก', 'url' => '#', 'icon' => 'home', 'visible' => $pt,
                         'items' =>
                             [
                                 ['label' => 'BOM', 'url' => '#', 'icon' => 'chevron-circle-right',
                                     'items' =>
                                         [
                                             //['label' => 'Dashboard', 'icon' => 'dashboard', 'url' => ['/dashboard']],
-                                            ['label' => 'ค่ามาตรฐาน', 'icon' => 'cog', 'url' => ['/extrainfo'], 'visible' => $edi],
+                                            ['label' => 'ค่ามาตรฐาน', 'icon' => 'cog', 'url' => ['/extrainfo'], 'visible' => $ps],
                                             ['label' => 'ค่าพิเศษ', 'icon' => 'btc', 'url' => ['/bominfo']],
                                         ],
                                 ],
@@ -71,31 +52,31 @@
                                     'items' =>
                                         [
                                             //['label' => 'Dashboard', 'icon' => 'dashboard', 'url' => ['/dashboard']],
-                                            ['label' => 'เงินประจำตำแหน่ง', 'icon' => 'cog', 'url' => ['/steambicycleworkinfo'], 'visible' => $edi],
+                                            ['label' => 'เงินประจำตำแหน่ง', 'icon' => 'cog', 'url' => ['/steambicycleworkinfo'], 'visible' => $ps],
                                             ['label' => 'ค่าเข้างาน', 'icon' => 'btc', 'url' => ['/bicyclesteamworkinfo']],
-                                            ['label' => 'ค่ามาตรฐาน', 'icon' => 'cog', 'url' => ['/standardtirebicycleinfo'], 'visible' => $edi],
+                                            ['label' => 'ค่ามาตรฐาน', 'icon' => 'cog', 'url' => ['/standardtirebicycleinfo'], 'visible' => $ps],
                                             ['label' => 'ค่าพิเศษ', 'icon' => 'btc', 'url' => ['/bicycletireinfo']],
                                         ],
                                 ],
                             ],
                     ],
-                    ['label' => 'ประกอบยางนอก', 'url' => '#', 'icon' => 'home', 'visible' => $sbw,
+                    ['label' => 'ประกอบยางนอก', 'url' => '#', 'icon' => 'home', 'visible' => $pt,
                         'items' =>
                             [
                                 ['label' => 'จักรยาน', 'url' => '#', 'icon' => 'chevron-circle-right',
                                     'items' =>
                                         [
                                             //['label' => 'Dashboard', 'icon' => 'dashboard', 'url' => ['/dashboard']],
-                                            ['label' => 'เงินประจำตำแหน่ง', 'icon' => 'cog', 'url' => ['/standardbicycle'], 'visible' => $edi],
+                                            ['label' => 'เงินประจำตำแหน่ง', 'icon' => 'cog', 'url' => ['/standardbicycle'], 'visible' => $ps],
                                             ['label' => 'ค่าเข้างาน', 'icon' => 'btc', 'url' => ['/bicycleempinfo']],
-                                            ['label' => 'รายละเอียดยาง', 'icon' => 'cog', 'url' => ['/standardbicycleex'], 'visible' => $edi],
+                                            ['label' => 'รายละเอียดยาง', 'icon' => 'cog', 'url' => ['/standardbicycleex'], 'visible' => $ps],
                                             ['label' => 'ค่าพิเศษ', 'icon' => 'btc', 'url' => ['/bicycleinfo']],
                                         ],
                                 ],
                                 ['label' => 'มอเตอร์ไซต์', 'url' => '#', 'icon' => 'chevron-circle-right', 'visible' => $it,
                                     'items' =>
                                         [
-                                            ['label' => 'ใบสั่งประกอบยาง','icon' => 'btc','url' => ['/ptbmplanning'], 'visible' => $ptbm]
+                                            ['label' => 'ใบสั่งประกอบยาง', 'icon' => 'btc', 'url' => ['/ptbmplanning'], 'visible' => $pto]
                                         ]
                                 ]
                             ],
@@ -119,7 +100,7 @@
                                 ['label' => 'จักรยาน', 'url' => '#', 'icon' => 'chevron-circle-right',
                                     'items' =>
                                         [
-                                            ['label' => 'ค่ามาตรฐาน', 'icon' => 'cog', 'url' => ['/pibistandard'], 'visible' => $edi],
+                                            ['label' => 'ค่ามาตรฐาน', 'icon' => 'cog', 'url' => ['/pibistandard'], 'visible' => $ps],
                                             ['label' => 'จัดการพนักงาน', 'icon' => 'user', 'url' => ['/pibibcemplist']],
                                             ['label' => 'ค่าพิเศษ', 'icon' => 'btc', 'url' => ['/pibicalculator']],
                                         ],
@@ -127,7 +108,7 @@
                                 ['label' => 'มอเตอร์ไซค์', 'url' => '#', 'icon' => 'chevron-circle-right',
                                     'items' =>
                                         [
-                                            ['label' => 'ค่ามาตรฐาน', 'icon' => 'cog', 'url' => ['/pibimcstandard'], 'visible' => $edi],
+                                            ['label' => 'ค่ามาตรฐาน', 'icon' => 'cog', 'url' => ['/pibimcstandard'], 'visible' => $ps],
                                             ['label' => 'จัดการพนักงาน', 'icon' => 'user', 'url' => ['/pibimcemplist']],
                                             ['label' => 'ค่าพิเศษ', 'icon' => 'btc', 'url' => ['/pibimccalculator']],
                                         ],

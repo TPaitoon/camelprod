@@ -80,7 +80,7 @@ $JS = <<<JS
 JS;
 $this->registerJs($JS, static::POS_END);
 
-if ($Role == 'ITIT' || $Role == 'PSPS') {
+if ($Role == 'IT' || $Role == 'PS') {
     $sys = 1;
 } else {
     $sys = 0;

@@ -60,7 +60,7 @@ class BicycleempinfoSearch extends BicycleEmpInfo
         $array = [];
         foreach ($query->all() as $item) {
             $chk = new UserDirect();
-            $usr = $chk->ChkusrForBicycletire();
+            $usr = $chk->ChkusrForPT();
             $usr == 'ITIT' || $usr == 'PSPS' ? $sys = 1 : $sys = 0;
             array_push($array, [
                 'id' => $item->id,
@@ -92,7 +92,7 @@ class BicycleempinfoSearch extends BicycleEmpInfo
         $array = [];
         foreach ($query->all() as $item) {
             $chk = new UserDirect();
-            $usr = $chk->ChkusrForBicycletire();
+            $usr = $chk->ChkusrForPT();
             $usr == 'ITIT' || $usr == 'PSPS' ? $sys = 1 : $sys = 0;
             array_push($array, [
                 'id' => $item->id,

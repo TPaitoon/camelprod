@@ -47,8 +47,8 @@ class PibicalculatorSearch extends PIBICalculator
             ->all();
 
         $chk = new UserDirect();
-        $usr = $chk->ChkusrForPIBIMaster();
-        $usr == 'ITIT' || $usr == 'PSPS' ? $this->role = 1 : $this->role = 0;
+        $usr = $chk->ChkusrForPI();
+        $usr == 'IT' || $usr == 'PS' ? $this->role = 1 : $this->role = 0;
         $array = [];
 
         foreach ($query as $i) {
@@ -81,8 +81,8 @@ class PibicalculatorSearch extends PIBICalculator
         $query = PIBICalculator::find()->where(['status' => 0])->all();
         $array = [];
         $chk = new UserDirect();
-        $usr = $chk->ChkusrForPIBIMaster();
-        $usr == 'ITIT' || $usr == 'PSPS' ? $role = 1 : $role = 0;
+        $usr = $chk->ChkusrForPI();
+        $usr == 'IT' || $usr == 'PS' ? $role = 1 : $role = 0;
 
         foreach ($query as $i) {
             $data = PIBIDetail::find()->where(['Date' => date('Y-m-d', strtotime($i->date))])

@@ -42,7 +42,7 @@ class BicycleinfoController extends Controller
     public function actionIndex()
     {
         $chk = new UserDirect();
-        $usr = $chk->ChkusrForBicycle();
+        $usr = $chk->ChkusrForPT();
 
         if (Yii::$app->request->isGet && isset(Yii::$app->request->queryParams['BicycleinfoSearch']['startdate'])) {
             $searchModel = new BicycleinfoSearch();

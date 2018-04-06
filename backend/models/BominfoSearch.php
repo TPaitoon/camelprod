@@ -87,8 +87,8 @@ class BominfoSearch extends BOMInfo
 //                        break;
 //                }
                 $chk = new UserDirect();
-                $usr = $chk->ChkusrForBOM();
-                if ($usr == 'ITIT' || $usr == 'PSPS') {
+                $usr = $chk->ChkusrForPT();
+                if ($usr == 'IT' || $usr == 'PS') {
                     $sys = 1;
                 } else {
                     $sys = 0;
@@ -168,8 +168,8 @@ class BominfoSearch extends BOMInfo
 //                        break;
 //                }
                 $chk = new UserDirect();
-                $usr = $chk->ChkusrForBOM();
-                if ($usr == 'ITIT' || $usr == 'PSPS') {
+                $usr = $chk->ChkusrForPT();
+                if ($usr == 'IT' || $usr == 'PS') {
                     $sys = 1;
                 } else {
                     $sys = 0;

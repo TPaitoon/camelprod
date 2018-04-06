@@ -45,7 +45,7 @@ class BominfoController extends Controller
     public function actionIndex()
     {
         $chk = new UserDirect();
-        $usr = $chk->ChkusrForBOM();
+        $usr = $chk->ChkusrForPT();
 
         if (Yii::$app->request->isGet && isset(Yii::$app->request->queryParams['BominfoSearch']['startdate'])) {
 //            print Yii::$app->request->queryParams['BominfoSearch']['startdate'];

@@ -48,7 +48,7 @@ class BicycletireinfoController extends Controller
     {
 
         $chk = new UserDirect();
-        $usr = $chk->ChkusrForBicycletire();
+        $usr = $chk->ChkusrForPT();
 
         if (Yii::$app->request->isGet && isset(Yii::$app->request->queryParams['BicycletireinfoSearch']['startdate'])) {
             $searchModel = new BicycletireinfoSearch();

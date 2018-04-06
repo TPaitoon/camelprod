@@ -41,7 +41,7 @@ class BicyclesteamworkinfoController extends Controller
     public function actionIndex()
     {
         $chk = new UserDirect();
-        $usr = $chk->ChkusrForBicycletire();
+        $usr = $chk->ChkusrForPT();
 
         if (Yii::$app->request->isGet && isset(Yii::$app->request->queryParams['BicyclesteamworkinfoSearch']['startdate'])) {
             $searchModel = new BicyclesteamworkinfoSearch();

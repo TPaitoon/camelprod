@@ -78,7 +78,7 @@ $res = $session->getFlash('res');
 $debug->printr($dataProvider);
 return;*/
 
-if ($Role == 'ITIT' || $Role == 'PSPS') {
+if ($Role == 'IT' || $Role == 'PS') {
     $sys = 1;
 } else {
     $sys = 0;

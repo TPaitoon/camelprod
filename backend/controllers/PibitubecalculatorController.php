@@ -22,8 +22,8 @@ class PibitubecalculatorController extends Controller
     public function actionIndex()
     {
         $chk = new UserDirect();
-        $usr = $chk->ChkusrForPIBIMaster();
-        $usr == 'ITIT' || $usr == 'PSPS' ? $role = 1 : $role = 0;
+        $usr = $chk->ChkusrForPI();
+        $usr == 'IT' || $usr == 'PS' ? $role = 1 : $role = 0;
 
         $req = Yii::$app->request;
         $searchModel = new PibitubecalculatorSearch();

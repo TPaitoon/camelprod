@@ -82,7 +82,7 @@ $this->title = 'ค่าเข้างานนึ่งยางนอกจ�
 $this->params['breadcrumbs'][] = $this->title;
 $res = Yii::$app->session->getFlash('res');
 
-if ($Role == 'ITIT' || $Role == 'PSPS') {
+if ($Role == 'IT' || $Role == 'PS') {
     $sys = 1;
 } else {
     $sys = 0;

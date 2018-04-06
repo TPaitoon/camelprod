@@ -13,5 +13,6 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="pibitire-out-create">
     <?= $this->render('_form', [
         'model' => $model,
+        'status' => $status,
     ]) ?>
 </div>

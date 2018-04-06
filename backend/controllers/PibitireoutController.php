@@ -38,12 +38,17 @@ class PibitireoutController extends Controller
     public function actionIndex()
     {
         $chk = new UserDirect();
-        $usr = $chk->ChkusrForPIBIMaster();
+        $usr = $chk->ChkusrForPI();
 
-        $usr == 'ITIT' || $usr == 'PSPS' ? $role = 1 : $role = 0;
+        $usr == 'IT' || $usr == 'PS' ? $role = 1 : $role = 0;
 
-        $searchModel = new PibitireoutSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        if (Yii::$app->request->isGet && isset(Yii::$app->request->queryParams['PibitireoutSearch']['startdate'])) {
+            $searchModel = new PibitireoutSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        } else {
+            $searchModel = new PibitireoutSearch();
+            $dataProvider = $searchModel->showcreated();
+        }
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -80,6 +85,7 @@ class PibitireoutController extends Controller
         } else {
             return $this->renderAjax('create', [
                 'model' => $model,
+                'status' => 0
             ]);
         }
     }
@@ -95,10 +101,11 @@ class PibitireoutController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         } else {
             return $this->renderAjax('update', [
                 'model' => $model,
+                'status' => 1,
             ]);
         }
     }
@@ -150,7 +157,7 @@ class PibitireoutController extends Controller
         $date = $req->post("date");
         $empid = $req->post("empid");
         if (!empty($date) && !empty($empid)) {
-            $model = PIBITireOut::findAll(["empid" => $empid,"date" => $date]);
+            $model = PIBITireOut::findAll(["empid" => $empid, "date" => $date]);
             return count($model);
         }
     }

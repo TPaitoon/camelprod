@@ -76,7 +76,7 @@ $this->registerJs($js, static::POS_END);
 $this->title = 'ค่าพิเศษนึ่งยางนอกจกย.';
 $this->params['breadcrumbs'][] = $this->title;
 
-if ($Role == 'ITIT' || $Role == 'PSPS') {
+if ($Role == 'IT' || $Role == 'PS') {
     $sys = 1;
 } else {
     $sys = 0;

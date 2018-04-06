@@ -35,8 +35,8 @@ class PibimcstandardController extends Controller
     public function actionIndex()
     {
         $chk = new UserDirect();
-        $usr = $chk->ChkusrForPIBIMaster();
-        $usr == 'ITIT' || $usr == 'PSPS' ? $role = 1 : $role = 0;
+        $usr = $chk->ChkusrForPI();
+        $usr == 'IT' || $usr == 'PS' ? $role = 1 : $role = 0;
 
         $searchModel = new PibimcstandardSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);

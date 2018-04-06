@@ -40,8 +40,8 @@ class PibitubecalculatorSearch extends PIBITubeMaster
         $this->load($params);
 
         $chk = new UserDirect();
-        $usr = $chk->ChkusrForPIBIMaster();
-        $usr == 'ITIT' || $usr == 'PSPS' ? $this->role = 1 : $this->role = 0;
+        $usr = $chk->ChkusrForPI();
+        $usr == 'IT' || $usr == 'PS' ? $this->role = 1 : $this->role = 0;
 
         $temp = PIBITubeMaster::find()->andFilterWhere(['and', ['like', 'shift', $this->shift], ['>=', 'date', $this->startdate], ['<=', 'date', $this->enddate]])->all();
         $array = [];
@@ -77,8 +77,8 @@ class PibitubecalculatorSearch extends PIBITubeMaster
     public function searchcreated()
     {
         $chk = new UserDirect();
-        $usr = $chk->ChkusrForPIBIMaster();
-        $usr == 'ITIT' || $usr == 'PSPS' ? $this->role = 1 : $this->role = 0;
+        $usr = $chk->ChkusrForPI();
+        $usr == 'IT' || $usr == 'PS' ? $this->role = 1 : $this->role = 0;
 
         $temp = PIBITubeMaster::find()->where(['status' => 0])->all();
         $array = [];

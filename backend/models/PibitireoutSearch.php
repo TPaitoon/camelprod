@@ -61,8 +61,38 @@ class PibitireoutSearch extends PIBITireOut
             ->all();
 
         $chk = new UserDirect();
-        $usr = $chk->ChkusrForPIBIMaster();
-        $usr == 'ITIT' || $usr == 'PSPS' ? $this->role = 1 : $this->role = 0;
+        $usr = $chk->ChkusrForPI();
+        $usr == 'IT' || $usr == 'PS' ? $this->role = 1 : $this->role = 0;
+        $array = [];
+
+        foreach ($query as $item) {
+            array_push($array,[
+                'id' => $item->id,
+                'empid' => $item->empid,
+                'empname' => $item->empname,
+                'shift' => $item->shift,
+                'date' => $item->date,
+                'qty' => $item->qty,
+                'status' => $item->status,
+                'role' => $this->role
+            ]);
+        }
+
+        ArrayHelper::multisort($array,['date','empid'],4);
+        $dataProvider = new ArrayDataProvider([
+            'allModels' => $array
+        ]);
+
+        return $dataProvider;
+    }
+
+    public function showcreated()
+    {
+        $query = PIBITireOut::findAll(['status' => 0]);
+
+        $chk = new UserDirect();
+        $usr = $chk->ChkusrForPI();
+        $usr == 'IT' || $usr == 'PS' ? $this->role = 1 : $this->role = 0;
         $array = [];
 
         foreach ($query as $item) {

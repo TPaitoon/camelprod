@@ -81,6 +81,7 @@ for ($i = 0; $i < 4; $i++) {
     </div>
 <?php
 $checkjs = <<<JS
+// alert($status);
 $("#empidselect").select2()
 .on("select2:opening",function() {
     $("#create-modal").removeAttr("tabindex","-1");
@@ -94,8 +95,12 @@ $("#btnsave").on("click",function(e) {
         $.when(getCount()).done(function(data) {
             // alert(data);
             if (parseInt(data) > 0) {
-                 alert("มีข้อมูลแล้ว ...");
-                 e.preventDefault();
+                if ($status == 0) {
+                    alert("มีข้อมูลแล้ว ...");
+                    e.preventDefault();
+                } else {
+                    $("#btnsave").submit();
+                }
             } else {
                  $("#btnsave").submit();
             }
