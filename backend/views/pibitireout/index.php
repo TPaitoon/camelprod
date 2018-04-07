@@ -13,6 +13,40 @@ use yii\grid\GridView;
 
 $this->title = 'ค่าพิเศษออกยางแทน.';
 $this->params['breadcrumbs'][] = $this->title;
+
+$scriptjs = <<<JS
+function checkDel(e) {
+    if (confirm('ต้องการลบข้อมูล ?')) {
+        //alert($(".role").val());
+        if ($(".role").val() != 1) {
+            var status = e.closest('tr').attr('id');
+            // alert(status);
+            if (status != 0) {
+                alert('ไม่สามารถลบข้อมูลได้เนื่องจากไม่มีสิทธิ์');
+            } else {
+                var link = e.parent().attr('data-url');
+                // alert('');
+                $.ajax({
+                    type:'post',
+                    url:link,
+                    async:false,
+                    cache:false
+                });
+            } 
+        } else {
+            var link = e.parent().attr('data-url');
+            // alert(link);
+            $.ajax({
+                type:'post',
+                url:link,
+                async:false,
+                cache:false
+            });
+        }
+    }   
+}
+JS;
+$this->registerJs($scriptjs, static::POS_END);
 ?>
 <input hidden class="role" value="<?= $role ?>">
 <div class="pibitireout-index">
