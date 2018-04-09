@@ -170,7 +170,6 @@ $res = Yii::$app->session->getFlash('res');
 <?php
 Modal::begin([
     "id" => "modal-view",
-    "header" => "<h4>รายละเอียด</h4>",
     "size" => "modal-lg"
 ]);
 echo '<div class="modalContent"></div>';

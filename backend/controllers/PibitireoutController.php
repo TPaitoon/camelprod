@@ -161,4 +161,27 @@ class PibitireoutController extends Controller
             return count($model);
         }
     }
+
+    public function actionSetapproved()
+    {
+        $dataar = Yii::$app->request->post('dataar');
+
+        if (!empty($dataar)) {
+            for ($i = 0; $i < count($dataar); $i++) {
+                if (strlen($dataar[$i]) == 1) {
+                    continue;
+                } else {
+                    try {
+                        $idexplode = explode(':', $dataar[$i]);
+                        PIBITireOut::updateAll(['status' => 1], ['id' => $idexplode[0]]);
+                    } catch (\Exception $exception) {
+                        return 0;
+                    }
+                }
+            }
+            return 1;
+        } else {
+            return 0;
+        }
+    }
 }

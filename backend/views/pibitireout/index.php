@@ -45,6 +45,31 @@ function checkDel(e) {
         }
     }   
 }
+
+$(".indexapproved").on("click",function(e) {
+    e.preventDefault();
+    if ($(".role").val() != 1) {
+        alert('ไม่สามารถยืนยันรายการได้เนื่องจากไม่มีสิทธิ์');
+    }else if (confirm("ยืนยันการทำรายการ ?")) {
+        var dataar = $("input[type=checkbox]:checked").map(function() {
+            return $(this).val();
+        }).get();
+        // alert(dataar);
+        $.ajax({
+            type:"post",
+            url:"?r=pibitireout/setapproved",
+            data:{dataar:dataar},
+            success: function(data) {
+                if (data != 1) {
+                    alert(data);
+                } else {
+                    alert("บันทึกเรียบร้อยแล้ว");
+                    location.reload();
+                } 
+            }
+        });
+    } 
+});
 JS;
 $this->registerJs($scriptjs, static::POS_END);
 ?>
@@ -93,6 +118,9 @@ $this->registerJs($scriptjs, static::POS_END);
                             } else {
                                 return ["class" => "text-center"];
                             }
+                        },
+                        'checkboxOptions' => function ($model) {
+                            return ['value' => ArrayHelper::getValue($model, 'id') . ":"];
                         }
                     ],
 //                    'empid:raw:รหัสพนักงาน',
@@ -270,6 +298,10 @@ $(document).on("click","#updatemodal",function(e) {
     } else {
         umodal.modal("show",{backdrop:"static",keyboard:true}).find(".modalContent").load($(this).attr("data-url"));       
     }
+});
+
+$("#create-modal").on("hidden.bs.modal",function() {
+    location.reload();
 });
 JS;
 $this->registerJs($modaljs, static::POS_END);

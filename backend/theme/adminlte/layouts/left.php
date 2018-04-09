@@ -81,7 +81,7 @@
                                 ]
                             ],
                     ],
-                    ['label' => 'ประกอบยางใน', 'url' => '#', 'icon' => 'home', 'visible' => $it,
+                    ['label' => 'ประกอบยางใน', 'url' => '#', 'icon' => 'home', 'visible' => $pi,
                         'items' =>
                             [
                                 ['label' => 'ออกยางแทน', 'url' => '#', 'icon' => 'chevron-circle-right',

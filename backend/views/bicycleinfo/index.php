@@ -44,8 +44,10 @@ $js = <<<JS
     
      $("#binfo").on('click',function(e) {
         e.preventDefault();
-        if (confirm('ต้องการยืนยันข้อมูล ?')){
             // alert(ids);
+        if ($(".role").val() != 1) {
+            alert('ไม่สามารถยืนยันรายการได้เนื่องจากไม่มีสิทธิ์');
+        } else if (confirm("ยืนยันการทำรายการ ?")) {
             var dataar = $('input[type=checkbox]:checked').map(function() {
                 return $(this).val();
             }).get();
@@ -64,8 +66,8 @@ $js = <<<JS
                     }
                 }
             });
-        }
-    })
+        }           
+    });
     
 JS;
 $this->registerJs($js, static::POS_END);
@@ -106,9 +108,13 @@ if ($Role == 'IT' || $Role == 'PS') {
                             'headerOptions' => [
                                 'class' => 'text-center',
                             ],
-                            'contentOptions' => [
-                                'class' => 'text-center',
-                            ],
+                            'contentOptions' => function ($model) {
+                                if (ArrayHelper::getValue($model, 'checks') !== 0) {
+                                    return ['class' => 'text-center', 'style' => 'visibility: hidden'];
+                                } else {
+                                    return ['class' => 'text-center'];
+                                }
+                            },
                             'checkboxOptions' => function ($model) {
                                 $data = ArrayHelper::getValue($model, 'empid') . "," . ArrayHelper::getValue($model, 'date');
                                 return ['value' => $data];

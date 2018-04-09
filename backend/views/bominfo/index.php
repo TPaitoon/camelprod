@@ -114,9 +114,13 @@ if ($Role == 'IT' || $Role == 'PS') {
                             'headerOptions' => [
                                 'class' => 'text-center',
                             ],
-                            'contentOptions' => [
-                                'class' => 'text-center',
-                            ],
+                            'contentOptions' => function ($model) {
+                                if (ArrayHelper::getValue($model, 'check') !== 'Created') {
+                                    return ['class' => 'text-center', 'style' => 'visibility: hidden'];
+                                } else {
+                                    return ['class' => 'text-center'];
+                                }
+                            },
                             'checkboxOptions' => function ($model) {
                                 $data = ArrayHelper::getValue($model, 'empid') . "," . ArrayHelper::getValue($model, 'date') . "," . ArrayHelper::getValue($model, 'stoveid');
                                 return ['value' => $data];

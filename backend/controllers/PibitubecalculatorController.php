@@ -287,7 +287,7 @@ class PibitubecalculatorController extends Controller
         $model->recid = $recid;
         $model->refid = $mst->id;
 
-        return $this->renderAjax("view", ['model' => $model]);
+        return $this->renderAjax("view_2", ['model' => $model]);
     }
 
     public function actionDelete($id)
