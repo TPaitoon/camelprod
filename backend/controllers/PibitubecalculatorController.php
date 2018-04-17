@@ -233,15 +233,15 @@ class PibitubecalculatorController extends Controller
         for ($i = 0; $i < count($data); $i++) {
             array_push($recid, $data[$i]->id);
             if ($i == 0) {
-                array_push($_listid, $data[$i]->empid . ' ' . $data[$i]->empname);
-            } elseif ($this->findArray($data[$i]->empid . ' ' . $data[$i]->empname, $_listid) == true) {
-                array_push($_listid, $data[$i]->empid . ' ' . $data[$i]->empname);
+                array_push($_listid, $data[$i]->empid . '|' . $data[$i]->empname);
+            } elseif ($this->findArray($data[$i]->empid . '|' . $data[$i]->empname, $_listid) == true) {
+                array_push($_listid, $data[$i]->empid . '|' . $data[$i]->empname);
             }
         }
 
         $empidz = [];
         for ($z = 0; $z < count($_listid); $z++) {
-            $tempz = explode(" ", $_listid[$z]);
+            $tempz = explode("|", $_listid[$z]);
             array_push($empidz, $tempz[0]);
         }
 
@@ -286,6 +286,7 @@ class PibitubecalculatorController extends Controller
         $model->itemid = $itemid;
         $model->recid = $recid;
         $model->refid = $mst->id;
+        $model->itemlist = $groupdatalist;
 
         return $this->renderAjax("view_2", ['model' => $model]);
     }
