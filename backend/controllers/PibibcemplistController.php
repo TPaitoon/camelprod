@@ -81,7 +81,7 @@ class PibibcemplistController extends Controller
             }
             return $this->redirect(["index"]);
         } else {
-            return $this->render('create', [
+            return $this->renderAjax('create', [
                 'model' => $model,
             ]);
         }

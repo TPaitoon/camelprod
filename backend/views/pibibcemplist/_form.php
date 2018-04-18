@@ -114,11 +114,6 @@ for ($i = 1; $i <= 15; $i++) {
                 <div class="pull-left">
                     <?= Html::submitButton("บันทึก", ["id" => "pibibcemplistsubmit", "class" => "btn btn-success"]) ?>
                 </div>
-                <div class="pull-right">
-                    <?= Html::a("หน้าหลัก", ["index"], ["class" => "btn btn-info"]) ?>
-
-                    <?= Html::a("ย้อนกลับ", Yii::$app->request->referrer, ["class" => "btn btn-danger"]) ?>
-                </div>
             </div>
         </div>
         <?php ActiveForm::end(); ?>
@@ -127,4 +122,12 @@ for ($i = 1; $i <= 15; $i++) {
 $baseurl = Yii::$app->request->baseUrl;
 $this->registerCssFile($baseurl . "/css/panel.css?Ver=0001", ["depends" => JqueryAsset::className()]);
 $this->registerJsFile($baseurl . "/js/pibi/newline-emplist-bc.js?Ver=0001", ["depends" => JqueryAsset::className()]);
+$js = <<<JS
+$("#emplistselect").select2().on("select2:opening",function() {
+    $("#create-modal").removeAttr("tabindex","-1");  
+}).on("select2:close",function() {
+    $("#create-modal").removeAttr("tabindex","1");    
+});
+JS;
+$this->registerJs($js,static::POS_END);
 ?>

@@ -1,8 +1,10 @@
 <?php
 
+use yii\bootstrap\Modal;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\web\JqueryAsset;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\PibimcemplistSearch */
@@ -16,7 +18,7 @@ $res = Yii::$app->session->getFlash('res');
     <div class="pibimcemplist-index">
         <div class="panel">
             <div class="panel panel-body">
-                <?= Html::a("เพิ่มข้อมูล", ["create"], ["class" => "btn btn-success"]) ?>
+                <?= Html::a("เพิ่มข้อมูล", ["create"], ["class" => "btn btn-success createmodal"]) ?>
             </div>
         </div>
         <div class="panel">
@@ -193,6 +195,14 @@ $res = Yii::$app->session->getFlash('res');
         </div>
     </div>
 <?php
+Modal::begin([
+    "id" => "create-modal",
+    "size" => "modal-lg",
+    "header" => "<h4>เพิ่มข้อมูล</h4>",
+]);
+echo '<div class="modalContent"></div>';
+Modal::end();
+
 $js = <<<JS
 var txt = "$res";
 if(txt !== "") { alert(txt); }
@@ -212,6 +222,22 @@ function del(e) {
         cache: false
     })
 }
+
+$(document).on("click",".createmodal",function(e) {
+    e.preventDefault();
+    var cmodal = $("#create-modal");
+    if (cmodal.hasClass("in")) {
+        cmodal.find(".modalContent").load($(this).attr("data-url"));
+    } else {
+        cmodal.modal("show",{backdrop:"static",keyboard:true}).find(".modalContent").load($(this).attr("href"));
+    }
+});
+
+$("#create-modal").on("hidden.bs.modal",function() {
+    location.reload();  
+});
 JS;
+$baseurl = Yii::$app->request->baseUrl;
+$this->registerCssFile($baseurl . "/css/panel.css?Ver=0001", ['depends' => JqueryAsset::className()]);
 $this->registerJs($js, static::POS_END);
 ?>

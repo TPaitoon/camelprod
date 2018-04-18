@@ -11,12 +11,5 @@ $this->params['breadcrumbs'][] = ['label' => 'จัดการพนักง�
 $this->params['breadcrumbs'][] = 'เพิ่มข้อมูล';
 ?>
 <div class="pibibcemplist-create">
-    <div class="panel">
-        <div class="panel panel-heading">
-            <h4>เพิ่มข้อมูล</h4>
-        </div>
-        <div class="panel panel-body">
-            <?= $this->render("_form", ['model' => $model]) ?>
-        </div>
-    </div>
+    <?= $this->render("_form", ['model' => $model]) ?>
 </div>
