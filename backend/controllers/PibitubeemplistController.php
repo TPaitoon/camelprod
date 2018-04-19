@@ -145,4 +145,17 @@ class PibitubeemplistController extends Controller
             return null;
         }
     }
+
+    public function action_delete()
+    {
+        $req = Yii::$app->request;
+        $shiftval = $req->post("shift");
+        $count = count(PIBITubeEmplist::findAll(["shift" => $shiftval]));
+        if ($count > 0) {
+            PIBITubeEmplist::deleteAll(["shift" => $shiftval]);
+            return "ลบข้อมูลเรียบร้อยแล้ว";
+        } else {
+            return "ไม่พบข้อมูล";
+        }
+    }
 }

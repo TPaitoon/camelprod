@@ -143,4 +143,19 @@ class PibibcemplistController extends Controller
             return null;
         }
     }
+
+    public function action_delete()
+    {
+//        return "1234567890";
+        $req = Yii::$app->request;
+        $shiftval = $req->post("shift");
+        $groupval = $req->post("group");
+        $count = PIBIBCEmplist::find()->where(["shift" => $shiftval,"group" => $groupval])->count();
+        if ($count > 0) {
+            PIBIBCEmplist::deleteAll(["group" => $groupval,"shift" => $shiftval]);
+            return "ลบข้อมูลเรียบร้อยแล้ว";
+        } else {
+            return "ไม่พบข้อมูล";
+        }
+    }
 }

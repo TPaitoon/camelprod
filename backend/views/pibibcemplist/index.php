@@ -19,6 +19,7 @@ $res = Yii::$app->session->getFlash('res');
         <div class="panel">
             <div class="panel panel-body">
                 <?= Html::a("เพิ่มข้อมูล", ["create"], ["class" => "btn btn-success createmodal"]) ?>
+                <?= Html::a("ลบข้อมูล", "javascript:void(0)", ["class" => "btn btn-danger deletemodal"]) ?>
             </div>
         </div>
         <div class="panel">
@@ -79,29 +80,6 @@ $res = Yii::$app->session->getFlash('res');
                                 'class' => 'text-left'
                             ],
                             'label' => 'พนักงาน'
-                        ],
-                        [
-                            'class' => 'yii\grid\ActionColumn',
-                            'headerOptions' => [
-                                'class' => 'text-center',
-                                'style' => 'width:10%'
-                            ],
-                            'contentOptions' => [
-                                'class' => 'text-center'
-                            ],
-                            'template' => '{delete}',
-                            'buttons' => [
-                                'delete' => function ($url) {
-                                    return Html::a('<span class="glyphicon glyphicon-trash" onclick="checkDel($(this))"></span>', 'javascript:void(0)', [
-                                        'data-url' => $url,
-                                    ]);
-                                }
-                            ],
-                            'urlCreator' => function ($action, $model) {
-                                $id = ArrayHelper::getValue($model, 'id');
-                                $url = '?r=pibimcemplist/' . $action . '&id=' . $id;
-                                return $url;
-                            }
                         ],
                     ],
                 ]); ?>
@@ -166,29 +144,6 @@ $res = Yii::$app->session->getFlash('res');
                             ],
                             'label' => 'พนักงาน'
                         ],
-                        [
-                            'class' => 'yii\grid\ActionColumn',
-                            'headerOptions' => [
-                                'class' => 'text-center',
-                                'style' => 'width:10%'
-                            ],
-                            'contentOptions' => [
-                                'class' => 'text-center'
-                            ],
-                            'template' => '{delete}',
-                            'buttons' => [
-                                'delete' => function ($url) {
-                                    return Html::a('<span class="glyphicon glyphicon-trash" onclick="checkDel($(this))"></span>', 'javascript:void(0)', [
-                                        'data-url' => $url,
-                                    ]);
-                                }
-                            ],
-                            'urlCreator' => function ($action, $model) {
-                                $id = ArrayHelper::getValue($model, 'id');
-                                $url = '?r=pibimcemplist/' . $action . '&id=' . $id;
-                                return $url;
-                            }
-                        ],
                     ],
                 ]); ?>
             </div>
@@ -201,6 +156,14 @@ Modal::begin([
     "header" => "<h4>เพิ่มข้อมูล</h4>",
 ]);
 echo '<div class="modalContent"></div>';
+Modal::end();
+
+Modal::begin([
+    "id" => "delete-modal",
+    "size" => "modal-lg",
+    "header" => "<h4>ลบข้อมูล</h4>"
+]);
+echo $this->render('_delete');
 Modal::end();
 
 $js = <<<JS
@@ -227,10 +190,34 @@ $(document).on("click",".createmodal",function(e) {
     e.preventDefault();
     var cmodal = $("#create-modal");
     if (cmodal.hasClass("in")) {
-        cmodal.find(".modalContent").load($(this).attr("data-url"));
+        cmodal.find(".modalContent").load($(this).attr("href"));
     } else {
         cmodal.modal("show",{backdrop:"static",keyboard:true}).find(".modalContent").load($(this).attr("href"));
     }
+});
+
+$(document).on("click",".deletemodal",function(e) {
+    // alert(1234567890);
+    var dmodal = $("#delete-modal");
+    if (dmodal.hasClass("in")) {
+        dmodal.find(".modalContent");
+    } else {
+        dmodal.modal("show",{backdrop:"static",keyboard:true});
+    } 
+});
+
+$(".delete").on("click",function(e) {
+    e.preventDefault();
+    // alert(1234567890);
+    $.ajax({
+        type:"post",
+        url:"?r=pibibcemplist/_delete",
+        data: {shift:$("#shiftselect").val(),group:$("#groupselect").val()},
+        success: function(data) {
+            alert(data);
+            location.reload();
+        }
+    });
 });
 
 $("#create-modal").on("hidden.bs.modal",function() {
