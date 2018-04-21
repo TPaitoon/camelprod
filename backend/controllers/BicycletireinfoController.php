@@ -192,7 +192,7 @@ class BicycletireinfoController extends Controller
                         break;
                 }
                 $create->empid = $model->empid;
-                $create->empName = $model->empName;
+                $create->empName = $this->Showempname($model->empid);
                 $create->date = $model->date;
                 $create->standard = $model->standard;
                 $create->hour = $model->hour . ' ชั่วโมง';
@@ -261,7 +261,7 @@ class BicycletireinfoController extends Controller
             $z++;
             if ($z == 11) {
                 $model->empid = $i->empid;
-                $model->empName = $i->empName;
+                $model->empName = $this->Showempname($model->empid);
                 $model->date = $i->date;
                 $model->hour = $i->hour;
                 $model->standard = $i->standard;
@@ -376,7 +376,7 @@ class BicycletireinfoController extends Controller
         }
     }
 
-    public function actionShowempname($empid)
+    public function Showempname($empid)
     {
         $model = EmpInfo::find()->where(['PRS_NO' => $empid])->one();
         if (!empty($model)) {

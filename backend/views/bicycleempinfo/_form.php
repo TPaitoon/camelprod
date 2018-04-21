@@ -19,20 +19,16 @@ $bicyclesec = StandardBicycle::find()->all();
 <div class="bicycle-emp-info-form">
     <?php $form = ActiveForm::begin(['id' => 'bicycleemp-form']); ?>
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-5">
             <?= $form->field($model, 'empid')->widget(Select2::className(), [
-                'data' => ArrayHelper::map($empmodel, 'PRS_NO', 'PRS_NO'),
+                'data' => ArrayHelper::map($empmodel, 'PRS_NO', function ($data) {
+                    return $data->PRS_NO . " : " . $data->EMP_NAME . " " . $data->EMP_SURNME;
+                }),
                 'options' => [
                     'placeholder' => 'เลือกรหัสพนักงาน',
                     'id' => 'eempid',
-                    'onchange' => '$.post("index.php?r=bicycleempinfo/showempname&id=' . '"+$(this).val(),function(data){
-            $("#eempname").val(data);
-            });',
                 ],])->label('รหัสพนักงาน')
             ?>
-        </div>
-        <div class="col-md-4">
-            <?= $form->field($model, 'empName')->textInput(['id' => 'eempname', 'readonly' => true])->label('ชื่อ - นามสกุล') ?>
         </div>
         <div class="col-md-2">
             <?= $form->field($model, 'Extra')->hiddenInput(['id' => 'eextra', 'readonly' => true])->label(false) ?>

@@ -117,7 +117,7 @@ class BicycleinfoController extends Controller
             for ($i = 1; $i <= 4; $i++) {
                 $create = new BicycleInfo();
                 $create->empid = $model->empid;
-                $create->empname = $model->empname;
+                $create->empname = $this->Showempname($model->empid);
                 $create->typeid = $i;
                 switch ($i) {
                     case 1:
@@ -182,7 +182,7 @@ class BicycleinfoController extends Controller
             $index++;
             if ($index == 4) {
                 $model->empid = $value->empid;
-                $model->empname = $value->empname;
+                $model->empname = $this->Showempname($value->empid);
                 $model->date = $value->date;
                 $model->tirename = $value->tirename;
                 $model->grouptire = $value->grouptire;
@@ -263,7 +263,7 @@ class BicycleinfoController extends Controller
         }
     }
 
-    public function actionShowempname($empid)
+    public function Showempname($empid)
     {
         $model = EmpInfo::find()->where(['PRS_NO' => $empid])->one();
         if (!empty($model)) {

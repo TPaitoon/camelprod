@@ -133,19 +133,15 @@ foreach ($hourarray as $item) {
         <div class="panel panel-body">
             <?php $form = ActiveForm::begin(['id' => 'bomform']); ?>
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <?= $form->field($model, 'empid')->widget(Select2::className(), [
-                        'data' => ArrayHelper::map($empmodel, 'PRS_NO', 'PRS_NO'),
+                        'data' => ArrayHelper::map($empmodel, 'PRS_NO', function ($data) {
+                            return $data->PRS_NO . " : " . $data->EMP_NAME . " " . $data->EMP_SURNME;
+                        }),
                         'options' => [
-                            'placeholder' => 'เลือกรหัสพนักงาน',
+                            'placeholder' => 'เลือกพนักงาน',
                             'id' => 'cempid',
-                            'onchange' => '$.post("index.php?r=bominfo/showempname&id=' . '"+$(this).val(),function(data){
-					$("#cempname").val(data);
-					 });',
                         ],])->label('รหัสพนักงาน') ?>
-                </div>
-                <div class="col-md-6">
-                    <?= $form->field($model, 'empName')->textInput(['id' => 'cempname', 'readonly' => true])->label('ชื่อ - นามสกุล') ?>
                 </div>
                 <div class="col-md-3">
                     <?php $model->date == '' ? $model->date = date('Y-m-d') : $model->date ?>

@@ -115,7 +115,7 @@ if ($Role == 'IT' || $Role == 'PS') {
                                 'class' => 'text-center',
                             ],
                             'contentOptions' => function ($model) {
-                                if (ArrayHelper::getValue($model, 'checks') !== 0) {
+                                if (ArrayHelper::getValue($model, 'checks') != 0) {
                                     return ['class' => 'text-center', 'style' => 'visibility: hidden'];
                                 } else {
                                     return ['class' => 'text-center'];

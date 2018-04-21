@@ -78,13 +78,15 @@ class BicycleempinfoController extends Controller
     {
         $model = new BicycleEmpInfo();
         $usr = Userinfo::find()->where(['username' => Yii::$app->user->identity->username])->one();
-        if ($usr->Dept === 'ITIT' || $usr->Dept === 'PSPS') {
+        if ($usr->Dept === 'IT' || $usr->Dept === 'PS') {
             $chk = 1;
         } else {
             $chk = 0;
         }
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            $model->empName = $this->Showempname($model->empid);
+            $model->save();
             return $this->redirect(['index']);
         } else {
             return $this->renderAjax('create', [
@@ -104,13 +106,15 @@ class BicycleempinfoController extends Controller
     {
         $model = $this->findModel($id);
         $usr = Userinfo::find()->where(['username' => Yii::$app->user->identity->username])->one();
-        if ($usr->Dept === 'ITIT' || $usr->Dept === 'PSPS') {
+        if ($usr->Dept === 'IT' || $usr->Dept === 'PS') {
             $chk = 1;
         } else {
             $chk = 0;
         }
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            $model->empName = $this->Showempname($model->empid);
+            $model->save();
             return $this->redirect(['index']);
         } else {
             return $this->renderAjax('update', [
@@ -129,7 +133,7 @@ class BicycleempinfoController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
-        Yii::$app->session->setFlash('res','ลบข้อมูลเรียบร้อยแล้ว !');
+        Yii::$app->session->setFlash('res', 'ลบข้อมูลเรียบร้อยแล้ว !');
 
         return $this->redirect(['index']);
     }
@@ -150,7 +154,7 @@ class BicycleempinfoController extends Controller
         }
     }
 
-    public function actionShowempname($id)
+    public function Showempname($id)
     {
         $model = EmpInfo::find()->where(['PRS_NO' => $id])->one();
         if (count($model) > 0) {

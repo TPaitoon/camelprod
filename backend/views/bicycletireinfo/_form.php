@@ -36,20 +36,16 @@ foreach ($hourarray as $item) {
     <?php $form = ActiveForm::begin(['id' => 'bicycletire-form']); ?>
     <div class="box-body">
         <div class="row">
-            <div class="col-md-2">
+            <div class="col-md-5">
                 <?= $form->field($model, 'empid')->widget(Select2::className(), [
-                    'data' => ArrayHelper::map($empmodel, 'PRS_NO', 'PRS_NO'),
+                    'data' => ArrayHelper::map($empmodel, 'PRS_NO', function ($data) {
+                        return $data->PRS_NO . " : " . $data->EMP_NAME . " " . $data->EMP_SURNME;
+                    }),
                     'options' => [
                         'placeholder' => 'เลือกรหัสพนักงาน',
                         'id' => 'btempid',
-                        'onchange' => '$.post("index.php?r=bicycletireinfo/showempname&empid=' . '"+$(this).val(),function(data){
-                        $("#btempname").val(data);
-                        });',
                     ],
                 ])->label('รหัสพนักงาน') ?>
-            </div>
-            <div class="col-md-3">
-                <?= $form->field($model, 'empName')->textInput(['id' => 'btempname', 'readonly' => 'true'])->label('ชื่อ - นามสกุล') ?>
             </div>
             <div class="col-md-2">
                 <?php $model->date == '' ? $model->date = date('Y-m-d') : $model->date ?>

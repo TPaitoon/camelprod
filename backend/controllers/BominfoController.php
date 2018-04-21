@@ -142,7 +142,7 @@ class BominfoController extends Controller
             for ($i = 1; $i <= 4; $i++) {
                 $create = new BOMInfo();
                 $create->empid = $model->empid;
-                $create->empName = $model->empName;
+                $create->empName = $this->Showempname($model->empid);
                 if ($i === 1) {
                     $create->typeID = $i;
                     $create->qty = $model->losttime;
@@ -236,7 +236,7 @@ class BominfoController extends Controller
                 for ($i = 0; $i <= count($recid) - 1; $i++) {
                     $update = BOMInfo::find()->where(['id' => $recid[$i]])->one();
                     $update->empid = $model->empid;
-                    $update->empName = $model->empName;
+                    $update->empName = $this->Showempname($model->empid);
                     switch ($i + 1) {
                         case 1:
                             $update->typeID = 1;
@@ -304,7 +304,7 @@ class BominfoController extends Controller
         }
     }
 
-    public function actionShowempname($id)
+    public function Showempname($id)
     {
         $model = EmpInfo::find()->where(['PRS_NO' => $id])->one();
         if (count($model) > 0) {

@@ -79,7 +79,9 @@ class BicyclesteamworkinfoController extends Controller
     {
         $model = new BicyclesteamworkInfo();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            $model->empName = $this->Showempname($model->empid);
+            $model->save();
             return $this->redirect(['index']);
         } else {
             return $this->renderAjax('create', [
@@ -137,7 +139,7 @@ class BicyclesteamworkinfoController extends Controller
         }
     }
 
-    public function actionShowempname($empid)
+    public function Showempname($empid)
     {
         $model = EmpInfo::find()->where(['PRS_NO' => $empid])->one();
         if (!empty($model)) {

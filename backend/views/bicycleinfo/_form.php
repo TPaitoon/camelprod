@@ -20,9 +20,11 @@ $tiremodel = Weaverbicycle::find()->all();
 <div class="bicycle-info-form">
     <?php $form = ActiveForm::begin(['id' => 'bicycleform']); ?>
     <div class="row">
-        <div class="col-md-2">
+        <div class="col-md-5">
             <?= $form->field($model, 'empid')->widget(Select2::className(), [
-                'data' => ArrayHelper::map($empmodel, 'PRS_NO', 'PRS_NO'),
+                'data' => ArrayHelper::map($empmodel, 'PRS_NO', function ($data) {
+                    return $data->PRS_NO . " : " . $data->EMP_NAME . " " . $data->EMP_SURNME;
+                }),
                 'options' => [
                     'placeholder' => 'เลือกรหัสพนักงาน',
                     'id' => 'bempid',
@@ -30,9 +32,6 @@ $tiremodel = Weaverbicycle::find()->all();
                         $("#bempname").val(data);
                         });',
                 ],])->label('รหัสพนักงาน') ?>
-        </div>
-        <div class="col-md-3">
-            <?= $form->field($model, 'empname')->textInput(['id' => 'bempname', 'readonly' => true])->label('ชื่อ - นามสกุล') ?>
         </div>
         <div class="col-md-2">
             <?php $model->date == '' ? $model->date = date('Y-m-d') : $model->date ?>
@@ -51,7 +50,7 @@ $tiremodel = Weaverbicycle::find()->all();
     </div>
     <hr>
     <div class="row">
-        <div class="col-md-2">
+        <div class="col-md-4">
             <?= $form->field($model, 'tirename')->widget(Select2::className(), [
                 'data' => ArrayHelper::map($tiremodel, 'sizename', 'sizename'),
                 'options' => [
