@@ -37,100 +37,8 @@ foreach ($hourarray as $item) {
 //$debug->printr($data);return;
 ?>
 
-<div class="bominfo-form">
-    <div class="panel">
-        <div class="panel panel-heading">
-            <div class="row">
-                <div class="col-md-4">
-                    <table id="arraytb11" class="table tab-content" border="solid">
-                        <h5 class="text-center">
-                            <label><?php echo ArrayHelper::getValue($data, '0.name') ?></label>
-                        </h5>
-                        <thead>
-                        <th class="text-center">ค่าต่ำสุด</th>
-                        <th class="text-center">ค่าสูงสุด</th>
-                        <th class="text-center">อัตรา</th>
-                        </thead>
-                        <tbody class="text-center">
-                        <tr>
-                            <td><?php echo ArrayHelper::getValue($data, '0.min') ?></td>
-                            <td><?php echo ArrayHelper::getValue($data, '0.max') ?></td>
-                            <td><?php echo ArrayHelper::getValue($data, '0.rate') ?></td>
-                        </tr>
-                        <tr>
-                            <td><?php echo ArrayHelper::getValue($data, '1.min') ?></td>
-                            <td><?php echo ArrayHelper::getValue($data, '1.max') ?></td>
-                            <td><?php echo ArrayHelper::getValue($data, '1.rate') ?></td>
-                        </tr>
-                        <tr>
-                            <td><?php echo ArrayHelper::getValue($data, '2.min') ?></td>
-                            <td><?php echo ArrayHelper::getValue($data, '2.max') ?></td>
-                            <td><?php echo ArrayHelper::getValue($data, '2.rate') ?></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col-md-4">
-                    <table id="arraytb12" class="table tab-content" border="solid">
-                        <h5 class="text-center">
-                            <label><?php echo ArrayHelper::getValue($data, '3.name') ?></label>
-                        </h5>
-                        <thead>
-                        <th class="text-center">ค่าต่ำสุด</th>
-                        <th class="text-center">ค่าสูงสุด</th>
-                        <th class="text-center">อัตรา</th>
-                        </thead>
-                        <tbody class="text-center">
-                        <tr>
-                            <td><?php echo ArrayHelper::getValue($data, '3.min') ?></td>
-                            <td><?php echo ArrayHelper::getValue($data, '3.max') ?></td>
-                            <td><?php echo ArrayHelper::getValue($data, '3.rate') ?></td>
-                        </tr>
-                        <tr>
-                            <td><?php echo ArrayHelper::getValue($data, '4.min') ?></td>
-                            <td><?php echo ArrayHelper::getValue($data, '4.max') ?></td>
-                            <td><?php echo ArrayHelper::getValue($data, '4.rate') ?></td>
-                        </tr>
-                        <tr>
-                            <td><?php echo ArrayHelper::getValue($data, '5.min') ?></td>
-                            <td><?php echo ArrayHelper::getValue($data, '5.max') ?></td>
-                            <td><?php echo ArrayHelper::getValue($data, '5.rate') ?></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col-md-4">
-                    <table id="arraytb12" class="table tab-content" border="solid">
-                        <h5 class="text-center">
-                            <label><?php echo ArrayHelper::getValue($data, '6.name') ?></label>
-                        </h5>
-                        <thead>
-                        <th class="text-center">ค่าต่ำสุด</th>
-                        <th class="text-center">ค่าสูงสุด</th>
-                        <th class="text-center">อัตรา</th>
-                        </thead>
-                        <tbody class="text-center">
-                        <tr>
-                            <td><?php echo ArrayHelper::getValue($data, '6.min') ?></td>
-                            <td><?php echo ArrayHelper::getValue($data, '6.max') ?></td>
-                            <td><?php echo ArrayHelper::getValue($data, '6.rate') ?></td>
-                        </tr>
-                        <tr>
-                            <td><?php echo ArrayHelper::getValue($data, '7.min') ?></td>
-                            <td><?php echo ArrayHelper::getValue($data, '7.max') ?></td>
-                            <td><?php echo ArrayHelper::getValue($data, '7.rate') ?></td>
-                        </tr>
-                        <tr>
-                            <td><?php echo ArrayHelper::getValue($data, '8.min') ?></td>
-                            <td><?php echo ArrayHelper::getValue($data, '8.max') ?></td>
-                            <td><?php echo ArrayHelper::getValue($data, '8.rate') ?></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div class="panel panel-body">
+    <div class="bominfo-form">
+        <div class="panel">
             <?php $form = ActiveForm::begin(['id' => 'bomform']); ?>
             <div class="row">
                 <div class="col-md-4">
@@ -144,7 +52,7 @@ foreach ($hourarray as $item) {
                         ],])->label('รหัสพนักงาน') ?>
                 </div>
                 <div class="col-md-3">
-                    <?php $model->date == '' ? $model->date = date('Y-m-d') : $model->date ?>
+                    <?php $model->date == '' ? $model->date = date('d-m-Y') : $model->date ?>
                     <?= $form->field($model, 'date')->widget(DatePicker::className(), [
                         'options' => [
                             'id' => 'cdate'
@@ -153,7 +61,7 @@ foreach ($hourarray as $item) {
                         'layout' => '{picker}{input}',
                         'readonly' => true,
                         'pluginOptions' => [
-                            'format' => 'yyyy-mm-dd',
+                            'format' => 'dd-mm-yyyy',
                             'autoclose' => true,
                             'todayHighlight' => true,
                         ]
@@ -169,7 +77,7 @@ foreach ($hourarray as $item) {
                     <?= $form->field($model, 'standard')->dropDownList(ArrayHelper::map(ExtraInfo::find()->all(), 'ExtraName', 'ExtraName'), ['id' => 'cstandard'])->label('มาตรฐาน') ?>
                 </div>
                 <div class="col-md-2">
-                    <?= $form->field($model, 'hour')->dropDownList(ArrayHelper::map($hourlist, 'hour', 'hour'))->label('ชั่วโมง') ?>
+                    <?= $form->field($model, 'hour')->dropDownList(ArrayHelper::map($hourlist, 'hour', 'hour'), ['id' => 'chour'])->label('ชั่วโมง') ?>
                 </div>
                 <div class="col-md-3">
                     <?= $form->field($model, 'amount')->textInput(['id' => 'camount', 'autocomplete' => 'off', 'onkeypress' => 'return chknumber(event)'])->label('ยอดนึ่ง') ?>
@@ -200,24 +108,79 @@ foreach ($hourarray as $item) {
                     <?= $form->field($model, 'checkconfirm')->hiddenInput(['value' => 0])->label(false) ?>
                 </div>
             </div>
-        </div>
-        <div class="panel-footer">
+            <br>
             <div class="row">
-                <div class="pull-left">
-                    <?= Html::submitButton($model->isNewRecord ? 'บันทึก' : 'แก้ไข', ['id' => 'bomsubmit', 'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-                    <?= Html::button('ค่าเริ่มต้น', ['id' => 'creset', 'class' => 'btn btn-danger']) ?>
+                <div class="col-md-12">
+                    <div style="text-align: center">
+                        <!--?= Html::submitButton($model->isNewRecord ? 'บันทึก' : 'แก้ไข', ['id' => 'bomsubmit', 'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?-->
+                        <?= Html::a('<i class="fa fa-plus"></i>', 'javascript:void(0)', ['class' => 'btn btn-success adddata','style' => 'width: 50px']) ?>
+                        <!--?= Html::button('ค่าเริ่มต้น', ['id' => 'creset', 'class' => 'btn btn-danger']) ?-->
+                    </div>
                 </div>
-                <div class="pull-right">
-                    <?= Html::a('หน้าหลัก', ['index'], ['class' => 'btn btn-info']) ?>
-                    <?= Html::a('ย้อนกลับ', Yii::$app->request->referrer, ['class' => 'btn btn-danger']) ?>
+            </div>
+            <br>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h4>จำนวน : <label id="count" style="color: #00a65a">#</label> แถว</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div style="overflow-x: scroll">
+                    <table class="table table-bordered listemp">
+                        <thead>
+                        <tr>
+                            <th>รหัสพนักงาน</th>
+                            <th>วันที่</th>
+                            <th>ชั่วโมง</th>
+                            <th>มาตรฐานเตา</th>
+                            <th>เตาที่</th>
+                            <th>ยอดนึ่ง</th>
+                            <th>เสียเวลา : นาที</th>
+                            <th>หักเงิน</th>
+                            <th>ยอดยาง</th>
+                            <th>ราคา : เส้น</th>
+                            <th>ค่าพิเศษ</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td><input type="text" class="form-control empids" style="width: 150px" name="empidx[]" readonly></td>
+                            <td><input type="text" class="form-control dates" style="width: 100px" name="datex[]" readonly></td>
+                            <td><input type="text" class="form-control hours" style="width: 100px" name="hourx[]" readonly></td>
+                            <td><input type="text" class="form-control standards" style="width: 150px" name="standardx[]" readonly></td>
+                            <td><input type="text" class="form-control stoveids" style="width: 100px" name="stoveidx[]" readonly></td>
+                            <td><input type="text" class="form-control amounts" style="width: 100px" name="amountx[]" readonly></td>
+                            <td><input type="text" class="form-control losttimes" style="width: 100px" name="losttimex[]" readonly></td>
+                            <td><input type="text" class="form-control deducts" style="width: 100px" name="deductx[]" readonly></td>
+                            <td><input type="text" class="form-control totaltires" style="width: 100px" name="totaltirex[]" readonly></td>
+                            <td><input type="text" class="form-control perpcss" style="width: 100px" name="perpcsx[]" readonly></td>
+                            <td><input type="text" class="form-control rates" style="width: 100px" name="ratex[]" readonly></td>
+                            <td><button type="button" class="btn btn-danger" onclick="removegroupline($(this))"><i class="fa fa-minus"></i></button></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <br>
+                <div class="form-group">
+                    <div class="pull-left"></div>
+                    <div class="pull-right">
+                        <?= Html::a('<i class="fa fa-home"></i>', ['index'], ['class' => 'btn btn-info']) ?>
+                        <?= Html::a('<i class="fa fa-undo"></i>', Yii::$app->request->referrer, ['class' => 'btn btn-danger']) ?>
+                    </div>
                 </div>
             </div>
         </div>
         <?php ActiveForm::end(); ?>
     </div>
-</div>
 <?php
 $baseurl = Yii::$app->request->baseUrl;
 $this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => JqueryAsset::className()]);
 $this->registerJsFile($baseurl . '/js/chkkeypressnumber.js?Ver=0001', ['depends' => JqueryAsset::className()]);
+$this->registerCss('div.overflow {
+width:100%;
+overflow-x: scroll;
+}');
 ?>

@@ -4,7 +4,7 @@
 $(document).on('ready', function () {
     defaultload();
     $("#camount").on('change', function () {
-        //alert($(this).val());
+        // alert($(this).val());
         if ($(this).val() !== '0' || $(this).val() !== '') {
             calculatebom();
         }
