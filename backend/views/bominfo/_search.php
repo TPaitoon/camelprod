@@ -1,5 +1,6 @@
 <?php
 
+use backend\models\BominfoSearch;
 use common\models\EmpInfo;
 use kartik\date\DatePicker;
 use yii\helpers\Html;
@@ -47,32 +48,30 @@ $empmodel = EmpInfo::find()->where(['Dept' => 'ฝ่ายผลิต'])->andF
             ])->label('รหัสพนักงานที่ต้องการค้นหา') ?>
         </div>
         <div class="col-lg-2" id="starts">
-            <?php $model->startdate == '' ? $model->startdate = date('Y-m-d') : $model->startdate ?>
+            <?php $model->startdate == '' ? $model->startdate = date('d/m/Y') : $model->startdate = date('d/m/Y', strtotime(BominfoSearch::ConvertDate($model->startdate))) ?>
             <?= $form->field($model, 'startdate')->widget(DatePicker::className(), [
                 'name' => 'startdate',
                 'type' => DatePicker::TYPE_COMPONENT_APPEND,
-                'readonly' => true,
                 'layout' => '{picker}{input}',
                 'options' => ['id' => 'Sdate'],
                 'pluginOptions' => [
                     'todayHighlight' => true,
                     'autoclose' => true,
-                    'format' => 'yyyy-mm-dd'
+                    'format' => 'dd/mm/yyyy'
                 ]
             ])->label('วันที่เริ่มค้นหา') ?>
         </div>
         <div class="col-lg-2" id="ends">
-            <?php $model->enddate == '' ? $model->enddate = date('Y-m-d') : $model->enddate ?>
+            <?php $model->enddate == '' ? $model->enddate = date('d/m/Y') : $model->enddate = date('d/m/Y', strtotime(BominfoSearch::ConvertDate($model->enddate))) ?>
             <?= $form->field($model, 'enddate')->widget(DatePicker::className(), [
                 'name' => 'enddate',
                 'type' => DatePicker::TYPE_COMPONENT_APPEND,
-                'readonly' => true,
                 'layout' => '{picker}{input}',
                 'options' => ['id' => 'Edate'],
                 'pluginOptions' => [
                     'todayHighlight' => true,
                     'autoclose' => true,
-                    'format' => 'yyyy-mm-dd'
+                    'format' => 'dd/mm/yyyy'
                 ]
             ])->label('วันที่สิ้นสุดค้นหา') ?>
         </div>
@@ -97,7 +96,7 @@ $empmodel = EmpInfo::find()->where(['Dept' => 'ฝ่ายผลิต'])->andF
     <?php // echo $form->field($model, 'totaltire') ?>
 
     <div class="form-group">
-        <span id="search"><?= Html::submitButton('ค้นหา', ['id' => 'SearchSubmit','class' => 'btn btn-primary']) ?></span>
+        <span id="search"><?= Html::submitButton('ค้นหา', ['id' => 'SearchSubmit', 'class' => 'btn btn-primary']) ?></span>
         <span id="create"><?= Html::a('เพิ่มข้อมูล', ['create'], ['class' => 'btn btn-success']) ?></span>
         <span id="check"><?= Html::button('ยืนยันข้อมูล', ['id' => 'binfo', 'class' => 'btn btn-info pull-right']) ?></span>
     </div>

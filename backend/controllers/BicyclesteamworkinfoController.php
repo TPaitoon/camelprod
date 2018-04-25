@@ -81,6 +81,7 @@ class BicyclesteamworkinfoController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             $model->empName = $this->Showempname($model->empid);
+            $model->date = BicyclesteamworkinfoSearch::ConvertDate($model->date);
             $model->save();
             return $this->redirect(['index']);
         } else {
@@ -100,7 +101,9 @@ class BicyclesteamworkinfoController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            $model->date = BicyclesteamworkinfoSearch::ConvertDate($model->date);
+            $model->save();
             return $this->redirect(['index']);
         } else {
             return $this->renderAjax('update', [

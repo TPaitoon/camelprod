@@ -48,15 +48,15 @@ class BominfoSearch extends BOMInfo
     public function search($params)
     {
         if ($this->startdate == '' && $this->enddate == '') {
-            $this->startdate = date('Y-m-d');
-            $this->enddate = date('Y-m-d');
+            $this->startdate = date('d/m/Y');
+            $this->enddate = date('d/m/Y');
         }
         $this->load($params);
         $query = BOMInfo::find()->andFilterWhere([
             'and',
             ['like', 'empid', $this->empid],
-            ['>=', 'date', $this->startdate],
-            ['<=', 'date', $this->enddate]
+            ['>=', 'date', date('Y-m-d', strtotime($this->ConvertDate($this->startdate)))],
+            ['<=', 'date', date('Y-m-d', strtotime($this->ConvertDate($this->enddate)))]
         ])->orderBy(['date' => SORT_ASC, 'stoveid' => SORT_ASC]);
 
         $array = [];
@@ -214,5 +214,10 @@ class BominfoSearch extends BOMInfo
         }
 
         return $dataProvider;
+    }
+
+    public static function ConvertDate($val)
+    {
+        return str_replace("/","-",$val);
     }
 }

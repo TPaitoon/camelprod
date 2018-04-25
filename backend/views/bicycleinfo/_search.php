@@ -1,5 +1,6 @@
 <?php
 
+use backend\controllers\BicycleinfoController;
 use common\models\EmpInfo;
 use kartik\date\DatePicker;
 use kartik\select2\Select2;
@@ -46,7 +47,7 @@ $this->registerJs($js, static::POS_END);
             ])->label('รหัสพนักงานที่ต้องการค้นหา') ?>
         </div>
         <div class="col-lg-2" id="starts">
-            <?php $model->startdate == '' ? $model->startdate = date('Y-m-d') : $model->startdate ?>
+            <?php $model->startdate == '' ? $model->startdate = date('d/m/Y') : $model->startdate = date('d/m/Y', strtotime(BicycleinfoController::ConvertDate($model->startdate))) ?>
             <?= $form->field($model, 'startdate')->widget(DatePicker::className(), [
                 'name' => 'startdate',
                 'type' => DatePicker::TYPE_COMPONENT_APPEND,
@@ -56,12 +57,12 @@ $this->registerJs($js, static::POS_END);
                 'pluginOptions' => [
                     'todayHighlight' => true,
                     'autoclose' => true,
-                    'format' => 'yyyy-mm-dd'
+                    'format' => 'dd/mm/yyyy'
                 ]
             ])->label('วันที่เริ่มค้นหา') ?>
         </div>
         <div class="col-lg-2" id="ends">
-            <?php $model->enddate == '' ? $model->enddate = date('Y-m-d') : $model->enddate ?>
+            <?php $model->enddate == '' ? $model->enddate = date('d/m/Y') : $model->enddate = date('d/m/Y', strtotime(BicycleinfoController::ConvertDate($model->enddate))) ?>
             <?= $form->field($model, 'enddate')->widget(DatePicker::className(), [
                 'name' => 'enddate',
                 'type' => DatePicker::TYPE_COMPONENT_APPEND,
@@ -71,7 +72,7 @@ $this->registerJs($js, static::POS_END);
                 'pluginOptions' => [
                     'todayHighlight' => true,
                     'autoclose' => true,
-                    'format' => 'yyyy-mm-dd'
+                    'format' => 'dd/mm/yyyy'
                 ]
             ])->label('วันที่สิ้นสุดค้นหา') ?>
         </div>

@@ -23,6 +23,8 @@ use yii\filters\VerbFilter;
  */
 class BominfoController extends Controller
 {
+    public $enableCsrfValidation = false;
+
     /**
      * @inheritdoc
      */
@@ -137,35 +139,35 @@ class BominfoController extends Controller
         $data = $extra->getArray();
 
         if ($model->load(Yii::$app->request->post())) {
-            //$debug = new CheckDebug();
-            //$debug->printr($model,1);
-            for ($i = 1; $i <= 4; $i++) {
-                $create = new BOMInfo();
-                $create->empid = $model->empid;
-                $create->empName = $this->Showempname($model->empid);
-                if ($i === 1) {
-                    $create->typeID = $i;
-                    $create->qty = $model->losttime;
-                } elseif ($i === 2) {
-                    $create->typeID = $i;
-                    $create->qty = $model->amount;
-                } elseif ($i === 3) {
-                    $create->typeID = $i;
-                    $create->qty = $model->perpcs;
-                } elseif ($i === 4) {
-                    $create->typeID = $i;
-                    $create->qty = $model->rate;
-                }
-                $create->date = $model->date;
-                $create->stoveid = $model->stoveid;
-                $create->standard = $model->standard;
-                $create->hour = $model->hour;
-                $create->checkconfirm = 0;
-                $create->deduct = $model->deduct;
-                $create->totaltire = $model->totaltire;
-                $create->save(false);
-            }
-            return $this->redirect(['index']);
+//            $debug = new CheckDebug();
+//            $debug->printr($model,1);
+//            for ($i = 1; $i <= 4; $i++) {
+//                $create = new BOMInfo();
+//                $create->empid = $model->empid;
+//                $create->empName = $this->Showempname($model->empid);
+//                if ($i === 1) {
+//                    $create->typeID = $i;
+//                    $create->qty = $model->losttime;
+//                } elseif ($i === 2) {
+//                    $create->typeID = $i;
+//                    $create->qty = $model->amount;
+//                } elseif ($i === 3) {
+//                    $create->typeID = $i;
+//                    $create->qty = $model->perpcs;
+//                } elseif ($i === 4) {
+//                    $create->typeID = $i;
+//                    $create->qty = $model->rate;
+//                }
+//                $create->date = $model->date;
+//                $create->stoveid = $model->stoveid;
+//                $create->standard = $model->standard;
+//                $create->hour = $model->hour;
+//                $create->checkconfirm = 0;
+//                $create->deduct = $model->deduct;
+//                $create->totaltire = $model->totaltire;
+//                $create->save(false);
+//            }
+//            return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -411,5 +413,44 @@ class BominfoController extends Controller
         } else {
             return 0;
         }
+    }
+
+    public function actionCreatemanual()
+    {
+        $req = Yii::$app->request;
+        $empid = $req->post("empidx");
+        $date = $req->post("datex");
+        $hour = $req->post("hourx");
+        $standard = $req->post("standardx");
+        $stove = $req->post("stoveidx");
+        $amount = $req->post("amountx");
+        $losttime = $req->post("losttimex");
+        $deduct = $req->post("deductx");
+        $totaltire = $req->post("totaltirex");
+        $perpcs = $req->post("perpcsx");
+        $rates = $req->post("ratex");
+
+        for ($i = 0; $i < count($empid); $i++) {
+            for ($x = 1; $x <= 4; $x++) {
+                $bomc = new BOMInfo();
+                $bomc->empid = $empid[$i];
+                $bomc->empName = $this->Showempname($empid[$i]);
+                $bomc->typeID = $x;
+                $x === 1 ? $bomc->qty = $losttime[$i] : $bomc->qty;
+                $x === 2 ? $bomc->qty = $amount[$i] : $bomc->qty;
+                $x === 3 ? $bomc->qty = $perpcs[$i] : $bomc->qty;
+                $x === 4 ? $bomc->qty = $rates[$i] : $bomc->qty;
+                $_date = str_replace("/", "-", $date[$i]);
+                $bomc->date = date("Y-m-d", strtotime($_date));
+                $bomc->stoveid = $stove[$i];
+                $bomc->standard = $standard[$i];
+                $bomc->hour = $hour[$i];
+                $bomc->checkconfirm = 0;
+                $bomc->deduct = $deduct[$i];
+                $bomc->totaltire = $totaltire[$i];
+                $bomc->save(false);
+            }
+        }
+        return $this->redirect(['index']);
     }
 }

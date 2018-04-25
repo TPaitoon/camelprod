@@ -57,6 +57,9 @@ function defaultload() {
         $("#camount").val(0);
         calculatebom();
     }
+    if ($("#cdeduct").val() === '') {
+        $("#cdeduct").val(0);
+    }
 }
 
 function calculatebom() {
@@ -65,7 +68,6 @@ function calculatebom() {
         $("#crate").val(0);
         $("#cperpcs").val(0);
         $("#closttime").val(0);
-        $("#cdeduct").val(0);
     } else {
         var amount = $("#camount").val();
         var at = 0;
@@ -78,7 +80,7 @@ function calculatebom() {
             $("#ctotaltire").val(total);
             getData($("#cstandard").val(), total);
             var rate = parseInt(total) * parseFloat($("#cperpcs").val());
-            var totals = Math.round(rate) - parseInt($("#cdeduct").val());
+            var totals = Math.round(rate);
             $("#crate").val(totals);
         });
     }

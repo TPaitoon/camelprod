@@ -1,5 +1,6 @@
 <?php
 
+use backend\models\BicyclesteamworkinfoSearch;
 use common\models\CheckStatusInfo;
 use common\models\EmpInfo;
 use common\models\SteambicycleworkInfo;
@@ -36,16 +37,15 @@ $bicyclesec = SteambicycleworkInfo::find()->all();
     </div>
     <div class="row">
         <div class="col-md-3">
-            <?php $model->date == '' ? $model->date = date('Y-m-d') : $model->date ?>
+            <?php $model->date == '' ? $model->date = date('d/m/Y') : $model->date = date("d/m/Y",strtotime(BicyclesteamworkinfoSearch::ConvertDate($model->date))) ?>
             <?= $form->field($model, 'date')->widget(DatePicker::className(), [
                 'options' => [
                     'id' => 'bsdate'
                 ],
                 'type' => DatePicker::TYPE_COMPONENT_APPEND,
                 'layout' => '{picker}{input}',
-                'readonly' => true,
                 'pluginOptions' => [
-                    'format' => 'yyyy-mm-dd',
+                    'format' => 'dd/mm/yyyy',
                     'autoclose' => true,
                     'todayHighlight' => true,
                 ]

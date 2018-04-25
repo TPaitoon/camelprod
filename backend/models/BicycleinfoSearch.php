@@ -2,6 +2,7 @@
 
 namespace backend\models;
 
+use backend\controllers\BicycleinfoController;
 use common\models\CheckStatusInfo;
 use Yii;
 use yii\base\Model;
@@ -48,16 +49,16 @@ class BicycleinfoSearch extends BicycleInfo
     public function search($params)
     {
         if ($this->startdate == '' && $this->enddate == '') {
-            $this->startdate = date('Y-m-d');
-            $this->enddate = date('Y-m-d');
+            $this->startdate = date('d/m/Y');
+            $this->enddate = date('d/m/Y');
         }
         $this->load($params);
 
         $query = BicycleInfo::find()->andFilterWhere([
             'and',
             ['like', 'empid', $this->empid],
-            ['>=', 'date', $this->startdate],
-            ['<=', 'date', $this->enddate]
+            ['>=', 'date', BicycleinfoController::ConvertDate($this->startdate)],
+            ['<=', 'date', BicycleinfoController::ConvertDate($this->enddate)]
         ])->orderBy(['date' => SORT_ASC, 'tirename' => SORT_ASC]);
 
         $array = [];

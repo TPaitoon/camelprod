@@ -1,5 +1,6 @@
 <?php
 
+use backend\controllers\BicycleinfoController;
 use common\models\EmpInfo;
 use common\models\Weaverbicycle;
 use kartik\date\DatePicker;
@@ -34,14 +35,13 @@ $tiremodel = Weaverbicycle::find()->all();
                 ],])->label('รหัสพนักงาน') ?>
         </div>
         <div class="col-md-2">
-            <?php $model->date == '' ? $model->date = date('Y-m-d') : $model->date ?>
+            <?php $model->date == '' ? $model->date = date('d/m/Y') : $model->date = date('d/m/Y',strtotime(BicycleinfoController::ConvertDate($model->date))) ?>
             <?= $form->field($model, 'date')->widget(DatePicker::className(), [
                 'options' => ['id' => 'bdate'],
                 'type' => DatePicker::TYPE_COMPONENT_APPEND,
                 'layout' => '{picker}{input}',
-                'readonly' => true,
                 'pluginOptions' => [
-                    'format' => 'yyyy-mm-dd',
+                    'format' => 'dd/mm/yyyy',
                     'autoclose' => true,
                     'todayHighlight' => true,
                 ]

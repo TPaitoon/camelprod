@@ -134,7 +134,7 @@ class BicycleinfoController extends Controller
                         break;
                 }
                 $create->tirename = $model->tirename;
-                $create->date = $model->date;
+                $create->date = self::ConvertDate($model->date);
                 $create->checks = $model->checks;
                 $create->minus = $model->minus;
                 $create->grouptire = $model->grouptire;
@@ -156,7 +156,7 @@ class BicycleinfoController extends Controller
      */
     public function actionUpdate($empid, $date)
     {
-        $bicyclequery = BicycleInfo::find()->where(['empid' => $empid, 'date' => $date])->all();
+        $bicyclequery = BicycleInfo::find()->where(['empid' => $empid, 'date' => self::ConvertDate($date)])->all();
         $model = new BicycleInfo();
         $recid = '';
         $index = 0;
@@ -218,7 +218,7 @@ class BicycleinfoController extends Controller
                             break;
                     }
                     $update->tirename = $model->tirename;
-                    $update->date = $model->date;
+                    $update->date = self::ConvertDate($model->date);
                     $update->checks = $model->checks;
                     $update->minus = $model->minus;
                     $update->grouptire = $model->grouptire;
@@ -353,5 +353,11 @@ class BicycleinfoController extends Controller
         } else {
             return 0;
         }
+    }
+
+    public static function ConvertDate($val)
+    {
+        $_temp = str_replace("/", "-", $val);
+        return date('Y-m-d', strtotime($_temp));
     }
 }

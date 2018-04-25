@@ -22,7 +22,6 @@ class BOMInfo extends \common\models\BOMInfo
                 [['losttime', 'amount', 'rate', 'deduct'], 'integer'],
                 [['perpcs'], 'double'],
                 [['listid'], 'string'],
-                [['losttime', 'amount', 'rate', 'perpcs', 'deduct', 'empid', 'empName'], 'required'],
             ]);
     }
 

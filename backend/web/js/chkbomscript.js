@@ -3,23 +3,32 @@
  */
 
 $('#bomsubmit').click(function (e) {
-    e.preventDefault();
-    if ($('#camount').val() === '0' || $('#camount').val() === '') {
-        alert('ค่ายอดนึ่งห้ามต่ำกว่า 1');
-        $('#camount').focus();
-        return;
-    } else {
-        if (confirm('ยืนยันการทำรายการ ?')) {
-            $.when(getcount()).done(function (data) {
-                if (data > 0) {
-                    alert("วันที่ " + $('#cdate').val() + " รหัสพนักงาน " + $('#cempid').val() + " เตาที่ " + $('#cstoveid').val() + " มีข้อมูลแล้ว ...");
-                    return;
-                } else {
-                    $('#bomform').submit();
-                }
-            });
-        }
-    }
+    // e.preventDefault();
+    // if ($('#camount').val() === '0' || $('#camount').val() === '') {
+    //     alert('ค่ายอดนึ่งห้ามต่ำกว่า 1');
+    //     $('#camount').focus();
+    //     return;
+    // } else {
+    //     if (confirm('ยืนยันการทำรายการ ?')) {
+    //         $.when(getcount()).done(function (data) {
+    //             if (data > 0) {
+    //                 alert("วันที่ " + $('#cdate').val() + " รหัสพนักงาน " + $('#cempid').val() + " เตาที่ " + $('#cstoveid').val() + " มีข้อมูลแล้ว ...");
+    //                 return;
+    //             } else {
+    //                 $('#bomform').submit();
+    //             }
+    //         });
+    //     }
+    // }
+    // $('#bomform').submit();
+    // var emplist = document.getElementsByName("empidx[]");
+    // alert(emplist.length);
+});
+
+$("#btnshowtable").click(function (e) {
+    // e.preventDefault();
+    // alert('');
+    $("#testf").submit();
 });
 
 var cntline = 0;
@@ -59,8 +68,28 @@ $(".bominfo-form").each(function () {
                 fLaststr.find(".rates").val(rate.val());
                 cntline++;
                 setGroupLine(cntline);
-            } else if (checkGroupValue(empid.val(),date.val(),stove.val()) === 1) {
-
+            } else if (checkGroupValue(empid.val(), date.val(), stove.val()) === 1) {
+                fLast = fBody.find("tr:last");
+                fNew = fLast.clone();
+                fLast.after(fNew);
+                fLast = fBody.find("tr:last");
+                fLaststr = fLast.closest("tr");
+                fNew.find("id input:text").each(function () {
+                    $(this).val("");
+                });
+                fLaststr.find(".empids").val(empid.val());
+                fLaststr.find(".dates").val(date.val());
+                fLaststr.find(".hours").val(hour.val());
+                fLaststr.find(".standards").val(standard.val());
+                fLaststr.find(".stoveids").val(stove.val());
+                fLaststr.find(".amounts").val(amount.val());
+                fLaststr.find(".losttimes").val(losttime.val());
+                fLaststr.find(".deducts").val(deduct.val());
+                fLaststr.find(".totaltires").val(totaltire.val());
+                fLaststr.find(".perpcss").val(perpcs.val());
+                fLaststr.find(".rates").val(rate.val());
+                cntline++;
+                setGroupLine(cntline);
             }
         }
     });
