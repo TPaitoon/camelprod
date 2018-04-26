@@ -257,7 +257,7 @@ class BominfoController extends Controller
                             $update->qty = $model->rate;
                             break;
                     }
-                    $update->date = $model->date;
+                    $update->date = date('Y-m-d',strtotime($this->ConvetDate($model->date)));
                     $update->stoveid = $model->stoveid;
                     $update->standard = $model->standard;
                     $update->hour = $model->hour;
@@ -452,5 +452,10 @@ class BominfoController extends Controller
             }
         }
         return $this->redirect(['index']);
+    }
+
+    private function ConvetDate($val)
+    {
+        return str_replace("/","-",$val);
     }
 }

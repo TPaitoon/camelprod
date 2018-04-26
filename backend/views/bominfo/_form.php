@@ -147,29 +147,50 @@ foreach ($hourarray as $item) {
                                     </thead>
                                     <tbody>
                                     <tr>
-                                        <td><input type="text" class="form-control empids" style="width: 150px"
+                                        <td>
+                                            <input type="text" class="form-control empids" style="width: 100px"
                                                    name="empidx[]" readonly>
                                         </td>
-                                        <td><input type="text" class="form-control dates" style="width: 100px"
-                                                   name="datex[]" readonly></td>
-                                        <td><input type="text" class="form-control hours" style="width: 100px"
-                                                   name="hourx[]" readonly></td>
-                                        <td><input type="text" class="form-control standards" style="width: 150px"
-                                                   name="standardx[]" readonly></td>
-                                        <td><input type="text" class="form-control stoveids" style="width: 100px"
-                                                   name="stoveidx[]" readonly></td>
-                                        <td><input type="text" class="form-control amounts" style="width: 100px"
-                                                   name="amountx[]" readonly></td>
-                                        <td><input type="text" class="form-control losttimes" style="width: 100px"
-                                                   name="losttimex[]" readonly></td>
-                                        <td><input type="text" class="form-control deducts" style="width: 100px"
-                                                   name="deductx[]" readonly></td>
-                                        <td><input type="text" class="form-control totaltires" style="width: 100px"
-                                                   name="totaltirex[]" readonly></td>
-                                        <td><input type="text" class="form-control perpcss" style="width: 100px"
-                                                   name="perpcsx[]" readonly></td>
-                                        <td><input type="text" class="form-control rates" style="width: 100px"
-                                                   name="ratex[]" readonly></td>
+                                        <td>
+                                            <input type="text" class="form-control dates" style="width: 100px"
+                                                   name="datex[]" readonly>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control hours" style="width: 100px"
+                                                   name="hourx[]" readonly>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control standards" style="width: 150px"
+                                                   name="standardx[]" readonly>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control stoveids" style="width: 100px"
+                                                   name="stoveidx[]" readonly>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control amounts" style="width: 100px"
+                                                   name="amountx[]" readonly>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control losttimes" style="width: 100px"
+                                                   name="losttimex[]" readonly>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control deducts" style="width: 100px"
+                                                   name="deductx[]" readonly>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control totaltires" style="width: 100px"
+                                                   name="totaltirex[]" readonly>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control perpcss" style="width: 100px"
+                                                   name="perpcsx[]" readonly>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control rates" style="width: 100px"
+                                                   name="ratex[]" readonly>
+                                        </td>
                                         <td>
                                             <button type="button" class="btn btn-danger"
                                                     onclick="removegroupline($(this))">

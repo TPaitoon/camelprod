@@ -15,9 +15,6 @@ $(document).on('ready', function () {
     $("#bthour").on('change', function () {
         calculatetire1();
     });
-    $("#btdeduct").on('change', function () {
-        totalrate();
-    });
     $("#bttireamount2").on('change', function () {
         calculatetire2();
     });
@@ -109,7 +106,7 @@ function gettireamount1(standard, losttime) {
 }
 
 function totalrate() {
-    var cal = (parseInt($("#bttirerate1").val()) + parseInt($("#bttirerate2").val()) + parseInt($("#btstickerrate").val())) - parseInt($("#btdeduct").val());
+    var cal = (parseInt($("#bttirerate1").val()) + parseInt($("#bttirerate2").val()) + parseInt($("#btstickerrate").val()));
     // alert(cal);
     $("#bttotalrate").val(Math.round(cal));
 }

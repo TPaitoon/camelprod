@@ -50,7 +50,6 @@ $empmodel = EmpInfo::find()->where(['Dept' => 'ฝ่ายผลิต'])->andF
             <?= $form->field($model, 'startdate')->widget(DatePicker::className(), [
                 'name' => 'startdate',
                 'type' => DatePicker::TYPE_COMPONENT_APPEND,
-                'readonly' => true,
                 'options' => ['id' => 'Sdate'],
                 'layout' => '{picker}{input}',
                 'pluginOptions' => [
@@ -65,7 +64,6 @@ $empmodel = EmpInfo::find()->where(['Dept' => 'ฝ่ายผลิต'])->andF
             <?= $form->field($model, 'enddate')->widget(DatePicker::className(), [
                 'name' => 'enddate',
                 'type' => DatePicker::TYPE_COMPONENT_APPEND,
-                'readonly' => true,
                 'options' => ['id' => 'Edate'],
                 'layout' => '{picker}{input}',
                 'pluginOptions' => [

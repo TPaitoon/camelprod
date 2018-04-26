@@ -48,13 +48,13 @@ class BicycletireinfoSearch extends BicycletireInfo
     public function search($params)
     {
         if ($this->startdate == '' && $this->enddate == '') {
-            $this->startdate = date('Y-m-d');
-            $this->enddate = date('Y-m-d');
+            $this->startdate = date('d/m/Y');
+            $this->enddate = date('d/m/Y');
         }
 
         $this->load($params);
 
-        $query = BicycletireInfo::find()->andFilterWhere(['and', ['like', 'empid', $this->empid], ['>=', 'date', $this->startdate], ['<=', 'date', $this->enddate]])->orderBy(['date' => SORT_ASC]);
+        $query = BicycletireInfo::find()->andFilterWhere(['and', ['like', 'empid', $this->empid], ['>=', 'date', self::ConvertDate($this->startdate)], ['<=', 'date', self::ConvertDate($this->enddate)]])->orderBy(['date' => SORT_ASC]);
 
         $array = [];
         $z = 0;
@@ -247,5 +247,11 @@ class BicycletireinfoSearch extends BicycletireInfo
         }
 
         return $dataProvider;
+    }
+
+    public static function ConvertDate($val)
+    {
+        $_temp = str_replace("/", "-", $val);
+        return date('Y-m-d', strtotime($_temp));
     }
 }

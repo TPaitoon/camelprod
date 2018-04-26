@@ -140,68 +140,68 @@ class BicycletireinfoController extends Controller
         $model = new BicycletireInfo();
 
         if ($model->load(Yii::$app->request->post())) {
-            $skn = Standardsticker::findOne($model->stickername);
-            //$debug = new CheckDebug();
-            //return $debug->printr($model,1);
-            for ($i = 1; $i <= 11; $i++) {
-                $create = new BicycletireInfo();
-                switch ($i) {
-                    case 1:
-                        $create->typeID = $i;
-                        $create->qty = $model->losttime;
-                        break;
-                    case 2:
-                        $create->typeID = $i;
-                        $create->qty = $model->tireamount1;
-                        break;
-                    case 3:
-                        $create->typeID = $i;
-                        $create->qty = $model->tireperpcs;
-                        break;
-                    case 4:
-                        $create->typeID = $i;
-                        $create->qty = $model->tirerate1;
-                        break;
-                    case 5:
-                        $create->typeID = $i;
-                        $create->qty = $model->tireamount2;
-                        break;
-                    case 6:
-                        $create->typeID = $i;
-                        $create->qty = $model->tirerate2;
-                        break;
-                    case 7:
-                        $create->typeID = $i;
-                        $create->qty = $model->stickeramount;
-                        break;
-                    case 8:
-                        $create->typeID = $i;
-                        $create->qty = $model->stickerperpcs;
-                        break;
-                    case 9:
-                        $create->typeID = $i;
-                        $create->qty = $model->stickerrate;
-                        break;
-                    case 10:
-                        $create->typeID = $i;
-                        $create->qty = $model->deduct;
-                        break;
-                    case 11:
-                        $create->typeID = $i;
-                        $create->qty = $model->totalrate;
-                        break;
-                }
-                $create->empid = $model->empid;
-                $create->empName = $this->Showempname($model->empid);
-                $create->date = $model->date;
-                $create->standard = $model->standard;
-                $create->hour = $model->hour . ' ชั่วโมง';
-                $create->checkconfirm = 0;
-                $create->stickername = $skn->stickername;
-                $create->totaltire = $model->totaltire;
-                $create->save(false);
-            }
-            return $this->redirect(['index']);
+//            $skn = Standardsticker::findOne($model->stickername);
+//            //$debug = new CheckDebug();
+//            //return $debug->printr($model,1);
+//            for ($i = 1; $i <= 11; $i++) {
+//                $create = new BicycletireInfo();
+//                switch ($i) {
+//                    case 1:
+//                        $create->typeID = $i;
+//                        $create->qty = $model->losttime;
+//                        break;
+//                    case 2:
+//                        $create->typeID = $i;
+//                        $create->qty = $model->tireamount1;
+//                        break;
+//                    case 3:
+//                        $create->typeID = $i;
+//                        $create->qty = $model->tireperpcs;
+//                        break;
+//                    case 4:
+//                        $create->typeID = $i;
+//                        $create->qty = $model->tirerate1;
+//                        break;
+//                    case 5:
+//                        $create->typeID = $i;
+//                        $create->qty = $model->tireamount2;
+//                        break;
+//                    case 6:
+//                        $create->typeID = $i;
+//                        $create->qty = $model->tirerate2;
+//                        break;
+//                    case 7:
+//                        $create->typeID = $i;
+//                        $create->qty = $model->stickeramount;
+//                        break;
+//                    case 8:
+//                        $create->typeID = $i;
+//                        $create->qty = $model->stickerperpcs;
+//                        break;
+//                    case 9:
+//                        $create->typeID = $i;
+//                        $create->qty = $model->stickerrate;
+//                        break;
+//                    case 10:
+//                        $create->typeID = $i;
+//                        $create->qty = $model->deduct;
+//                        break;
+//                    case 11:
+//                        $create->typeID = $i;
+//                        $create->qty = $model->totalrate;
+//                        break;
+//                }
+//                $create->empid = $model->empid;
+//                $create->empName = $this->Showempname($model->empid);
+//                $create->date = $model->date;
+//                $create->standard = $model->standard;
+//                $create->hour = $model->hour . ' ชั่วโมง';
+//                $create->checkconfirm = 0;
+//                $create->stickername = $skn->stickername;
+//                $create->totaltire = $model->totaltire;
+//                $create->save(false);
+//            }
+//            return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -275,7 +275,7 @@ class BicycletireinfoController extends Controller
         $fdate = $model->date;
         $fempid = $model->empid;
         if ($model->load(Yii::$app->request->post())) {
-            BicycletireInfo::deleteAll(['empid' => $fempid,'date' => $fdate]);
+            BicycletireInfo::deleteAll(['empid' => $fempid, 'date' => $fdate]);
             $skn = Standardsticker::findOne($model->stickername);
             //$debug = new CheckDebug();
             //return $debug->printr($model,1);
@@ -328,8 +328,9 @@ class BicycletireinfoController extends Controller
                         break;
                 }
                 $create->empid = $model->empid;
-                $create->empName = $model->empName;
-                $create->date = $model->date;
+                $create->empName = $this->Showempname($model->empid);
+                $_temp = str_replace("/", "-", $model->date);
+                $create->date = date("Y-m-d", strtotime($_temp));
                 $create->standard = $model->standard;
                 $create->hour = $model->hour . ' ชั่วโมง';
                 $create->checkconfirm = 0;
