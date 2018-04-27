@@ -35,7 +35,6 @@ function getcount() {
 var cntline = 0;
 var empid = $("#btempid");
 var date = $("#btdate");
-var hour = $("#bthour option:selected");
 var standard = $("#btstandard");
 var tireamount1 = $("#bttireamount1");
 var losttime = $("#btlosttime");
@@ -44,7 +43,6 @@ var tireperpcs = $("#bttireperpcs");
 var tirerate1 = $("#bttirerate1");
 var tireamount2 = $("#bttireamount2");
 var tirerate2 = $("#bttirerate2");
-var stickername = $("#btstickername option:selected");
 var stickeramount = $("#btstickeramount");
 var stickerperpcs = $("#btstickerperpcs");
 var stickerrate = $("#btstickerrate");
@@ -59,6 +57,9 @@ $(".bicycletire-info-form").each(function () {
     var fNew;
 
     $(".adddata", $(this)).click(function () {
+        var hour = $("#bthour option:selected");
+        var stickername = $("#btstickername option:selected");
+        // alert(hour.text());
         // alert(stickername.text());
         if (empid.val() !== "") {
             if (fLaststr.find(".empids").val() === "") {
@@ -79,7 +80,55 @@ $(".bicycletire-info-form").each(function () {
                 fLaststr.find(".stickerrates").val(stickerrate.val());
                 fLaststr.find(".deducts").val(deduct.val());
                 fLaststr.find(".totalrates").val(totalratex.val());
+                cntline++;
+                setGroupLine(cntline);
+            } else if (checkGroupValue(empid.val(),date.val(),standard.val()) === 1) {
+                fLast = fBody.find("tr:last");
+                fNew = fLast.clone();
+                fLast.after(fNew);
+                fLast = fBody.find("tr:last");
+                fLaststr = fLast.closest("tr");
+                fNew.find("input:text").each(function () {
+                    $(this).val("");
+                });
+                fLaststr.find(".empids").val(empid.val());
+                fLaststr.find(".dates").val(date.val());
+                fLaststr.find(".hours").val(hour.text());
+                fLaststr.find(".standards").val(standard.val());
+                fLaststr.find(".tireamount1s").val(tireamount1.val());
+                fLaststr.find(".losttimes").val(losttime.val());
+                fLaststr.find(".totaltires").val(totaltire.val());
+                fLaststr.find(".tireperpcss").val(tireperpcs.val());
+                fLaststr.find(".tirerate1s").val(tirerate1.val());
+                fLaststr.find(".tireamount2s").val(tireamount2.val());
+                fLaststr.find(".tirerate2s").val(tirerate2.val());
+                fLaststr.find(".stickernames").val(stickername.text());
+                fLaststr.find(".stickeramounts").val(stickeramount.val());
+                fLaststr.find(".stickerperpcss").val(stickerperpcs.val());
+                fLaststr.find(".stickerrates").val(stickerrate.val());
+                fLaststr.find(".deducts").val(deduct.val());
+                fLaststr.find(".totalrates").val(totalratex.val());
+                cntline++;
+                setGroupLine(cntline);
             }
         }
     });
 });
+
+function setGroupLine(val) {
+    document.getElementById("count").innerHTML = val;
+}
+
+function checkGroupValue(empid, date, standard) {
+    var emplist = document.getElementsByName("empidx[]");
+    var datelist = document.getElementsByName("datex[]");
+    var standardlist = document.getElementsByName("standardx[]");
+    for (var i = 0; i < emplist.length; i++) {
+        if (empid === emplist[i].value && date === datelist[i].value) {
+            if (standard === standardlist[i].value) {
+                return 0;
+            }
+        }
+    }
+    return 1;
+}

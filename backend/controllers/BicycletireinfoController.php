@@ -587,5 +587,32 @@ class BicycletireinfoController extends Controller
             return 0;
         }
     }
-//    wait edit // 
+
+    public function Createmanual()
+    {
+        $Req = Yii::$app->request;
+        $Empid = $Req->post("empidx");
+        $Date = $Req->post("datex");
+        $Hour = $Req->post("hourx");
+        $Standard = $Req->post("standardx");
+        $Tireamount1 = $Req->post("tireamount1x");
+        $Losttime = $Req->post("losttimex");
+        $Totaltire = $Req->post("totaltirex");
+        $Tireperpcs = $Req->post("tireperpcsx");
+        $Tirerate1 = $Req->post("tirerate1x");
+        $Tireamount2 = $Req->post("tireamount2x");
+        $Tirerate2 = $Req->post("tirerate2x");
+        $Stickername = $Req->post("stickernamex");
+        $Stickeramount = $Req->post("stickeramountx");
+        $Stickerperpcs = $Req->post("stickerperpcs");
+        $Stickerrate = $Req->post("stickerrate");
+        $Deduct = $Req->post("deductx");
+        $Totalrate = $Req->post("totalratex");
+
+        for ($i = 0; $i < count($Empid); $i++) {
+            for ($x = 1; $x <= 11; $x++) {
+                ///......///
+            }
+        }
+    }
 }

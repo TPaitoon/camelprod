@@ -56,7 +56,6 @@ foreach ($hourarray as $item) {
                     ],
                     'type' => DatePicker::TYPE_COMPONENT_APPEND,
                     'layout' => '{picker}{input}',
-                    'readonly' => true,
                     'pluginOptions' => [
                         'format' => 'dd/mm/yyyy',
                         'autoclose' => true,

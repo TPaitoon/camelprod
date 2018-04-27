@@ -142,6 +142,8 @@ function calculatetire2() {
     if (amount > 0) {
         var cal = amount * 0.6;
         $("#bttirerate2").val(Math.round(cal));
+    } else {
+        $("#bttirerate2").val(0);
     }
     totalrate();
 }
