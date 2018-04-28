@@ -255,14 +255,21 @@ foreach ($hourarray as $item) {
                                 </tbody>
                             </table>
                         </div>
+                        <br>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    <div class="pull-right">
-        <?= Html::a('หน้าหลัก', ['index'], ['class' => 'btn btn-info']) ?>
-        <?= Html::a('ย้อนกลับ', Yii::$app->request->referrer, ['class' => 'btn btn-danger']) ?>
+    <div class="form-group">
+        <div class="pull-left">
+            <button id="btnshowtable" class="btn btn-success">บันทึกข้อมูล</button>
+        </div>
+        <div class="pull-right">
+            <?= Html::a('<i class="fa fa-home"></i>', ['index'], ['class' => 'btn btn-info']) ?>
+            <?= Html::a('<i class="fa fa-undo"></i>', Yii::$app->request->referrer, ['class' => 'btn btn-danger']) ?>
+        </div>
     </div>
+</div>
 
 </div>

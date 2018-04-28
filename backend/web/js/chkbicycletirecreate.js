@@ -115,6 +115,39 @@ $(".bicycletire-info-form").each(function () {
     });
 });
 
+function removegroupline(e) {
+    var fBody = $(".bicycletire-info-form").find(".listemp");
+    var fLast = fBody.find("tr:last");
+    var fLaststr = fLast.closest("tr");
+    if ($("table.listemp >tbody >tr").length > 1) {
+        e.parent().parent().remove();
+        cntline--;
+        setGroupLine(cntline);
+    } else {
+        if (fLaststr.find(".empids").val() !== "") {
+            fLaststr.find(".empids").val("");
+            fLaststr.find(".dates").val("");
+            fLaststr.find(".hours").val("");
+            fLaststr.find(".standards").val("");
+            fLaststr.find(".tireamount1s").val("");
+            fLaststr.find(".losttimes").val("");
+            fLaststr.find(".totaltires").val("");
+            fLaststr.find(".tireperpcss").val("");
+            fLaststr.find(".tirerate1s").val("");
+            fLaststr.find(".tireamount2s").val("");
+            fLaststr.find(".tirerate2s").val("");
+            fLaststr.find(".stickernames").val("");
+            fLaststr.find(".stickeramounts").val("");
+            fLaststr.find(".stickerperpcss").val("");
+            fLaststr.find(".stickerrates").val("");
+            fLaststr.find(".deducts").val("");
+            fLaststr.find(".totalrates").val("");
+            cntline--;
+            setGroupLine(cntline);
+        }
+    }
+}
+
 function setGroupLine(val) {
     document.getElementById("count").innerHTML = val;
 }
@@ -132,3 +165,7 @@ function checkGroupValue(empid, date, standard) {
     }
     return 1;
 }
+
+$("#btnshowtable").click(function () {
+    $("#bctire-form").submit();
+});

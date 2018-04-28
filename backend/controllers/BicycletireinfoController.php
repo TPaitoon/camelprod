@@ -25,6 +25,7 @@ use yii\web\Session;
  */
 class BicycletireinfoController extends Controller
 {
+    public $enableCsrfValidation = false;
     /**
      * @inheritdoc
      */
@@ -588,7 +589,7 @@ class BicycletireinfoController extends Controller
         }
     }
 
-    public function Createmanual()
+    public function actionCreatemanual()
     {
         $Req = Yii::$app->request;
         $Empid = $Req->post("empidx");
@@ -604,15 +605,38 @@ class BicycletireinfoController extends Controller
         $Tirerate2 = $Req->post("tirerate2x");
         $Stickername = $Req->post("stickernamex");
         $Stickeramount = $Req->post("stickeramountx");
-        $Stickerperpcs = $Req->post("stickerperpcs");
-        $Stickerrate = $Req->post("stickerrate");
+        $Stickerperpcs = $Req->post("stickerperpcsx");
+        $Stickerrate = $Req->post("stickerratex");
         $Deduct = $Req->post("deductx");
         $Totalrate = $Req->post("totalratex");
 
         for ($i = 0; $i < count($Empid); $i++) {
+            $skn = Standardsticker::findOne(["stickername" => $Stickername]);
             for ($x = 1; $x <= 11; $x++) {
-                ///......///
+                $cmodel = new BicycletireInfo();
+                $x === 1 ? $cmodel->qty = $Losttime[$i] : "";
+                $x === 2 ? $cmodel->qty = $Tireamount1[$i] : "";
+                $x === 3 ? $cmodel->qty = $Tireperpcs[$i] : "";
+                $x === 4 ? $cmodel->qty = $Tirerate1[$i] : "";
+                $x === 5 ? $cmodel->qty = $Tireamount2[$i] : "";
+                $x === 6 ? $cmodel->qty = $Tirerate2[$i] : "";
+                $x === 7 ? $cmodel->qty = $Stickeramount[$i] : "";
+                $x === 8 ? $cmodel->qty = $Stickerperpcs[$i] : "";
+                $x === 9 ? $cmodel->qty = $Stickerrate[$i] : "";
+                $x === 10 ? $cmodel->qty = $Deduct[$i] : "";
+                $x === 11 ? $cmodel->qty = $Totalrate[$i] : "";
+                $cmodel->empid = $Empid[$i];
+                $cmodel->empName = $this->Showempname($Empid[$i]);
+                $cmodel->date = BicycletireinfoSearch::ConvertDate($Date[$i]);
+                $cmodel->standard = $Standard[$i];
+                $cmodel->hour = $Hour[$i];
+                $cmodel->typeID = $x;
+                $cmodel->checkconfirm = 0;
+                $cmodel->stickername = $Stickername[$i];
+                $cmodel->totaltire = $Totaltire[$i];
+                $cmodel->save(false);
             }
         }
+        return $this->redirect(['index']);
     }
 }

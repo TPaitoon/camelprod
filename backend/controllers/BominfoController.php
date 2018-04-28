@@ -436,10 +436,10 @@ class BominfoController extends Controller
                 $bomc->empid = $empid[$i];
                 $bomc->empName = $this->Showempname($empid[$i]);
                 $bomc->typeID = $x;
-                $x === 1 ? $bomc->qty = $losttime[$i] : $bomc->qty;
-                $x === 2 ? $bomc->qty = $amount[$i] : $bomc->qty;
-                $x === 3 ? $bomc->qty = $perpcs[$i] : $bomc->qty;
-                $x === 4 ? $bomc->qty = $rates[$i] : $bomc->qty;
+                $x === 1 ? $bomc->qty = $losttime[$i] : $losttime[$i];
+                $x === 2 ? $bomc->qty = $amount[$i] : $amount[$i];
+                $x === 3 ? $bomc->qty = $perpcs[$i] : $perpcs[$i];
+                $x === 4 ? $bomc->qty = $rates[$i] : $rates[$i];
                 $_date = str_replace("/", "-", $date[$i]);
                 $bomc->date = date("Y-m-d", strtotime($_date));
                 $bomc->stoveid = $stove[$i];
