@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = 'แก้ไขข้อมูล';
             <hr>
         </div>
         <div class="box-body">
-            <?= $this->render('_form', [
+            <?= $this->render('_editform', [
                 'model' => $model,
             ]) ?>
         </div>

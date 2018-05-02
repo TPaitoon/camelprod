@@ -11,6 +11,7 @@ use Yii;
 use backend\models\BicycleInfo;
 use backend\models\BicycleinfoSearch;
 use yii\db\Exception;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -140,7 +141,8 @@ class BicycleinfoController extends Controller
                 $create->grouptire = $model->grouptire;
                 $create->save(false);
             }
-            return $this->redirect(['index']);
+//            return $this->redirect(['index']);
+            return Yii::$app->getResponse()->redirect(Url::previous());
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -198,7 +200,7 @@ class BicycleinfoController extends Controller
                 for ($i = 0; $i <= count($recid) - 1; $i++) {
                     $update = BicycleInfo::findOne($recid[$i]);
                     $update->empid = $model->empid;
-                    $update->empname = $model->empname;
+                    $update->empname = $this->Showempname($model->empid);
                     switch ($i + 1) {
                         case 1:
                             $update->typeid = 1;
@@ -225,7 +227,8 @@ class BicycleinfoController extends Controller
                     $update->save(false);
                 }
             }
-            return $this->redirect(['index']);
+//            return $this->redirect(['index']);
+            return Yii::$app->getResponse()->redirect(Url::previous());
         } else {
             return $this->render('update', [
                 'model' => $model,

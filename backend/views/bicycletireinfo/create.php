@@ -13,6 +13,7 @@ $this->params['breadcrumbs'][] = 'เพิ่มข้อมูล';
 $baseurl = Yii::$app->request->baseUrl;
 $this->registerJsFile($baseurl . '/js/chkbicycletirecreate.js?Ver=0001', ['depends' => JqueryAsset::className()]);
 $this->registerCssFile($baseurl . '/css/panel.css?Ver=0001', ['depends' => JqueryAsset::className()]);
+//print \yii\helpers\Url::previous();
 ?>
 <div class="bicycletire-info-create">
     <div class="panel">

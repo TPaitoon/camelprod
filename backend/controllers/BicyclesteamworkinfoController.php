@@ -10,6 +10,7 @@ use Yii;
 use backend\models\BicyclesteamworkInfo;
 use backend\models\BicyclesteamworkinfoSearch;
 use yii\db\Exception;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -83,7 +84,8 @@ class BicyclesteamworkinfoController extends Controller
             $model->empName = $this->Showempname($model->empid);
             $model->date = BicyclesteamworkinfoSearch::ConvertDate($model->date);
             $model->save();
-            return $this->redirect(['index']);
+//            return $this->redirect(['index']);
+            return Yii::$app->getResponse()->redirect(Url::previous());
         } else {
             return $this->renderAjax('create', [
                 'model' => $model,
@@ -104,7 +106,8 @@ class BicyclesteamworkinfoController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $model->date = BicyclesteamworkinfoSearch::ConvertDate($model->date);
             $model->save();
-            return $this->redirect(['index']);
+//            return $this->redirect(['index']);
+            return Yii::$app->getResponse()->redirect(Url::previous());
         } else {
             return $this->renderAjax('update', [
                 'model' => $model,

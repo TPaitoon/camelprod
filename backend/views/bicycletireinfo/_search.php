@@ -15,7 +15,7 @@ use yii\widgets\ActiveForm;
 $js = <<<JS
     $('#SearchSubmit').click(function(e) {
       e.preventDefault();
-      if($('#Sdate').val() > $('#Edate').val()) {
+      if($('#Sdate').val().split('/').reverse().join('-') > $('#Edate').val().split('/').reverse().join('-')) {
           alert('วันที่เริ่มห้ามน้อยกว่าวันที่สิ้นสุด');
       }else{
           $('#SearchForm').submit();
@@ -25,9 +25,8 @@ JS;
 $this->registerJs($js, static::POS_END);
 
 $empmodel = EmpInfo::find()->where(['Dept' => 'ฝ่ายผลิต'])->andFilterWhere(['like', 'Sec', 'นึ่ง'])->all();
-
+//print $Linkurl;
 ?>
-
 <div class="bicycletire-info-search">
 
     <?php $form = ActiveForm::begin([
@@ -51,7 +50,6 @@ $empmodel = EmpInfo::find()->where(['Dept' => 'ฝ่ายผลิต'])->andF
             <?= $form->field($model, 'startdate')->widget(DatePicker::className(), [
                 'name' => 'startdate',
                 'type' => DatePicker::TYPE_COMPONENT_APPEND,
-                'readonly' => true,
                 'options' => ['id' => 'Sdate'],
                 'layout' => '{picker}{input}',
                 'pluginOptions' => [
@@ -66,7 +64,6 @@ $empmodel = EmpInfo::find()->where(['Dept' => 'ฝ่ายผลิต'])->andF
             <?= $form->field($model, 'enddate')->widget(DatePicker::className(), [
                 'name' => 'enddate',
                 'type' => DatePicker::TYPE_COMPONENT_APPEND,
-                'readonly' => true,
                 'options' => ['id' => 'Edate'],
                 'layout' => '{picker}{input}',
                 'pluginOptions' => [

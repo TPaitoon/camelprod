@@ -83,7 +83,7 @@ if ($Role == 'IT' || $Role == 'PS') {
 } else {
     $sys = 0;
 }
-
+\yii\helpers\Url::remember(Yii::$app->request->getUrl());
 //echo Yii::$app->formatter->asDate(str_replace('/','-','20/10/2017'),'yyyy-MM-dd');
 ?>
     <input hidden class="role" value="<?php echo $sys ?>">

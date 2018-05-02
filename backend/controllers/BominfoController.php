@@ -11,6 +11,7 @@ use backend\models\Userinfo;
 use common\models\EmpInfo;
 use Yii;
 use backend\models\BOMInfo;
+use yii\helpers\Url;
 use backend\models\BominfoSearch;
 use yii\db\Exception;
 use yii\helpers\Json;
@@ -266,7 +267,8 @@ class BominfoController extends Controller
                     $update->save(false);
                 }
             }
-            return $this->redirect(['index']);
+//            return $this->redirect(['index']);
+            return Yii::$app->getResponse()->redirect(Url::previous());
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -451,7 +453,8 @@ class BominfoController extends Controller
                 $bomc->save(false);
             }
         }
-        return $this->redirect(['index']);
+//        return $this->redirect(['index']);
+        return Yii::$app->getResponse()->redirect(Url::previous());
     }
 
     private function ConvetDate($val)

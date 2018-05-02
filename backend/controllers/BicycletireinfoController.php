@@ -15,6 +15,7 @@ use backend\models\BicycletireInfo;
 use backend\models\BicycletireinfoSearch;
 use yii\db\Exception;
 use yii\helpers\Json;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -26,6 +27,7 @@ use yii\web\Session;
 class BicycletireinfoController extends Controller
 {
     public $enableCsrfValidation = false;
+
     /**
      * @inheritdoc
      */
@@ -339,7 +341,8 @@ class BicycletireinfoController extends Controller
                 $create->totaltire = $model->totaltire;
                 $create->save(false);
             }
-            return $this->redirect(['index']);
+//            return $this->redirect(['index']);
+            return Yii::$app->getResponse()->redirect(Url::previous());
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -592,6 +595,7 @@ class BicycletireinfoController extends Controller
     public function actionCreatemanual()
     {
         $Req = Yii::$app->request;
+
         $Empid = $Req->post("empidx");
         $Date = $Req->post("datex");
         $Hour = $Req->post("hourx");
@@ -637,6 +641,9 @@ class BicycletireinfoController extends Controller
                 $cmodel->save(false);
             }
         }
-        return $this->redirect(['index']);
+//        print Url::previous();
+        return Yii::$app->getResponse()->redirect(Url::previous());
     }
+
+    
 }

@@ -15,7 +15,7 @@ use yii\helpers\ArrayHelper;
 $JS = <<<JS
     $('#SearchSubmit').click(function(e) {
       e.preventDefault();
-      if($('#Sdate').val() > $('#Edate').val()) {
+      if($('#Sdate').val().split('/').reverse().join('-') > $('#Edate').val().split('/').reverse().join('-')) {
           alert('วันที่เริ่มห้ามน้อยกว่าวันที่สิ้นสุด');
       }else{
           $('#SearchForm').submit();

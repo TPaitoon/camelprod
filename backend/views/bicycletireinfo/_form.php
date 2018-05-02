@@ -30,6 +30,7 @@ foreach ($hourarray as $item) {
         'hour' => $item->hour,
     ]);
 }
+//print \yii\helpers\Url::previous();
 ?>
 
 <div class="bicycletire-info-form">
@@ -270,6 +271,4 @@ foreach ($hourarray as $item) {
             <?= Html::a('<i class="fa fa-undo"></i>', Yii::$app->request->referrer, ['class' => 'btn btn-danger']) ?>
         </div>
     </div>
-</div>
-
 </div>

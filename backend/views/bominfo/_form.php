@@ -34,6 +34,7 @@ foreach ($hourarray as $item) {
 //return print_r($hourlist);
 //$debug = new \backend\models\CheckDebug();
 //$debug->printr($data);return;
+//print \yii\helpers\Url::previous();
 ?>
 
     <div class="bominfo-form">

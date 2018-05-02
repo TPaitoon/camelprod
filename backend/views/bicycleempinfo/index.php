@@ -79,7 +79,7 @@ $JS = <<<JS
     });
 JS;
 $this->registerJs($JS, static::POS_END);
-
+\yii\helpers\Url::remember(Yii::$app->request->getUrl());
 if ($Role == 'IT' || $Role == 'PS') {
     $sys = 1;
 } else {

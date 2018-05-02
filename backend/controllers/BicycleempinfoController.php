@@ -10,6 +10,7 @@ use Yii;
 use backend\models\BicycleEmpInfo;
 use backend\models\BicycleempinfoSearch;
 use yii\db\Exception;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -87,7 +88,8 @@ class BicycleempinfoController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $model->empName = $this->Showempname($model->empid);
             $model->save();
-            return $this->redirect(['index']);
+//            return $this->redirect(['index']);
+            return Yii::$app->getResponse()->redirect(Url::previous());
         } else {
             return $this->renderAjax('create', [
                 'model' => $model,
@@ -115,7 +117,8 @@ class BicycleempinfoController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $model->empName = $this->Showempname($model->empid);
             $model->save();
-            return $this->redirect(['index']);
+//            return $this->redirect(['index']);
+            return Yii::$app->getResponse()->redirect(Url::previous());
         } else {
             return $this->renderAjax('update', [
                 'model' => $model,

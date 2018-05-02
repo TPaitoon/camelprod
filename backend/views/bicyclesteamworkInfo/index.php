@@ -87,7 +87,7 @@ if ($Role == 'IT' || $Role == 'PS') {
 } else {
     $sys = 0;
 }
-
+\yii\helpers\Url::remember(Yii::$app->request->getUrl());
 ?>
     <input hidden class="role" value="<?php echo $sys ?>">
     <div class="bicyclesteamwork-info-index">

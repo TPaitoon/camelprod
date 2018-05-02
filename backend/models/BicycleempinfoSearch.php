@@ -53,7 +53,7 @@ class BicycleempinfoSearch extends BicycleEmpInfo
 
         $this->load($params);
 
-        $query = BicycleEmpInfo::find()->andFilterWhere(['and', ['like', 'empid', $this->empid], ['>=', 'date', $this->startdate], ['<=', 'date', $this->enddate]])->orderBy(['date' => SORT_ASC]);
+        $query = BicycleEmpInfo::find()->andFilterWhere(['and', ['like', 'empid', $this->empid], ['>=', 'date', date('Y-m-d', strtotime(self::ConvertDate($this->startdate)))], ['<=', 'date', date('Y-m-d', strtotime(self::ConvertDate($this->enddate)))]])->orderBy(['date' => SORT_ASC]);
 
         // add conditions that should always apply here
 
@@ -116,5 +116,10 @@ class BicycleempinfoSearch extends BicycleEmpInfo
             ]
         ]);
         return $dataProvider;
+    }
+
+    public static function ConvertDate($val)
+    {
+        return str_replace("/", "-", $val);
     }
 }

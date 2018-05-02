@@ -17,7 +17,7 @@ $empmodel = EmpInfo::find()->where(['Dept' => 'ฝ่ายผลิต', 'Sec' 
 $js = <<<JS
     $('#BSearch').click(function(e) {
       e.preventDefault();
-      if($('#Sdate').val() > $('#Edate').val()) {
+      if($('#Sdate').val().split('/').reverse().join('-') > $('#Edate').val().split('/').reverse().join('-')) {
           alert('วันที่เริ่มค้นหาห้ามน้อยกว่าวันที่สิ้นสุด');
       }else{
           $('#SearchForm').submit();

@@ -14,7 +14,7 @@ use yii\widgets\ActiveForm;
 $js = <<<JS
     $('#SearchSubmit').click(function(e) {
       e.preventDefault();
-      if($('#Sdate').val() > $('#Edate').val()) {
+      if($('#Sdate').val().split('/').reverse().join('-') > $('#Edate').val().split('/').reverse().join('-')) {
           alert('วันที่เริ่มค้นหาห้ามน้อยกว่าวันที่สิ้นสุด');
       }else{
           $('#SearchForm').submit();
@@ -45,32 +45,30 @@ $empmodel = EmpInfo::find()->where(['Dept' => 'ฝ่ายผลิต', 'Sec' 
             ])->label('รหัสพนักงานที่ต้องการค้นหา') ?>
         </div>
         <div class="col-lg-2" id="starts">
-            <?php $model->startdate == '' ? $model->startdate = date('Y-m-d') : $model->startdate ?>
+            <?php $model->startdate == '' ? $model->startdate = date('d/m/Y') : $model->startdate ?>
             <?= $form->field($model, 'startdate')->widget(DatePicker::className(), [
                 'name' => 'startdate',
                 'type' => DatePicker::TYPE_COMPONENT_APPEND,
-                'readonly' => true,
                 'options' => ['id' => 'Sdate'],
                 'layout' => '{picker}{input}',
                 'pluginOptions' => [
                     'todayHighlight' => true,
                     'autoclose' => true,
-                    'format' => 'yyyy-mm-dd'
+                    'format' => 'dd-mm-yyyy'
                 ]
             ])->label('วันที่เริ่มค้นหา') ?>
         </div>
         <div class="col-lg-2" id="ends">
-            <?php $model->enddate == '' ? $model->enddate = date('Y-m-d') : $model->enddate ?>
+            <?php $model->enddate == '' ? $model->enddate = date('d/m/Y') : $model->enddate ?>
             <?= $form->field($model, 'enddate')->widget(DatePicker::className(), [
                 'name' => 'enddate',
                 'type' => DatePicker::TYPE_COMPONENT_APPEND,
-                'readonly' => true,
                 'options' => ['id' => 'Edate'],
                 'layout' => '{picker}{input}',
                 'pluginOptions' => [
                     'todayHighlight' => true,
                     'autoclose' => true,
-                    'format' => 'yyyy-mm-dd'
+                    'format' => 'dd/mm/yyyy'
                 ]
             ])->label('วันที่สิ้นสุดค้นหา') ?>
         </div>

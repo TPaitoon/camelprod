@@ -74,7 +74,7 @@ $this->registerJs($js, static::POS_END);
 $this->title = 'ค่าพิเศษประกอบยางนอกจกย.';
 $this->params['breadcrumbs'][] = $this->title;
 $res = Yii::$app->session->getFlash('res');
-
+\yii\helpers\Url::remember(Yii::$app->request->getUrl());
 
 if ($Role == 'IT' || $Role == 'PS') {
     $sys = 1;
