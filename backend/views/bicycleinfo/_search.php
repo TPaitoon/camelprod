@@ -51,7 +51,6 @@ $this->registerJs($js, static::POS_END);
             <?= $form->field($model, 'startdate')->widget(DatePicker::className(), [
                 'name' => 'startdate',
                 'type' => DatePicker::TYPE_COMPONENT_APPEND,
-                'readonly' => true,
                 'options' => ['id' => 'Sdate'],
                 'layout' => '{picker}{input}',
                 'pluginOptions' => [
@@ -66,7 +65,6 @@ $this->registerJs($js, static::POS_END);
             <?= $form->field($model, 'enddate')->widget(DatePicker::className(), [
                 'name' => 'enddate',
                 'type' => DatePicker::TYPE_COMPONENT_APPEND,
-                'readonly' => true,
                 'options' => ['id' => 'Edate'],
                 'layout' => '{picker}{input}',
                 'pluginOptions' => [

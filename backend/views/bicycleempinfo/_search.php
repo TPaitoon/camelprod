@@ -54,7 +54,7 @@ $empmodel = EmpInfo::find()->where(['Dept' => 'ฝ่ายผลิต', 'Sec' 
                 'pluginOptions' => [
                     'todayHighlight' => true,
                     'autoclose' => true,
-                    'format' => 'dd-mm-yyyy'
+                    'format' => 'dd/mm/yyyy'
                 ]
             ])->label('วันที่เริ่มค้นหา') ?>
         </div>
