@@ -161,7 +161,7 @@ if ($Role == 'IT' || $Role == 'PS') {
                             'template' => '{view} {update} {delete}',
                             'buttons' => [
                                 'view' => function ($url, $model) {
-                                    return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', 'javascript:void(0)', [
+                                    return Html::a('<span class="btn btn-default btn-xs glyphicon glyphicon-eye-open"></span>', 'javascript:void(0)', [
                                         "id" => "viewmodal",
                                         "data-url" => $url,
                                         "value" => ArrayHelper::getValue($model, 'check') . ":" . ArrayHelper::getValue($model, 'empid') . "|" . ArrayHelper::getValue($model, 'date'),
@@ -169,10 +169,10 @@ if ($Role == 'IT' || $Role == 'PS') {
                                 },
                                 'update' => function ($url, $model) {
                                     if (ArrayHelper::getValue($model, 'check') == '0') {
-                                        return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, []);
+                                        return Html::a('<span class="btn btn-default btn-xs glyphicon glyphicon-pencil"></span>', $url, []);
                                     } else {
                                         if (ArrayHelper::getValue($model, 'role') == '1') {
-                                            return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, []);
+                                            return Html::a('<span class="btn btn-default btn-xs glyphicon glyphicon-pencil"></span>', $url, []);
                                         } else {
                                             return '';
                                         }
@@ -180,7 +180,7 @@ if ($Role == 'IT' || $Role == 'PS') {
 
                                 },
                                 'delete' => function ($url) {
-                                    return Html::a('<span class="glyphicon glyphicon-trash" onclick="return chkdelete($(this))"></span>', 'javascript:void(0)', [
+                                    return Html::a('<span class="btn btn-default btn-xs glyphicon glyphicon-trash" onclick="return chkdelete($(this))"></span>', 'javascript:void(0)', [
                                         'data-url' => $url,
                                     ]);
                                 }

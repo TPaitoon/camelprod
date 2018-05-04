@@ -23,14 +23,14 @@ $emplist = EmpInfo::findAll(['Dept' => 'ฝ่ายผลิต', 'Sec' => 'ป
                     <?= $form->field($model, 'shift')->dropDownList(ArrayHelper::map($shiftlist, "id", "shiftname"), ["id" => "shift"])->label("เลือกกะ") ?>
                 </div>
                 <div class="col-lg-3">
-                    <?php $model->date = date('Y-m-d') ?>
+                    <?php $model->date = date('d/m/Y') ?>
                     <?= $form->field($model, 'date')->widget(DatePicker::className(), [
                         'name' => 'date',
                         'type' => DatePicker::TYPE_COMPONENT_APPEND,
                         'layout' => '{picker}{input}',
                         'readonly' => true,
                         'pluginOptions' => [
-                            'format' => 'yyyy-mm-dd',
+                            'format' => 'dd/mm/yyyy',
                             'autoclose' => true,
                             'todayHighlight' => true,
                         ],

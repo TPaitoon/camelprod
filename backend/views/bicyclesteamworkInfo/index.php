@@ -153,13 +153,13 @@ if ($Role == 'IT' || $Role == 'PS') {
                             'buttons' => [
                                 'update' => function ($url, $model) {
                                     if (ArrayHelper::getValue($model, 'confirms') == '0') {
-                                        return Html::a('<span class="glyphicon glyphicon-pencil"></span>', 'javascript:void(0)', [
+                                        return Html::a('<span class="btn btn-default btn-xs glyphicon glyphicon-pencil"></span>', 'javascript:void(0)', [
                                             'id' => 'updatemodal',
                                             'data-url' => $url
                                         ]);
                                     } else {
                                         if (ArrayHelper::getValue($model, 'role') == '1') {
-                                            return Html::a('<span class="glyphicon glyphicon-pencil"></span>', 'javascript:void(0)', [
+                                            return Html::a('<span class="btn btn-default btn-xs glyphicon glyphicon-pencil"></span>', 'javascript:void(0)', [
                                                 'id' => 'updatemodal',
                                                 'data-url' => $url
                                             ]);
@@ -169,7 +169,7 @@ if ($Role == 'IT' || $Role == 'PS') {
                                     }
                                 },
                                 'delete' => function ($url) {
-                                    return Html::a('<span class="glyphicon glyphicon-trash" onclick="return chkdelete($(this))"></span>', 'javascript:void(0)', [
+                                    return Html::a('<span class="btn btn-default btn-xs glyphicon glyphicon-trash" onclick="return chkdelete($(this))"></span>', 'javascript:void(0)', [
                                         'data-url' => $url,
                                     ]);
                                 }

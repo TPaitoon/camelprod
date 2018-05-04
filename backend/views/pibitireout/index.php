@@ -229,21 +229,21 @@ $this->registerJs($scriptjs, static::POS_END);
                         'contentOptions' => [
                             'class' => 'text-center'
                         ],
-                        'template' => '{update}{delete}',
+                        'template' => '{update} {delete}',
                         'buttons' => [
                             'update' => function ($url, $model) {
                                 $st = ArrayHelper::getValue($model, 'status');
                                 $rl = ArrayHelper::getValue($model, 'role');
                                 if ($st === 0) {
-                                    return Html::a('<span class="glyphicon glyphicon-pencil"></span>', 'javascript:void(0)', ['id' => 'updatemodal', 'data-url' => $url]);
+                                    return Html::a('<span class="btn btn-default btn-xs glyphicon glyphicon-pencil"></span>', 'javascript:void(0)', ['id' => 'updatemodal', 'data-url' => $url]);
                                 } elseif ($rl === 1) {
-                                    return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, ['id' => 'updatemodal', 'data-url' => $url]);
+                                    return Html::a('<span class="btn btn-default btn-xs glyphicon glyphicon-pencil"></span>', $url, ['id' => 'updatemodal', 'data-url' => $url]);
                                 } else {
                                     return '';
                                 }
                             },
                             'delete' => function ($url) {
-                                return Html::a('<span class="glyphicon glyphicon-trash" onclick="checkDel($(this))"></span>', 'javascript:void(0)', [
+                                return Html::a('<span class="btn btn-default btn-xs glyphicon glyphicon-trash" onclick="checkDel($(this))"></span>', 'javascript:void(0)', [
                                     'data-url' => $url
                                 ]);
                             },

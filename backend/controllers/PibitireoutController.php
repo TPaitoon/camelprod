@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\Scripts;
 use backend\models\UserDirect;
 use common\models\EmpInfo;
 use Yii;
@@ -79,6 +80,8 @@ class PibitireoutController extends Controller
         $model = new PIBITireOut();
 
         if ($model->load(Yii::$app->request->post())) {
+            $model->empname = Scripts::ShowEmpname($model->empid);
+            $model->date = Scripts::ConvertDateDMYtoYMDforSQL($model->date);
             $model->status = 0;
             $model->save();
             return $this->redirect(['index']);
@@ -100,7 +103,10 @@ class PibitireoutController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            $model->empname = Scripts::ShowEmpname($model->empid);
+            $model->date = Scripts::ConvertDateDMYtoYMDforSQL($model->date);
+            $model->save(false);
             return $this->redirect(['index']);
         } else {
             return $this->renderAjax('update', [

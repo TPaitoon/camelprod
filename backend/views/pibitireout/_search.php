@@ -11,6 +11,18 @@ use yii\widgets\ActiveForm;
 /* @var $model backend\models\PibitireoutSearch */
 /* @var $form yii\widgets\ActiveForm */
 
+$JS = <<<JS
+    $('.SearchSubmit').click(function(e) {
+      e.preventDefault();
+      if($('#Startdate').val().split('/').reverse().join('-') > $('#Enddate').val().split('/').reverse().join('-')) {
+          alert('วันที่เริ่มห้ามน้อยกว่าวันที่สิ้นสุด');
+      }else{
+          $('#SearchForm').submit();
+      }
+    })
+JS;
+$this->registerJs($JS, static::POS_END);
+
 $emplist = EmpInfo::findAll(['Dept' => 'ฝ่ายผลิต', 'Sec' => 'ประกอบยางใน']);
 //print count($emplist);
 ?>
@@ -38,11 +50,10 @@ $emplist = EmpInfo::findAll(['Dept' => 'ฝ่ายผลิต', 'Sec' => 'ป
             ])->label('รหัสพนักงานที่ต้องการค้นหา') ?>
         </div>
         <div class="col-lg-2">
-            <?php $model->startdate == '' ? $model->startdate = date('Y-m-d') : $model->startdate ?>
+            <?php $model->startdate == '' ? $model->startdate = date('d/m/Y') : $model->startdate ?>
             <?= $form->field($model, 'startdate')->widget(DatePicker::className(), [
                 'name' => 'Startdatepicker',
                 'type' => DatePicker::TYPE_COMPONENT_APPEND,
-                'readonly' => true,
                 'layout' => '{picker}{input}',
                 'options' => [
                     'id' => 'Startdate'
@@ -50,16 +61,15 @@ $emplist = EmpInfo::findAll(['Dept' => 'ฝ่ายผลิต', 'Sec' => 'ป
                 'pluginOptions' => [
                     'todayHighlight' => true,
                     'autoclose' => true,
-                    'format' => 'yyyy-mm-dd',
+                    'format' => 'dd/mm/yyyy',
                 ],
             ])->label('วันที่เริ่มค้นหา') ?>
         </div>
         <div class="col-lg-2">
-            <?php $model->enddate == '' ? $model->enddate = date('Y-m-d') : $model->enddate ?>
+            <?php $model->enddate == '' ? $model->enddate = date('d/m/Y') : $model->enddate ?>
             <?= $form->field($model, 'enddate')->widget(DatePicker::className(), [
                 'name' => 'Enddatepicker',
                 'type' => DatePicker::TYPE_COMPONENT_APPEND,
-                'readonly' => true,
                 'layout' => '{picker}{input}',
                 'options' => [
                     'id' => 'Enddate'
@@ -67,7 +77,7 @@ $emplist = EmpInfo::findAll(['Dept' => 'ฝ่ายผลิต', 'Sec' => 'ป
                 'pluginOptions' => [
                     'todayHighlight' => true,
                     'autoclose' => true,
-                    'format' => 'yyyy-mm-dd',
+                    'format' => 'dd/mm/yyyy',
                 ],
             ])->label('วันที่สิ้นสุดค้นหา') ?>
         </div>

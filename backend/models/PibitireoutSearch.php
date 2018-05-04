@@ -4,7 +4,6 @@ namespace backend\models;
 
 use Yii;
 use yii\base\Model;
-use yii\data\ActiveDataProvider;
 use common\models\PIBITireOut;
 use yii\data\ArrayDataProvider;
 use yii\helpers\ArrayHelper;
@@ -41,12 +40,12 @@ class PibitireoutSearch extends PIBITireOut
      *
      * @param array $params
      *
-     * @return ActiveDataProvider
+     * @return ArrayDataProvider
      */
     public function search($params)
     {
         if (empty($this->startdate) && empty($this->enddate)) {
-            $this->startdate && $this->enddate = date('Y-m-d');
+            $this->startdate && $this->enddate = date('d/m/Y');
         }
 
         $this->load($params);
@@ -54,9 +53,9 @@ class PibitireoutSearch extends PIBITireOut
         $query = PIBITireOut::find()
             ->andFilterWhere(['and',
                 ['like', 'shift', $this->shift],
-                ['like','empid',$this->empid],
-                ['>=', 'date', $this->startdate],
-                ['<=', 'date', $this->enddate]
+                ['like', 'empid', $this->empid],
+                ['>=', 'date', Scripts::ConvertDateDMYtoYMDforSQL($this->startdate)],
+                ['<=', 'date', Scripts::ConvertDateDMYtoYMDforSQL($this->enddate)]
             ])
             ->all();
 
@@ -66,7 +65,7 @@ class PibitireoutSearch extends PIBITireOut
         $array = [];
 
         foreach ($query as $item) {
-            array_push($array,[
+            array_push($array, [
                 'id' => $item->id,
                 'empid' => $item->empid,
                 'empname' => $item->empname,
@@ -78,7 +77,7 @@ class PibitireoutSearch extends PIBITireOut
             ]);
         }
 
-        ArrayHelper::multisort($array,['date','empid'],4);
+        ArrayHelper::multisort($array, ['date', 'empid'], 4);
         $dataProvider = new ArrayDataProvider([
             'allModels' => $array
         ]);
@@ -96,7 +95,7 @@ class PibitireoutSearch extends PIBITireOut
         $array = [];
 
         foreach ($query as $item) {
-            array_push($array,[
+            array_push($array, [
                 'id' => $item->id,
                 'empid' => $item->empid,
                 'empname' => $item->empname,
@@ -108,7 +107,7 @@ class PibitireoutSearch extends PIBITireOut
             ]);
         }
 
-        ArrayHelper::multisort($array,['date','empid'],4);
+        ArrayHelper::multisort($array, ['date', 'empid'], 4);
         $dataProvider = new ArrayDataProvider([
             'allModels' => $array
         ]);

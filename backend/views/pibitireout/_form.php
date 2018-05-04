@@ -1,5 +1,6 @@
 <?php
 
+use backend\models\Scripts;
 use common\models\EmpInfo;
 use common\models\ShiftList;
 use kartik\date\DatePicker;
@@ -24,20 +25,19 @@ for ($i = 0; $i < 4; $i++) {
     <div class="pibitireout-form">
         <?php $form = ActiveForm::begin(); ?>
         <div class="row">
-            <div class="col-lg-3">
+            <div class="col-lg-7">
                 <?= $form->field($model, 'empid')->widget(Select2::className(), [
-                    "data" => ArrayHelper::map($emplist, "PRS_NO", "PRS_NO"),
+                    "data" => ArrayHelper::map($emplist, "PRS_NO", function ($model) {
+                        return $model->PRS_NO . " " . $model->EMP_NAME . " " . $model->EMP_SURNME;
+                    }),
                     "options" => [
                         "placeholder" => "เลือกรหัสพนักงาน",
                         "id" => "empidselect",
-                        "onchange" => '$.post("index.php?r=pibitireout/getempname&id=' . '"+$(this).val(),function(data){
-					$("#empname").val(data);
-					 });',
+//                        "onchange" => '$.post("index.php?r=pibitireout/getempname&id=' . '"+$(this).val(),function(data){
+//					$("#empname").val(data);
+//					 });',
                     ]
                 ])->label("รหัสพนักงาน") ?>
-            </div>
-            <div class="col-lg-4">
-                <?= $form->field($model, 'empname')->textInput(["id" => "empname", "readonly" => true])->label("ชื่อ - นามสกุล") ?>
             </div>
         </div>
         <div class="row">
@@ -50,15 +50,15 @@ for ($i = 0; $i < 4; $i++) {
                 )->label("ช่วงทำงาน") ?>
             </div>
             <div class="col-lg-3">
-                <?php $model->date == "" ? $model->date = date('Y-m-d') : $model->date ?>
+                <?php $model->date == "" ? $model->date = date('d/m/Y') : $model->date = Scripts::ConvertDateYMDtoDMYforForm($model->date) ?>
                 <?= $form->field($model, 'date')
                     ->widget(DatePicker::className(), [
                         'name' => 'datepk',
                         'type' => DatePicker::TYPE_COMPONENT_APPEND,
                         'layout' => '{picker}{input}',
-                        'readonly' => true,
+//                        'readonly' => true,
                         'pluginOptions' => [
-                            'format' => 'yyyy-mm-dd',
+                            'format' => 'dd/mm/yyyy',
                             'autoclose' => true,
                             'todayHighlight' => true
                         ],

@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\Scripts;
 use Yii;
 use common\models\PIBITubeEmplist;
 use backend\models\PibitubeemplistSearch;
@@ -76,7 +77,7 @@ class PibitubeemplistController extends Controller
             for ($i = 0; $i < count($emplist); $i++) {
                 $create = new PIBITubeEmplist();
                 $create->shift = $model->shift;
-                $create->date = $model->date;
+                $create->date = Scripts::ConvertDateDMYtoYMDforSQL($model->date);
                 $create->empid = $emplist[$i];
                 $create->save(false);
             }
