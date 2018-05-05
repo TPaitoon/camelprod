@@ -35,7 +35,7 @@ $tiremodel = Weaverbicycle::find()->all();
                 ],])->label('รหัสพนักงาน') ?>
         </div>
         <div class="col-md-2">
-            <?php $model->date == '' ? $model->date = date('d/m/Y') : $model->date = date('d/m/Y',strtotime(BicycleinfoController::ConvertDate($model->date))) ?>
+            <?php $model->date == '' ? $model->date = date('d/m/Y') : $model->date = date('d/m/Y', strtotime(BicycleinfoController::ConvertDate($model->date))) ?>
             <?= $form->field($model, 'date')->widget(DatePicker::className(), [
                 'options' => ['id' => 'bdate'],
                 'type' => DatePicker::TYPE_COMPONENT_APPEND,
@@ -86,14 +86,12 @@ $tiremodel = Weaverbicycle::find()->all();
         </div>
     </div>
     <hr>
-    <div class="form-group">
-        <div class="pull-left">
-            <?= Html::submitButton($model->isNewRecord ? 'บันทึก' : 'แก้ไข', ['id' => 'bicyclesubmit', 'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-            <?= Html::button('ค่าเริ่มต้น', ['id' => 'breset', 'class' => 'btn btn-danger']) ?>
-        </div>
-        <div class="pull-right">
-            <?= Html::a('หน้าหลัก', ['index'], ['class' => 'btn btn-info']) ?>
-            <?= Html::a('ย้อนกลับ', Yii::$app->request->referrer, ['class' => 'btn btn-danger']) ?>
+    <div class="row">
+        <div class="col-md-12">
+            <!--?= Html::submitButton($model->isNewRecord ? 'บันทึก' : 'แก้ไข', ['id' => 'bicyclesubmit', 'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?-->
+            <div style="text-align: center">
+                <?= Html::a('<i class="fa fa-plus"></i>', 'javascript:void(0)', ['class' => 'btn btn-success addata', 'style' => 'width: 50px']) ?>
+            </div>
         </div>
     </div>
     <?php ActiveForm::end(); ?>

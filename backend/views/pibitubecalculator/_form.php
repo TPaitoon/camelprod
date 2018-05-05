@@ -6,6 +6,7 @@
  * Time: 11:27
  */
 
+use backend\models\Scripts;
 use common\models\EmpInfo;
 use common\models\ShiftList;
 use kartik\date\DatePicker;
@@ -158,16 +159,16 @@ for ($i = 0; $i <= 1; $i++) {
                                     ->label('เลือกกะ') ?>
                             </div>
                             <div class="col-lg-4">
-                                <?php $model->date == '' ? $model->date = date('Y-m-d') : $model->date ?>
+                                <?php $model->date == '' ? $model->date = date('d/m/Y') : $model->date = Scripts::ConvertDateYMDtoDMYforForm($model->date) ?>
                                 <?= $form->field($model, 'date')
                                     ->widget(DatePicker::className(), [
                                         'options' => ['id' => 'date'],
                                         'name' => 'datepick',
                                         'type' => DatePicker::TYPE_COMPONENT_APPEND,
                                         'layout' => '{picker}{input}',
-                                        'readonly' => true,
+//                                        'readonly' => true,
                                         'pluginOptions' => [
-                                            'format' => 'yyyy-mm-dd',
+                                            'format' => 'dd/mm/yyyy',
                                             'autoclose' => true,
                                             'todayHighlight' => true
                                         ]

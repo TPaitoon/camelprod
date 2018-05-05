@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\Scripts;
 use backend\models\StandardBicycle;
 use backend\models\UserDirect;
 use backend\models\Userinfo;
@@ -87,6 +88,7 @@ class BicycleempinfoController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             $model->empName = $this->Showempname($model->empid);
+            $model->date = Scripts::ConvertDateDMYtoYMDforSQL($model->date);
             $model->save();
 //            return $this->redirect(['index']);
             return Yii::$app->getResponse()->redirect(Url::previous());
@@ -116,6 +118,7 @@ class BicycleempinfoController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             $model->empName = $this->Showempname($model->empid);
+            $model->date = Scripts::ConvertDateDMYtoYMDforSQL($model->date);
             $model->save();
 //            return $this->redirect(['index']);
             return Yii::$app->getResponse()->redirect(Url::previous());

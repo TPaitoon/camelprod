@@ -234,6 +234,10 @@ $(document).on("click","#updatemodal",function(e) {
         modalu.modal("show").find(".modalContent").load($(this).attr("data-url"));
     }
 });
+
+$("#modal-create").on("hidden.bs.modal",function() {
+    location.reload();
+});
 JS;
 
 $this->registerJs($js, static::POS_END);

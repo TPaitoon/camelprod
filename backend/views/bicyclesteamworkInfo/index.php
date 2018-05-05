@@ -231,6 +231,10 @@ $modaljs = <<<JS
             modalc.modal("show").find(".modalContent").load($(this).attr("href"));
         }
     });
+    
+    $("#modal-create").on("hidden.bs.modal",function() {
+        location.reload();
+    });
 JS;
 $this->registerJs($modaljs, static::POS_END);
 ?>

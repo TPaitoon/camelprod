@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use backend\models\PibitubecalculatorSearch;
+use backend\models\Scripts;
 use backend\models\UserDirect;
 use backend\models\PIBITubeDetail;
 use common\models\EmpInfo;
@@ -64,7 +65,7 @@ class PibitubecalculatorController extends Controller
                         $dtl->shift = $model->shift;
                         $dtl->empid = $idlist[$i];
                         $dtl->empname = $namelist[$i];
-                        $dtl->date = $model->date;
+                        $dtl->date = Scripts::ConvertDateDMYtoYMDforSQL($model->date);
                         $dtl->rate = $model->rate;
                         $dtl->itemid = $grouplist[$x];
                         $dtl->qty = $valuelist[$x];
@@ -77,7 +78,7 @@ class PibitubecalculatorController extends Controller
                         $pibitd->shift = $model->shift;
                         $pibitd->empid = $idlist[$i];
                         $pibitd->empname = $namelist[$i];
-                        $pibitd->date = $model->date;
+                        $pibitd->date = Scripts::ConvertDateDMYtoYMDforSQL($model->date);
                         $pibitd->rate = $model->rate;
                         if ($z == 0) {
                             $pibitd->itemid = 91;
@@ -169,7 +170,7 @@ class PibitubecalculatorController extends Controller
                 PIBITubeDetail::deleteAll(['id' => $model->recid[$r]]);
             }
             $master = $this->findModel($_tempquery->id);
-            $master->date = $model->date;
+            $master->date = Scripts::ConvertDateDMYtoYMDforSQL($model->date);
             $master->shift = $model->shift;
             $master->status = 0;
             if ($master->save(false)) {
@@ -185,7 +186,7 @@ class PibitubecalculatorController extends Controller
                         $detail->shift = $model->shift;
                         $detail->empid = $idlist[$i];
                         $detail->empname = $namelist[$i];
-                        $detail->date = $model->date;
+                        $detail->date = Scripts::ConvertDateDMYtoYMDforSQL($model->date);
                         $detail->rate = $model->rate;
                         $detail->itemid = $grouplist[$x];
                         $detail->qty = $valuelist[$x];
@@ -197,7 +198,7 @@ class PibitubecalculatorController extends Controller
                         $value->shift = $model->shift;
                         $value->empid = $idlist[$i];
                         $value->empname = $namelist[$i];
-                        $value->date = $model->date;
+                        $value->date = Scripts::ConvertDateDMYtoYMDforSQL($model->date);
                         $value->rate = $model->rate;
                         if ($z == 0) {
                             $value->itemid = 91;

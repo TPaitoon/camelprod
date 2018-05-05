@@ -132,7 +132,7 @@ $res = Yii::$app->session->getFlash('res');
                             'template' => '{view} {update} {delete}',
                             'buttons' => [
                                 'view' => function ($url, $model) {
-                                    return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', 'javascript:void(0)', [
+                                    return Html::a('<span class="btn btn-default btn-xs glyphicon glyphicon-eye-open"></span>', 'javascript:void(0)', [
                                         'id' => 'viewmodal',
                                         'data-url' => $url,
                                         'value' => ArrayHelper::getValue($model, "status") . ":" . ArrayHelper::getValue($model, "id"),
@@ -143,15 +143,15 @@ $res = Yii::$app->session->getFlash('res');
                                     $rl = ArrayHelper::getValue($model, 'role');
 
                                     if ($st == 0) {
-                                        return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, []);
+                                        return Html::a('<span class="btn btn-default btn-xs glyphicon glyphicon-pencil"></span>', $url, []);
                                     } elseif ($rl == 1) {
-                                        return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, []);
+                                        return Html::a('<span class="btn btn-default btn-xs glyphicon glyphicon-pencil"></span>', $url, []);
                                     } else {
                                         return '';
                                     }
                                 },
                                 'delete' => function ($url) {
-                                    return Html::a('<span class="glyphicon glyphicon-trash" onclick="checkDel($(this))"></span>', 'javascript:void(0)', [
+                                    return Html::a('<span class="btn btn-default btn-xs glyphicon glyphicon-trash" onclick="checkDel($(this))"></span>', 'javascript:void(0)', [
                                         'data-url' => $url,
                                     ]);
                                 }

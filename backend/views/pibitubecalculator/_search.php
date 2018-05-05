@@ -6,6 +6,7 @@
  * Time: 13:34
  */
 
+use backend\models\Scripts;
 use common\models\EmpInfo;
 use common\models\ShiftList;
 use kartik\date\DatePicker;
@@ -20,7 +21,7 @@ $emplist = EmpInfo::find()->where(['Dept' => 'ฝ่ายผลิต'])
 $js = <<<JS
     $('#SearchSubmit').click(function(e) {
         e.preventDefault();
-        if ($("#startdate").val() > $("#enddate").val()) {
+        if ($("#startdate").val().split('/').reverse().join('-') > $("#enddate").val().split('/').reverse().join('-')) {
             alert('วันที่เริ่มต้องไม่มากกว่าวันที่สิ้นสุด');
         } else {
             $(this).submit();
@@ -49,36 +50,36 @@ $this->registerJs($js, static::POS_END);
             ?>
         </div>
         <div class="col-lg-2">
-            <?php empty($model->startdate) ? $model->startdate = date('Y-m-d') : $model->startdate; ?>
+            <?php empty($model->startdate) ? $model->startdate = date('d/m/Y') : $model->startdate; ?>
             <?= $form->field($model, 'startdate')
                 ->widget(DatePicker::className(), [
                     'name' => 'startdate',
                     'type' => DatePicker::TYPE_COMPONENT_APPEND,
-                    'readonly' => true,
+//                    'readonly' => true,
                     'layout' => '{picker}{input}',
                     'options' => ['id' => 'startdate'],
                     'pluginOptions' => [
                         'todayHighlight' => true,
                         'autoclose' => true,
-                        'format' => 'yyyy-mm-dd'
+                        'format' => 'dd/mm/yyyy'
                     ]
                 ])
                 ->label('วันที่เริ่มค้นหา')
             ?>
         </div>
         <div class="col-lg-2">
-            <?php empty($model->enddate) ? $model->enddate = date('Y-m-d') : $model->enddate; ?>
+            <?php empty($model->enddate) ? $model->enddate = date('d/m/Y') : $model->enddate; ?>
             <?= $form->field($model, 'enddate')
                 ->widget(DatePicker::className(), [
                     'name' => 'enddate',
                     'type' => DatePicker::TYPE_COMPONENT_APPEND,
-                    'readonly' => true,
+//                    'readonly' => true,
                     'layout' => '{picker}{input}',
                     'options' => ['id' => 'enddate'],
                     'pluginOptions' => [
                         'todayHighlight' => true,
                         'autoclose' => true,
-                        'format' => 'yyyy-mm-dd'
+                        'format' => 'dd/mm/yyyy'
                     ]
                 ])
                 ->label('วันที่สิ้นสุดค้นหา')

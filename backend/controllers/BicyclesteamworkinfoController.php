@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\Scripts;
 use backend\models\UserDirect;
 use backend\models\Userinfo;
 use common\models\EmpInfo;
@@ -82,7 +83,7 @@ class BicyclesteamworkinfoController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             $model->empName = $this->Showempname($model->empid);
-            $model->date = BicyclesteamworkinfoSearch::ConvertDate($model->date);
+            $model->date = Scripts::ConvertDateDMYtoYMDforSQL($model->date);
             $model->save();
 //            return $this->redirect(['index']);
             return Yii::$app->getResponse()->redirect(Url::previous());

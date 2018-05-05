@@ -1,5 +1,6 @@
 <?php
 
+use backend\models\Scripts;
 use backend\models\StandardBicycle;
 use common\models\CheckStatusInfo;
 use common\models\EmpInfo;
@@ -37,16 +38,16 @@ $bicyclesec = StandardBicycle::find()->all();
     <hr>
     <div class="row">
         <div class="col-md-3">
-            <?php $model->date == '' ? $model->date = date('Y-m-d') : $model->date ?>
+            <?php $model->date == '' ? $model->date = date('d/m/Y') : $model->date = Scripts::ConvertDateYMDtoDMYforForm($model->date) ?>
             <?= $form->field($model, 'date')->widget(DatePicker::className(), [
                 'options' => [
                     'id' => 'edate'
                 ],
                 'type' => DatePicker::TYPE_COMPONENT_APPEND,
                 'layout' => '{picker}{input}',
-                'readonly' => true,
+//                'readonly' => true,
                 'pluginOptions' => [
-                    'format' => 'yyyy-mm-dd',
+                    'format' => 'dd/mm/yyyy',
                     'autoclose' => true,
                     'todayHighlight' => true,
                 ]
@@ -73,3 +74,15 @@ $bicyclesec = StandardBicycle::find()->all();
     </div>
     <?php ActiveForm::end(); ?>
 </div>
+<?php
+$scriptjs = <<<JS
+$("#eempid")
+.on("select2:opening",function() {
+    $("#modal-create").removeAttr("tabindex","-1");
+})
+.on("select2:close",function() {
+    $("#modal-create").attr("tabindex","1");  
+});
+JS;
+$this->registerJs($scriptjs);
+?>

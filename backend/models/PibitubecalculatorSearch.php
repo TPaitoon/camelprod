@@ -34,7 +34,7 @@ class PibitubecalculatorSearch extends PIBITubeMaster
     public function search($params)
     {
         if (empty($this->startdate) && empty($this->enddate)) {
-            $this->startdate && $this->enddate = date('Y-m-d');
+            $this->startdate && $this->enddate = date('d/m/Y');
         }
 
         $this->load($params);
@@ -43,7 +43,7 @@ class PibitubecalculatorSearch extends PIBITubeMaster
         $usr = $chk->ChkusrForPI();
         $usr == 'IT' || $usr == 'PS' ? $this->role = 1 : $this->role = 0;
 
-        $temp = PIBITubeMaster::find()->andFilterWhere(['and', ['like', 'shift', $this->shift], ['>=', 'date', $this->startdate], ['<=', 'date', $this->enddate]])->all();
+        $temp = PIBITubeMaster::find()->andFilterWhere(['and', ['like', 'shift', $this->shift], ['>=', 'date', Scripts::ConvertDateDMYtoYMDforSQL($this->startdate)], ['<=', 'date', Scripts::ConvertDateDMYtoYMDforSQL($this->enddate)]])->all();
         $array = [];
 
         foreach ($temp as $item) {
