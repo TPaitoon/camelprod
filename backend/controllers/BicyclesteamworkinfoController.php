@@ -82,13 +82,13 @@ class BicyclesteamworkinfoController extends Controller
         $model = new BicyclesteamworkInfo();
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->empName = $this->Showempname($model->empid);
-            $model->date = Scripts::ConvertDateDMYtoYMDforSQL($model->date);
-            $model->save();
+//            $model->empName = $this->Showempname($model->empid);
+//            $model->date = Scripts::ConvertDateDMYtoYMDforSQL($model->date);
+//            $model->save();
 //            return $this->redirect(['index']);
-            return Yii::$app->getResponse()->redirect(Url::previous());
+//            return Yii::$app->getResponse()->redirect(Url::previous());
         } else {
-            return $this->renderAjax('create', [
+            return $this->render('create', [
                 'model' => $model,
             ]);
         }

@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\Scripts;
 use backend\models\UserDirect;
 use backend\models\Userinfo;
 use common\models\EmpInfo;
@@ -21,6 +22,7 @@ use yii\filters\VerbFilter;
  */
 class BicycleinfoController extends Controller
 {
+    public $enableCsrfValidation = false;
     /**
      * @inheritdoc
      */
@@ -115,32 +117,32 @@ class BicycleinfoController extends Controller
     {
         $model = new BicycleInfo();
         if ($model->load(Yii::$app->request->post())) {
-            for ($i = 1; $i <= 4; $i++) {
-                $create = new BicycleInfo();
-                $create->empid = $model->empid;
-                $create->empname = $this->Showempname($model->empid);
-                $create->typeid = $i;
-                switch ($i) {
-                    case 1:
-                        $create->qty = $model->losttime;
-                        break;
-                    case 2:
-                        $create->qty = $model->amount;
-                        break;
-                    case 3:
-                        $create->qty = $model->perpcs;
-                        break;
-                    case 4:
-                        $create->qty = $model->rate;
-                        break;
-                }
-                $create->tirename = $model->tirename;
-                $create->date = self::ConvertDate($model->date);
-                $create->checks = $model->checks;
-                $create->minus = $model->minus;
-                $create->grouptire = $model->grouptire;
-                $create->save(false);
-            }
+//            for ($i = 1; $i <= 4; $i++) {
+//                $create = new BicycleInfo();
+//                $create->empid = $model->empid;
+//                $create->empname = $this->Showempname($model->empid);
+//                $create->typeid = $i;
+//                switch ($i) {
+//                    case 1:
+//                        $create->qty = $model->losttime;
+//                        break;
+//                    case 2:
+//                        $create->qty = $model->amount;
+//                        break;
+//                    case 3:
+//                        $create->qty = $model->perpcs;
+//                        break;
+//                    case 4:
+//                        $create->qty = $model->rate;
+//                        break;
+//                }
+//                $create->tirename = $model->tirename;
+//                $create->date = self::ConvertDate($model->date);
+//                $create->checks = $model->checks;
+//                $create->minus = $model->minus;
+//                $create->grouptire = $model->grouptire;
+//                $create->save(false);
+//            }
 //            return $this->redirect(['index']);
             return Yii::$app->getResponse()->redirect(Url::previous());
         } else {
@@ -362,5 +364,39 @@ class BicycleinfoController extends Controller
     {
         $_temp = str_replace("/", "-", $val);
         return date('Y-m-d', strtotime($_temp));
+    }
+
+    public function actionCreatemanual()
+    {
+        $Req = Yii::$app->request;
+        $Empid = $Req->post("empidx");
+        $Date = $Req->post("datex");
+        $Tirename = $Req->post("tirenamex");
+        $Grouptire = $Req->post("grouptirex");
+        $Amount = $Req->post("amountx");
+        $Losttime = $Req->post("losttimex");
+        $Minus = $Req->post("minusx");
+        $Perpcs = $Req->post("perpcsx");
+        $Rate = $Req->post("ratex");
+
+        for ($i = 0; $i < count($Empid); $i++) {
+            for ($x = 1; $x <= 4; $x++) {
+                $cnew = new BicycleInfo();
+                $cnew->empid = $Empid[$i];
+                $cnew->empname =$this->Showempname($Empid[$i]);
+                $x == 1 ? $cnew->qty = $Losttime[$i] : "";
+                $x == 2 ? $cnew->qty = $Amount[$i] : "";
+                $x == 3 ? $cnew->qty = $Perpcs[$i] : "";
+                $x == 4 ? $cnew->qty = $Rate[$i] : "";
+                $cnew->typeid = $x;
+                $cnew->tirename = $Tirename[$i];
+                $cnew->date = Scripts::ConvertDateDMYtoYMDforSQL($Date[$i]);
+                $cnew->checks = 0;
+                $cnew->minus = $Minus[$i];
+                $cnew->grouptire = $Grouptire[$i];
+                $cnew->save(false);
+            }
+        }
+        return Yii::$app->getResponse()->redirect(Url::previous());
     }
 }

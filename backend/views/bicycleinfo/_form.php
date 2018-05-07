@@ -90,7 +90,7 @@ $tiremodel = Weaverbicycle::find()->all();
         <div class="col-md-12">
             <!--?= Html::submitButton($model->isNewRecord ? 'บันทึก' : 'แก้ไข', ['id' => 'bicyclesubmit', 'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?-->
             <div style="text-align: center">
-                <?= Html::a('<i class="fa fa-plus"></i>', 'javascript:void(0)', ['class' => 'btn btn-success addata', 'style' => 'width: 50px']) ?>
+                <?= Html::a('<i class="fa fa-plus"></i>', 'javascript:void(0)', ['class' => 'btn btn-success adddata', 'style' => 'width: 50px']) ?>
             </div>
         </div>
     </div>

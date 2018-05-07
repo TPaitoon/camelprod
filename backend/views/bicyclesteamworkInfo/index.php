@@ -115,7 +115,7 @@ if ($Role == 'IT' || $Role == 'PS') {
                                 'class' => 'text-center',
                             ],
                             'contentOptions' => function ($model) {
-                                if (ArrayHelper::getValue($model, 'checks') != 0) {
+                                if (ArrayHelper::getValue($model, 'confirms') !== 0) {
                                     return ['class' => 'text-center', 'style' => 'visibility: hidden'];
                                 } else {
                                     return ['class' => 'text-center'];
@@ -221,16 +221,16 @@ $modaljs = <<<JS
         }
     });   
 
-    $(document).on("click","#createmodal",function(e) {
-        e.preventDefault();
-        // alert('');
-        var modalc = $("#modal-create");
-        if (modalc.hasClass("in")) {
-            modalc.find(".modalContent").load($(this).attr("href"));
-        } else {
-            modalc.modal("show").find(".modalContent").load($(this).attr("href"));
-        }
-    });
+    // $(document).on("click","#createmodal",function(e) {
+    //     e.preventDefault();
+    //     // alert('');
+    //     var modalc = $("#modal-create");
+    //     if (modalc.hasClass("in")) {
+    //         modalc.find(".modalContent").load($(this).attr("href"));
+    //     } else {
+    //         modalc.modal("show").find(".modalContent").load($(this).attr("href"));
+    //     }
+    // });
     
     $("#modal-create").on("hidden.bs.modal",function() {
         location.reload();

@@ -19,7 +19,7 @@ $js = <<<JS
             if ($(".role").val() != 1) {
                 var status = e.closest('tr').attr('id');
                 // alert(status);
-                if (status !== 0) {
+                if (status !== "0") {
                     alert('ไม่สามารถลบข้อมูลได้เนื่องจากไม่มีสิทธิ์');
                 } else {
                     var link = e.parent().attr('data-url');
