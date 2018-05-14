@@ -13,5 +13,6 @@ $this->params['breadcrumbs'][] = 'แก้ไขข้อมูล';
 <div class="bicyclesteamwork-info-update">
     <?= $this->render('_form', [
         'model' => $model,
+        'status' => 0
     ]) ?>
 </div>

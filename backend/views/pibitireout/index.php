@@ -276,17 +276,17 @@ echo "<div class='modalContent'></div>";
 Modal::end();
 
 $modaljs = <<<JS
-$(document).on("click",".createmodal",function(e) {
-    e.preventDefault();
-    // alert();
-    var cmodal = $("#create-modal");
-    
-    if (cmodal.hasClass("in")) {
-        cmodal.find(".modalContent").load($(this).attr("href"));
-    } else {
-        cmodal.modal("show",{backdrop:"static",keyboard:true}).find(".modalContent").load($(this).attr("href"));       
-    }
-});
+// $(document).on("click",".createmodal",function(e) {
+//     e.preventDefault();
+//     // alert();
+//     var cmodal = $("#create-modal");
+//    
+//     if (cmodal.hasClass("in")) {
+//         cmodal.find(".modalContent").load($(this).attr("href"));
+//     } else {
+//         cmodal.modal("show",{backdrop:"static",keyboard:true}).find(".modalContent").load($(this).attr("href"));       
+//     }
+// });
 
 $(document).on("click","#updatemodal",function(e) {
     e.preventDefault();

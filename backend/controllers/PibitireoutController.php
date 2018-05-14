@@ -86,7 +86,7 @@ class PibitireoutController extends Controller
             $model->save();
             return $this->redirect(['index']);
         } else {
-            return $this->renderAjax('create', [
+            return $this->render('create', [
                 'model' => $model,
                 'status' => 0
             ]);

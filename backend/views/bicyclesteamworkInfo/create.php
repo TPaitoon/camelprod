@@ -18,6 +18,7 @@ $this->params['breadcrumbs'][] = 'เพิ่มข้อมูล';
         <div class="panel-body">
             <?= $this->render('_form', [
                 'model' => $model,
+                'status' => 1
             ]) ?>
         </div>
     </div>

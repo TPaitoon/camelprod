@@ -21,6 +21,7 @@ use yii\filters\VerbFilter;
  */
 class BicycleempinfoController extends Controller
 {
+    public $enableCsrfValidation = false;
     /**
      * @inheritdoc
      */
@@ -87,13 +88,13 @@ class BicycleempinfoController extends Controller
         }
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->empName = $this->Showempname($model->empid);
-            $model->date = Scripts::ConvertDateDMYtoYMDforSQL($model->date);
-            $model->save();
+//            $model->empName = $this->Showempname($model->empid);
+//            $model->date = Scripts::ConvertDateDMYtoYMDforSQL($model->date);
+//            $model->save();
 //            return $this->redirect(['index']);
             return Yii::$app->getResponse()->redirect(Url::previous());
         } else {
-            return $this->renderAjax('create', [
+            return $this->render('create', [
                 'model' => $model,
                 'chk' => $chk,
             ]);
@@ -141,7 +142,7 @@ class BicycleempinfoController extends Controller
         $this->findModel($id)->delete();
         Yii::$app->session->setFlash('res', 'ลบข้อมูลเรียบร้อยแล้ว !');
 
-        return $this->redirect(['index']);
+        return Yii::$app->getResponse()->redirect(Url::previous());
     }
 
     /**
@@ -223,5 +224,26 @@ class BicycleempinfoController extends Controller
         } else {
             return 0;
         }
+    }
+
+    public function actionCreatemanual()
+    {
+        $Req = Yii::$app->request;
+        $Empid = $Req->post("empidx");
+        $Date = $Req->post("datex");
+        $Rank = $Req->post("rankx");
+
+        for ($i = 0; $i < count($Empid); $i++) {
+            $cnew = new BicycleEmpInfo();
+            $cnew->empid = $Empid[$i];
+            $cnew->empName = $this->Showempname($Empid[$i]);
+            $cnew->date = Scripts::ConvertDateDMYtoYMDforSQL($Date[$i]);
+            $cnew->rank = $Rank[$i];
+            $obj = StandardBicycle::findOne(['Section' => $Rank[$i]]);
+            $cnew->Extra = $obj->amount;
+            $cnew->confirms = 0;
+            $cnew->save(false);
+        }
+        return Yii::$app->getResponse()->redirect(Url::previous());
     }
 }

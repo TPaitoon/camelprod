@@ -289,7 +289,8 @@ class BominfoController extends Controller
         BOMInfo::deleteAll(['empid' => $empid, 'date' => $date, 'stoveid' => $stoveid]);
         $session = Yii::$app->session;
         $session->setFlash('res', 'ลบข้อมูลเรียบร้อยแล้ว !');
-        return $this->redirect(['index']);
+//        return $this->redirect(['index']);
+        return Yii::$app->getResponse()->redirect(Url::previous());
     }
 
     /**

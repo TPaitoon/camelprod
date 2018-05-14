@@ -362,7 +362,7 @@ class BicycletireinfoController extends Controller
         BicycletireInfo::deleteAll(['empid' => $empid, 'date' => $date]);
         Yii::$app->session->setFlash('res', 'ลบข้อมูลเรียบร้อยแล้ว !');
 
-        return $this->redirect(['index']);
+        return Yii::$app->getResponse()->redirect(Url::previous());
     }
 
     /**

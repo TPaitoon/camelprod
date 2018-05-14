@@ -215,15 +215,15 @@ $(".role").val($sys);
 var txt = "$res";
 if (txt !== "") { alert(txt); }
 
-$(document).on("click","#createmodal",function(e) {
-    e.preventDefault();
-    var modalc = $("#modal-create");
-    if (modalc.hasClass("in")) {
-        modalc.find(".modalContent").load($(this).attr("href"));
-    } else {
-        modalc.modal("show").find(".modalContent").load($(this).attr("href"));
-    }
-});
+// $(document).on("click","#createmodal",function(e) {
+//     e.preventDefault();
+//     var modalc = $("#modal-create");
+//     if (modalc.hasClass("in")) {
+//         modalc.find(".modalContent").load($(this).attr("href"));
+//     } else {
+//         modalc.modal("show").find(".modalContent").load($(this).attr("href"));
+//     }
+// });
 
 $(document).on("click","#updatemodal",function(e) {
     e.preventDefault();

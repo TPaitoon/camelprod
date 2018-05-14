@@ -16,6 +16,7 @@ use yii\widgets\ActiveForm;
 
 $empmodel = EmpInfo::find()->where(['Dept' => 'ฝ่ายผลิต'])->andFilterWhere(['like', 'Sec', 'นึ่ง'])->all();
 $bicyclesec = SteambicycleworkInfo::find()->all();
+//print $status;
 ?>
     <div class="bicyclesteamwork-info-form">
         <?php $form = ActiveForm::begin(['id' => 'bicyclesteamwork-form']); ?>
@@ -71,20 +72,24 @@ $bicyclesec = SteambicycleworkInfo::find()->all();
         <div class="row">
             <hr>
         </div>
-        <div class="form-group">
-            <?= Html::submitButton($model->isNewRecord ? 'บันทึก' : 'แก้ไข', ['id' => 'bicyclesteamwork-submit', 'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <div class="form-group" style="text-align: center">
+            <?php if ($status === 0) { ?>
+                <?= Html::submitButton($model->isNewRecord ? 'บันทึก' : 'แก้ไข', ['id' => 'bicyclesteamwork-submit', 'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+            <?php } else { ?>
+                <?= Html::a('<i class="fa fa-plus"></i>', 'javascript:void(0)', ['class' => 'btn btn-success adddata', 'style' => 'width: 75px']) ?>
+            <?php } ?>
         </div>
         <?php ActiveForm::end(); ?>
     </div>
 <?php
-$scriptjs = <<<JS
-$("#bsempid")
-.on("select2:opening",function() {
-    $("#modal-create").removeAttr("tabindex","-1");
-})
-.on("select2:close",function() {
-    $("#modal-create").attr("tabindex","1");  
-});
-JS;
-$this->registerJs($scriptjs);
+//$scriptjs = <<<JS
+//$("#bsempid")
+//.on("select2:opening",function() {
+//    $("#modal-create").removeAttr("tabindex","-1");
+//})
+//.on("select2:close",function() {
+//    $("#modal-create").attr("tabindex","1");
+//});
+//JS;
+//$this->registerJs($scriptjs);
 ?>

@@ -176,7 +176,7 @@ function removegroupline(e) {
     var fLast = fBody.find("tr:last");
     var fLaststr = fLast.closest("tr");
     if ($("table.listemp >tbody >tr").length > 1) {
-        e.parent().parent().remote();
+        e.parent().parent().remove();
         cntline--;
         setGroupLine(cntline);
     } else {

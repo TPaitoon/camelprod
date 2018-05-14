@@ -22,22 +22,26 @@ $(document).on('ready', function () {
         totalrate();
     });
     $("#btstickeramount").on('change', function () {
-        var amounttire1 = $("#bttireamount1").val();
-        var amounttire2 = $("#bttireamount2").val();
-        var stickeramount = $("#btstickeramount").val();
-        var cal = parseInt(amounttire1) + parseInt(amounttire2);
-        if (Math.round(cal) < parseInt(stickeramount)) {
-            alert("ยอดติดสติกเกอร์ห้ามมากกว่ายอดยางที่ผลิต");
-            $("#btstickeramount").val(Math.round(cal));
-            calculatesticker(Math.round(cal));
-        } else {
-            calculatesticker(parseInt(stickeramount));
-        }
+        calSticker();
     });
     $("#btstickername").on('change', function () {
         calculatesticker(parseInt($("#btstickeramount").val()));
     })
 });
+
+function calSticker() {
+    var amounttire1 = $("#bttireamount1").val();
+    var amounttire2 = $("#bttireamount2").val();
+    var stickeramount = $("#btstickeramount").val();
+    var cal = parseInt(amounttire1) + parseInt(amounttire2);
+    if (Math.round(cal) < parseInt(stickeramount)) {
+        //alert("ยอดติดสติกเกอร์ห้ามมากกว่ายอดยางที่ผลิต");
+        $("#btstickeramount").val(Math.round(cal));
+        calculatesticker(Math.round(cal));
+    } else {
+        calculatesticker(parseInt(stickeramount));
+    }
+}
 
 function loadtire1() {
     if ($("#bttireamount1").val() === '') {

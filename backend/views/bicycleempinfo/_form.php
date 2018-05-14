@@ -17,72 +17,76 @@ $empmodel = EmpInfo::find()->where(['Dept' => 'ฝ่ายผลิต', 'Sec' 
 $bicyclesec = StandardBicycle::find()->all();
 ?>
 
-<div class="bicycle-emp-info-form">
-    <?php $form = ActiveForm::begin(['id' => 'bicycleemp-form']); ?>
-    <div class="row">
-        <div class="col-md-5">
-            <?= $form->field($model, 'empid')->widget(Select2::className(), [
-                'data' => ArrayHelper::map($empmodel, 'PRS_NO', function ($data) {
-                    return $data->PRS_NO . " : " . $data->EMP_NAME . " " . $data->EMP_SURNME;
-                }),
-                'options' => [
-                    'placeholder' => 'เลือกรหัสพนักงาน',
-                    'id' => 'eempid',
-                ],])->label('รหัสพนักงาน')
-            ?>
+    <div class="bicycle-emp-info-form">
+        <?php $form = ActiveForm::begin(['id' => 'bicycleemp-form']); ?>
+        <div class="row">
+            <div class="col-md-5">
+                <?= $form->field($model, 'empid')->widget(Select2::className(), [
+                    'data' => ArrayHelper::map($empmodel, 'PRS_NO', function ($data) {
+                        return $data->PRS_NO . " : " . $data->EMP_NAME . " " . $data->EMP_SURNME;
+                    }),
+                    'options' => [
+                        'placeholder' => 'เลือกรหัสพนักงาน',
+                        'id' => 'eempid',
+                    ],])->label('รหัสพนักงาน')
+                ?>
+            </div>
+            <div class="col-md-2">
+                <?= $form->field($model, 'Extra')->hiddenInput(['id' => 'eextra', 'readonly' => true])->label(false) ?>
+            </div>
         </div>
-        <div class="col-md-2">
-            <?= $form->field($model, 'Extra')->hiddenInput(['id' => 'eextra', 'readonly' => true])->label(false) ?>
-        </div>
-    </div>
-    <hr>
-    <div class="row">
-        <div class="col-md-3">
-            <?php $model->date == '' ? $model->date = date('d/m/Y') : $model->date = Scripts::ConvertDateYMDtoDMYforForm($model->date) ?>
-            <?= $form->field($model, 'date')->widget(DatePicker::className(), [
-                'options' => [
-                    'id' => 'edate'
-                ],
-                'type' => DatePicker::TYPE_COMPONENT_APPEND,
-                'layout' => '{picker}{input}',
+        <hr>
+        <div class="row">
+            <div class="col-md-3">
+                <?php $model->date == '' ? $model->date = date('d/m/Y') : $model->date = Scripts::ConvertDateYMDtoDMYforForm($model->date) ?>
+                <?= $form->field($model, 'date')->widget(DatePicker::className(), [
+                    'options' => [
+                        'id' => 'edate'
+                    ],
+                    'type' => DatePicker::TYPE_COMPONENT_APPEND,
+                    'layout' => '{picker}{input}',
 //                'readonly' => true,
-                'pluginOptions' => [
-                    'format' => 'dd/mm/yyyy',
-                    'autoclose' => true,
-                    'todayHighlight' => true,
-                ]
-            ])->label('วันที่ทำงาน') ?>
-        </div>
-        <div class="col-md-4">
-            <?= $form->field($model, 'rank')->widget(Select2::className(), [
-                'data' => ArrayHelper::map($bicyclesec, 'Section', 'Section'),
-                'options' => [
-                    'placeholder' => 'เลือกตำแหน่งงาน',
-                    'id' => 'erank',
-                    'onchange' => '$.post("index.php?r=bicycleempinfo/showextra&id=' . '"+$(this).val(),function(data){
+                    'pluginOptions' => [
+                        'format' => 'dd/mm/yyyy',
+                        'autoclose' => true,
+                        'todayHighlight' => true,
+                    ]
+                ])->label('วันที่ทำงาน') ?>
+            </div>
+            <div class="col-md-4">
+                <?= $form->field($model, 'rank')->widget(Select2::className(), [
+                    'data' => ArrayHelper::map($bicyclesec, 'Section', 'Section'),
+                    'options' => [
+                        'placeholder' => 'เลือกตำแหน่งงาน',
+                        'id' => 'erank',
+                        'onchange' => '$.post("index.php?r=bicycleempinfo/showextra&id=' . '"+$(this).val(),function(data){
                         $("#eextra").val(data); 
                     });',
-                ],])->label('ตำแหน่ง') ?>
+                    ],])->label('ตำแหน่ง') ?>
+            </div>
+            <div class="col-md-3">
+                <?= $form->field($model, 'confirms')->hiddenInput(['value' => 0])->label(false) ?>
+            </div>
         </div>
-        <div class="col-md-3">
-            <?= $form->field($model, 'confirms')->hiddenInput(['value' => 0])->label(false) ?>
+        <hr>
+        <div class="form-group" style="text-align: center">
+            <?php if ($status === 0) { ?>
+                <?= Html::submitButton($model->isNewRecord ? 'บันทึก' : 'แก้ไข', ['id' => 'bicycleemp-submit', 'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+            <?php } else { ?>
+                <?= Html::a('<i class="fa fa-plus"></i>','javascript:void(0)', ['class' => 'btn btn-success adddata', 'style' => 'width: 75px']) ?>
+            <?php } ?>
         </div>
+        <?php ActiveForm::end(); ?>
     </div>
-    <hr>
-    <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'บันทึก' : 'แก้ไข', ['id' => 'bicycleemp-submit', 'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-    </div>
-    <?php ActiveForm::end(); ?>
-</div>
 <?php
-$scriptjs = <<<JS
-$("#eempid")
-.on("select2:opening",function() {
-    $("#modal-create").removeAttr("tabindex","-1");
-})
-.on("select2:close",function() {
-    $("#modal-create").attr("tabindex","1");  
-});
-JS;
-$this->registerJs($scriptjs);
+//$scriptjs = <<<JS
+//$("#eempid")
+//.on("select2:opening",function() {
+//    $("#modal-create").removeAttr("tabindex","-1");
+//})
+//.on("select2:close",function() {
+//    $("#modal-create").attr("tabindex","1");
+//});
+//JS;
+//$this->registerJs($scriptjs);
 ?>

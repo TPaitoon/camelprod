@@ -21,6 +21,7 @@ use yii\filters\VerbFilter;
  */
 class BicyclesteamworkinfoController extends Controller
 {
+    public $enableCsrfValidation = false;
     /**
      * @inheritdoc
      */
@@ -105,8 +106,14 @@ class BicyclesteamworkinfoController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->date = BicyclesteamworkinfoSearch::ConvertDate($model->date);
-            $model->save();
+            $temp = $this->findModel($id);
+            $temp->empid = $model->empid;
+            $temp->empName = $this->Showempname($model->empid);
+            $temp->date = BicyclesteamworkinfoSearch::ConvertDate($model->date);
+            $temp->rank = $model->rank;
+            $temp->Extra = $model->Extra;
+            $temp->confirms = 0;
+            $temp->save();
 //            return $this->redirect(['index']);
             return Yii::$app->getResponse()->redirect(Url::previous());
         } else {
@@ -125,9 +132,9 @@ class BicyclesteamworkinfoController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
-        Yii::$app->session->setFlash('res','ลบข้อมูลเรียบร้อยแล้ว !');
+        Yii::$app->session->setFlash('res', 'ลบข้อมูลเรียบร้อยแล้ว !');
 
-        return $this->redirect(['index']);
+        return Yii::$app->getResponse()->redirect(Url::previous());
     }
 
     /**
@@ -218,5 +225,26 @@ class BicyclesteamworkinfoController extends Controller
         } else {
             return 0;
         }
+    }
+
+    public function actionCreatemanual()
+    {
+        $Req = Yii::$app->request;
+        $Empid = $Req->post("empidx");
+        $Date = $Req->post("datex");
+        $Rank = $Req->post("sectionx");
+
+        for ($i = 0; $i < count($Empid); $i++) {
+            $cnew = new BicyclesteamworkInfo();
+            $cnew->empid = $Empid[$i];
+            $cnew->empName = $this->Showempname($Empid[$i]);
+            $cnew->date = Scripts::ConvertDateDMYtoYMDforSQL($Date[$i]);
+            $cnew->rank = $Rank[$i];
+            $obj = SteambicycleworkInfo::findOne(['section' => $Rank[$i]]);
+            $cnew->Extra = $obj->amount;
+            $cnew->confirms = 0;
+            $cnew->save(false);
+        }
+        return Yii::$app->getResponse()->redirect(Url::previous());
     }
 }
