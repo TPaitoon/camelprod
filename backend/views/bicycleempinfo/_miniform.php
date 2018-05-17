@@ -6,7 +6,7 @@
  * Time: 10:43
  */
 ?>
-<h4>จำนวณ : <label id="count" style="color: #00a65a">#</label> แถว</h4>
+<h4>จำนวน : <label id="count" style="color: #00a65a">#</label> แถว</h4>
 <div class="col-lg-12">
     <div class="row">
         <form action="index.php?r=bicycleempinfo/createmanual" id="bcemp-form" method="post">

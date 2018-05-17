@@ -68,14 +68,18 @@ for ($i = 0; $i < 4; $i++) {
                     ])->label("วันที่") ?>
             </div>
             <div class="col-lg-3">
-                <?= $form->field($model, 'qty')->dropDownList(ArrayHelper::map($value, "A", "A"))->label("ค่าพิเศษ") ?>
+                <?= $form->field($model, 'qty')->dropDownList(ArrayHelper::map($value, "A", "A"),['id' => 'rate'])->label("ค่าพิเศษ") ?>
             </div>
         </div>
         <div class="row">
             <hr>
         </div>
-        <div class="form-group">
-            <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary', 'id' => 'btnsave']) ?>
+        <div class="form-group" style="text-align: center">
+            <?php if ($action == 2) { ?>
+                <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary', 'id' => 'btnsave']) ?>
+            <?php } else { ?>
+                <?= Html::a('<i class="fa fa-plus"></i>','javascript:void(0)', ['class' => 'btn btn-success adddata', 'style' => 'width: 75px']) ?>
+            <?php } ?>
         </div>
         <?php ActiveForm::end(); ?>
     </div>
