@@ -59,13 +59,74 @@
 $ScriptJs = <<<JS
 $("#btnminisave").click(function() {
   // $("#tireout-form").submit();
-  var shift = $("#shiftselect option:selected");
-  alert(empid.val() + ' | ' + shift.text() + ' | ' + date.val() + ' | ' + rate.val());
+  // var shift = $("#shiftselect option:selected");
+  // alert(empid.val() + ' | ' + shift.text() + ' | ' + date.val() + ' | ' + rate.val());
+  if (confirm("ยืนยันการทำรายการ")) {
+      var emplist = document.getElementsByName("empidx[]");
+      if (emplist.length > 0 && emplist[0].value != "") 
+          $("#tireout-form").submit();
+  } 
 });
 
 var empid = $("#empidselect");
 var date = $("#date");
 var rate = $("#rate");
+var cntline = 0;
+setGroupLine(cntline);
+
+$("#tireout-form").each(function() {
+    var fBody = $(this).find(".listemp");
+    var fLast = fBody.find("tr:last");
+    var CTR = fLast.closest("tr");
+    var fNew;
+    
+    /* Form pibitireout/_form.php */
+    $(".adddata").click(function() {
+        var shift = $("#shiftselect option:selected");
+        if (empid.val() !== "" && date.val() !== "" && rate.val() !== "" && shift.text() !== "") {
+            // alert(checkGroupValue(empid.val(),date.val()));
+            if (CTR.find(".empids").val() === "") {
+                CTR.find(".empids").val(empid.val());
+                CTR.find(".shifts").val(shift.text());
+                CTR.find(".dates").val(date.val());
+                CTR.find(".rates").val(rate.val());
+                cntline++;
+                setGroupLine(cntline);
+            } else if (checkGroupValue(empid.val(),date.val()) === 1) {
+                // alert('');
+                fLast = fBody.find("tr:last");
+                fNew = fLast.clone();
+                fLast.after(fNew);
+                fLast = fBody.find("tr:last");
+                CTR = fLast.closest("tr");
+                CTR.find("input:text").each(function() {
+                    $(this).val("");
+                });
+                CTR.find(".empids").val(empid.val());
+                CTR.find(".shifts").val(shift.text());
+                CTR.find(".dates").val(date.val());
+                CTR.find(".rates").val(rate.val());
+                cntline++;
+                setGroupLine(cntline);
+            }
+        } 
+    }); 
+});
+
+function setGroupLine(val) {
+    document.getElementById("count").innerText = val;
+}
+
+function checkGroupValue(empid, date) {
+    var emplist = document.getElementsByName("empidx[]");
+    var datelist = document.getElementsByName("datex[]");
+    for (var i = 0; i < emplist.length; i++) {
+        // alert("emplist" + emplist[i].value);
+        if (empid === emplist[i].value && date === datelist[i].value)
+            return 0;
+    } 
+    return 1;
+}
 JS;
-$this->registerJs($ScriptJs,static::POS_END);
+$this->registerJs($ScriptJs, static::POS_END);
 ?>

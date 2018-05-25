@@ -46,7 +46,10 @@ class PibibcemplistSearch extends PIBIBCEmplist
         $temp = [];
         foreach ($query as $item) {
             $nml = EmpInfo::findOne(["PRS_NO" => $item->empid]);
-            $em = $nml->PRS_NO . ' ' . $nml->EMP_NAME . ' ' . $nml->EMP_SURNME;
+            if (empty($nml))
+                $em = "<label style='color: red'>" . $item->empid . " ไม่มีข้อมูล ... </label>";
+            else
+                $em = $nml->PRS_NO . ' ' . $nml->EMP_NAME . ' ' . $nml->EMP_SURNME;
             array_push($temp, [
                 "id" => $item->id,
                 "shift" => $item->shift,

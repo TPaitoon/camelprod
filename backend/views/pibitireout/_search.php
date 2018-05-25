@@ -86,7 +86,8 @@ $emplist = EmpInfo::findAll(['Dept' => 'ฝ่ายผลิต', 'Sec' => 'ป
     <div class="form-group">
         <?= Html::submitButton('ค้นหา', ['class' => 'btn btn-primary SearchSubmit']) ?>
         <?= Html::a('เพิ่มข้อมูล', ['create'], ['class' => 'btn btn-success createmodal']) ?>
-        <?= Html::button('ยืนยันข้อมูล', ['class' => 'btn btn-info pull-right indexapproved']) ?>
+        <?= Html::button('ลบข้อมูล', ['class' => 'btn btn-danger indexdelete']) ?>
+        <?= Html::button('ยืนยันข้อมูล', ['class' => 'btn btn-info indexapproved']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

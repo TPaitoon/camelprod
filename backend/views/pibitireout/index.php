@@ -6,6 +6,7 @@ use yii\bootstrap\Modal;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\PibitireoutSearch */
@@ -70,8 +71,28 @@ $(".indexapproved").on("click",function(e) {
         });
     } 
 });
+
+$(".indexdelete").on("click",function() {
+    // alert('');
+    var dataar = $("input[type=checkbox]:checked").map(function() {
+            return $(this).val();
+        }).get();
+    $.ajax({
+        type: "post",
+        url: "?r=pibitireout/loopdelete",
+        data: {dataar:dataar},
+        success: function(data) {
+            if (data != 1)
+                alert(data);
+            else
+                alert("ลบข้อมูลเรียบร้อยแล้ว");
+            location.reload();
+        }
+    });
+});
 JS;
 $this->registerJs($scriptjs, static::POS_END);
+Url::remember();
 ?>
 <input hidden class="role" value="<?= $role ?>">
 <div class="pibitireout-index">

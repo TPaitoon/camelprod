@@ -5,9 +5,11 @@ namespace backend\controllers;
 use backend\models\Scripts;
 use backend\models\UserDirect;
 use common\models\EmpInfo;
+use common\models\ShiftList;
 use Yii;
 use common\models\PIBITireOut;
 use backend\models\PibitireoutSearch;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -17,6 +19,7 @@ use yii\filters\VerbFilter;
  */
 class PibitireoutController extends Controller
 {
+    public $enableCsrfValidation = false;
     /**
      * @inheritdoc
      */
@@ -107,7 +110,7 @@ class PibitireoutController extends Controller
             $model->empname = Scripts::ShowEmpname($model->empid);
             $model->date = Scripts::ConvertDateDMYtoYMDforSQL($model->date);
             $model->save(false);
-            return $this->redirect(['index']);
+            return Yii::$app->getResponse()->redirect(Url::previous());
         } else {
             return $this->renderAjax('update', [
                 'model' => $model,
@@ -180,6 +183,55 @@ class PibitireoutController extends Controller
                     try {
                         $idexplode = explode(':', $dataar[$i]);
                         PIBITireOut::updateAll(['status' => 1], ['id' => $idexplode[0]]);
+                    } catch (\Exception $exception) {
+                        return 0;
+                    }
+                }
+            }
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public function actionCreatemanual()
+    {
+        $Req = Yii::$app->request;
+        $Empid = $Req->post("empidx");
+        $Date = $Req->post("datex");
+        $Shift = $Req->post("shiftx");
+        $Rate = $Req->post("ratex");
+
+        for ($i = 0; $i < count($Empid); $i++) {
+            $Cnew = new PIBITireOut();
+            $Cnew->empid = $Empid[$i];
+            $Cnew->empname = Scripts::ShowEmpname($Empid[$i]);
+            $Cnew->shift = $this->getShiftid($Shift[$i]);
+            $Cnew->date = Scripts::ConvertDateDMYtoYMDforSQL($Date[$i]);
+            $Cnew->qty = $Rate[$i];
+            $Cnew->status = 0;
+            $Cnew->save(false);
+        }
+        return Yii::$app->getResponse()->redirect(Url::previous());
+    }
+
+    private function getShiftid($name)
+    {
+        $_qurey = ShiftList::findOne(["shiftname" => $name]);
+        return $_qurey->id;
+    }
+
+    public function actionLoopdelete()
+    {
+        $dataarray = Yii::$app->request->post("dataar");
+        if (!empty($dataarray)) {
+            for ($i = 0; $i < count($dataarray); $i++) {
+                if (strlen($dataarray[$i]) == 1)
+                    continue;
+                else {
+                    try {
+                        $idexplode = explode(":",$dataarray[$i]);
+                        PIBITireOut::deleteAll(["id" => $idexplode[0]]);
                     } catch (\Exception $exception) {
                         return 0;
                     }
