@@ -113,7 +113,6 @@ function removegroupline(e) {
         cntgroupline--;
         setGroupLine(cntgroupline);
     } else {
-
         if (fLaststr.find(".empid").val() !== "") {
             fLaststr.find(".empid").val("");
             fLaststr.find(".empname").val("");

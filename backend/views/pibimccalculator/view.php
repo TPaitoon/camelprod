@@ -75,7 +75,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'value' => function ($model) {
                         $id = ArrayHelper::getValue($model, 'itemid');
                         $ls = PIBIMCStandardMaster::find()->select(['name'])->where(['refid' => $id])->one();
-                        return $ls->name;
+                        return empty($ls->name) ? '' : $ls->name;
                     },
                     'label' => 'มาตรฐาน'
                 ],

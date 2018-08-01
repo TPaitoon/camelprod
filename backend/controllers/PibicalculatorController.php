@@ -5,6 +5,7 @@ namespace backend\controllers;
 use backend\models\PIBICalculator;
 use backend\models\PibicalculatorSearch;
 use backend\models\PIBIDetail;
+use backend\models\Scripts;
 use backend\models\UserDirect;
 use common\models\EmpInfo;
 use common\models\PIBIBCEmplist;
@@ -62,7 +63,7 @@ class PibicalculatorController extends Controller
         $app = Yii::$app->request;
         if ($model->load($app->post())) {
             $master = new PIBIMaster();
-            $master->date = $model->Date;
+            $master->date = Scripts::ConvertDateDMYtoYMDforSQL($model->Date);
             $master->group = $model->Groupid;
             $master->shift = $model->Shiftid;
             $master->status = 0;
@@ -76,7 +77,7 @@ class PibicalculatorController extends Controller
                         $pibidetail->Shiftid = $model->Shiftid;
                         $pibidetail->Empid = $emplist[$i];
                         $pibidetail->Empname = $empnamelist[$i];
-                        $pibidetail->Date = $model->Date;
+                        $pibidetail->Date = Scripts::ConvertDateDMYtoYMDforSQL($model->Date);
                         $pibidetail->Hour = $model->Hour;
                         $pibidetail->Typeid = $r;
                         if ($r === 1) {
@@ -141,10 +142,7 @@ class PibicalculatorController extends Controller
     public function actionUpdate($id)
     {
         $master = $this->findModel($id);
-        $_query = PIBIDetail::find()->where(['Refid' => $master->id])
-            ->andWhere(['Shiftid' => $master->shift, 'Groupid' => $master->group])
-            ->andFilterWhere(['Date' => date('Y-m-d', strtotime($master->date))])
-            ->all();
+        $_query = PIBIDetail::find()->where(['Refid' => $master->id])->all();
         $model = new PIBIDetail();
         $c = 0;
         $recid = null;
@@ -179,7 +177,7 @@ class PibicalculatorController extends Controller
             }
 
             $_master = $this->findModel($_recid[0]);
-            $_master->date = $model->Date;
+            $_master->date = Scripts::ConvertDateDMYtoYMDforSQL($model->Date);
             $_master->group = $model->Groupid;
             $_master->shift = $model->Shiftid;
             $_master->status = 0;
@@ -194,7 +192,7 @@ class PibicalculatorController extends Controller
                         $pibidetail->Shiftid = $model->Shiftid;
                         $pibidetail->Empid = $emplist[$i];
                         $pibidetail->Empname = $empnamelist[$i];
-                        $pibidetail->Date = $model->Date;
+                        $pibidetail->Date = Scripts::ConvertDateDMYtoYMDforSQL($model->Date);
                         $pibidetail->Hour = $model->Hour;
                         $pibidetail->Typeid = $r;
                         if ($r === 1) {
@@ -392,7 +390,7 @@ class PibicalculatorController extends Controller
         $group = $req->post('group');
         $date = $req->post('date');
 
-        $cnt = PIBIMaster::find()->where(['shift' => $shift, 'group' => $group, 'date' => $date])->count();
+        $cnt = PIBIMaster::find()->where(['shift' => $shift, 'group' => $group, 'date' => Scripts::ConvertDateDMYtoYMDforSQL($date)])->count();
         return $cnt;
     }
 }

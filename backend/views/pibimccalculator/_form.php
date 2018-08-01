@@ -109,7 +109,7 @@ for ($i = 1; $i <= 15; $i++) {
                                 ])->label('กลุ่ม') ?>
                         </div>
                         <div class="col-lg-4">
-                            <?php $model->date == '' ? $model->date = date('Y-m-d') : $model->date ?>
+                            <?php $model->date == '' ? $model->date = date('d/m/Y') : $model->date = \backend\models\Scripts::ConvertDateDMYtoYMDforSQL($model->date) ?>
                             <?= $form->field($model, 'date')
                                 ->widget(DatePicker::classname(), [
                                     'options' => ['id' => 'date'],
@@ -118,7 +118,7 @@ for ($i = 1; $i <= 15; $i++) {
                                     'layout' => '{picker}{input}',
                                     'readonly' => true,
                                     'pluginOptions' => [
-                                        'format' => 'yyyy-mm-dd',
+                                        'format' => 'dd/mm/yyyy',
                                         'autoclose' => true,
                                         'todayHighlight' => true
                                     ]

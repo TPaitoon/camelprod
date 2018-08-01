@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use backend\models\PibimccalculatorSearch;
+use backend\models\Scripts;
 use backend\models\UserDirect;
 use backend\models\PIBIMCDetail;
 use common\models\EmpInfo;
@@ -48,7 +49,7 @@ class PibimccalculatorController extends Controller
 
         if ($model->load($app->post())) {
             $_master = new PIBIMCMaster();
-            $_master->date = $model->date;
+            $_master->date = Scripts::ConvertDateDMYtoYMDforSQL($model->date);
             $_master->group = $model->groupid;
             $_master->shift = $model->shiftid;
             $_master->status = 0;
@@ -62,7 +63,7 @@ class PibimccalculatorController extends Controller
                         $_detail->shiftid = $model->shiftid;
                         $_detail->empid = $emplist[$i];
                         $_detail->empname = $empnamelist[$i];
-                        $_detail->date = $model->date;
+                        $_detail->date = Scripts::ConvertDateDMYtoYMDforSQL($model->date);
                         $_detail->hour = $model->hour;
                         $_detail->typeid = $r;
                         if ($r == 1) {
@@ -162,7 +163,7 @@ class PibimccalculatorController extends Controller
                 }
             }
             $_master = $this->findModel($_rectemp[0]);
-            $_master->date = $model->date;
+            $_master->date = Scripts::ConvertDateDMYtoYMDforSQL($model->date);
             $_master->group = $model->groupid;
             $_master->shift = $model->shiftid;
             $_master->status = 0;
@@ -177,7 +178,7 @@ class PibimccalculatorController extends Controller
                         $_detail->shiftid = $model->shiftid;
                         $_detail->empid = $emplist[$i];
                         $_detail->empname = $empnamelist[$i];
-                        $_detail->date = $model->date;
+                        $_detail->date = Scripts::ConvertDateDMYtoYMDforSQL($model->date);
                         $_detail->hour = $model->hour;
                         $_detail->typeid = $r;
                         if ($r == 1) {

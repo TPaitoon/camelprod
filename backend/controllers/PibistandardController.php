@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use backend\models\UserDirect;
+use common\models\PIBIStandardDetail;
 use Yii;
 use common\models\PIBIStandard;
 use backend\models\PibistandardSearch;
@@ -15,6 +16,8 @@ use yii\filters\VerbFilter;
  */
 class PibistandardController extends Controller
 {
+    public $enableCsrfValidation = false;
+
     /**
      * @inheritdoc
      */
@@ -72,10 +75,18 @@ class PibistandardController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
         } else {
-            return $this->renderAjax('create', [
+            return $this->render('create', [
                 'model' => $model,
             ]);
         }
+    }
+
+    public function actionDcreate()
+    {
+        $model = new PIBIStandardDetail();
+        return $this->render('dcreate', [
+            'model' => $model
+        ]);
     }
 
     /**
@@ -108,6 +119,29 @@ class PibistandardController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function actionCreatemaster()
+    {
+        $Req = Yii::$app->request;
+        $Name = $Req->post("namex");
+        $Ref = $Req->post("refx");
+
+        for ($i = 0; $i < count($Name); $i++) {
+            $c = new PIBIStandard();
+            $c->name = $Name[$i];
+            $c->refid = $Ref[$i];
+            $c->save();
+        }
+
+        return $this->redirect(['index']);
+    }
+
+    public function actionCreatedetail()
+    {
+        $model = new PIBIStandardDetail();
+
+
     }
 
     /**

@@ -6,6 +6,7 @@
  * Time: 10:34 AM
  */
 
+use backend\models\Scripts;
 use common\models\EmpInfo;
 use common\models\HourInfo;
 use common\models\PIBIStandard;
@@ -113,7 +114,7 @@ for ($i = 1; $i <= 15; $i++) {
                                 ->label('กลุ่ม') ?>
                         </div>
                         <div class="col-lg-4">
-                            <?php $model->Date == '' ? $model->Date = date('Y-m-d') : $model->Date ?>
+                            <?php $model->Date == '' ? $model->Date = date('d/m/Y') : $model->Date = Scripts::ConvertDateYMDtoDMYforForm($model->Date) ?>
                             <?= $form->field($model, 'Date')
                                 ->widget(DatePicker::classname(), [
                                     'options' => ['id' => 'date'],
@@ -122,7 +123,7 @@ for ($i = 1; $i <= 15; $i++) {
                                     'layout' => '{picker}{input}',
                                     'readonly' => true,
                                     'pluginOptions' => [
-                                        'format' => 'yyyy-mm-dd',
+                                        'format' => 'dd/mm/yyyy',
                                         'autoclose' => true,
                                         'todayHighlight' => true
                                     ]

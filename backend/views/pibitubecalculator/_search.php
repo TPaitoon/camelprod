@@ -90,7 +90,7 @@ $this->registerJs($js, static::POS_END);
     <div class="form-group">
         <?= Html::submitButton('ค้นหา', ['class' => 'btn btn-primary', 'id' => 'SearchSubmit']) ?>
         <?= Html::a('เพิ่มข้อมูล', ['create'], ['class' => 'btn btn-success']) ?>
-        <?= Html::button('ยืนยันข้อมูล', ['id' => 'binfo', 'class' => 'btn btn-info pull-right']) ?>
+        <?= Html::button('ยืนยันข้อมูล', ['id' => 'binfo', 'class' => 'btn btn-info']) ?>
     </div>
 
     <?php ActiveForm::end() ?>

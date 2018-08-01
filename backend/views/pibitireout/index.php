@@ -83,7 +83,7 @@ $(".indexdelete").on("click",function() {
         data: {dataar:dataar},
         success: function(data) {
             if (data != 1)
-                alert(data);
+                alert("ยกเลิกการทำรายการ");
             else
                 alert("ลบข้อมูลเรียบร้อยแล้ว");
             location.reload();

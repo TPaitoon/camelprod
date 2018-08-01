@@ -34,7 +34,7 @@ class PibimccalculatorSearch extends PIBIMCMaster
     public function search($params)
     {
         if (empty($this->startdate) && empty($this->enddate)) {
-            $this->startdate && $this->enddate = date('Y-m-d');
+            $this->startdate && $this->enddate = date('d/m/Y');
         }
 
         $this->load($params);
@@ -44,13 +44,13 @@ class PibimccalculatorSearch extends PIBIMCMaster
         $usr == 'IT' || $usr == 'PS' ? $this->role = 1 : $this->role = 0;
 
         $_temp = PIBIMCMaster::find()->andFilterWhere([
-            'and', ['like', 'shift', $this->shift], ['>=', 'date', $this->startdate],
-            ['<=', 'date', $this->enddate]
+            'and', ['like', 'shift', $this->shift], ['>=', 'date', Scripts::ConvertDateDMYtoYMDforSQL($this->startdate)],
+            ['<=', 'date', Scripts::ConvertDateDMYtoYMDforSQL($this->enddate)]
         ])->all();
         $_array = [];
 
         foreach ($_temp as $i) {
-            $_data = PIBIMCDetail::find()->where(['date' => date('Y-m-d', strtotime($i->date))])
+            $_data = PIBIMCDetail::find()->where(['date' => Scripts::ConvertDateDMYtoYMDforSQL($i->date)])
                 ->andWhere(['shiftid' => $i->shift, 'groupid' => $i->group])
                 ->all();
 

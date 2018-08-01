@@ -20,7 +20,7 @@ $emplist = EmpInfo::find()->where(['Dept' => 'ฝ่ายผลิต'])
 $js = <<<JS
     $('#SearchSubmit').click(function(e) {
         e.preventDefault();
-        if ($("#startdate").val() > $("#enddate").val()) {
+        if ($("#startdate").val().split('/').reverse().join('-') > $("#enddate").val().split('/').reverse().join('-')) {
             alert('วันที่เริ่มต้องไม่มากกว่าวันที่สิ้นสุด');
         } else {
             $(this).submit();
@@ -49,7 +49,7 @@ $this->registerJs($js, static::POS_END);
             ?>
         </div>
         <div class="col-lg-2">
-            <?php empty($model->startdate) ? $model->startdate = date('Y-m-d') : $model->startdate; ?>
+            <?php empty($model->startdate) ? $model->startdate = date('d/m/Y') : $model->startdate; ?>
             <?= $form->field($model, 'startdate')
                 ->widget(DatePicker::className(), [
                     'name' => 'startdate',
@@ -60,14 +60,14 @@ $this->registerJs($js, static::POS_END);
                     'pluginOptions' => [
                         'todayHighlight' => true,
                         'autoclose' => true,
-                        'format' => 'yyyy-mm-dd'
+                        'format' => 'dd/mm/yyyy'
                     ]
                 ])
                 ->label('วันที่เริ่มค้นหา')
             ?>
         </div>
         <div class="col-lg-2">
-            <?php empty($model->enddate) ? $model->enddate = date('Y-m-d') : $model->enddate; ?>
+            <?php empty($model->enddate) ? $model->enddate = date('d/m/Y') : $model->enddate; ?>
             <?= $form->field($model, 'enddate')
                 ->widget(DatePicker::className(), [
                     'name' => 'enddate',
@@ -78,7 +78,7 @@ $this->registerJs($js, static::POS_END);
                     'pluginOptions' => [
                         'todayHighlight' => true,
                         'autoclose' => true,
-                        'format' => 'yyyy-mm-dd'
+                        'format' => 'dd/mm/yyyy'
                     ]
                 ])
                 ->label('วันที่สิ้นสุดค้นหา')
@@ -89,9 +89,7 @@ $this->registerJs($js, static::POS_END);
     <div class="form-group">
         <?= Html::submitButton('ค้นหา', ['class' => 'btn btn-primary', 'id' => 'SearchSubmit']) ?>
         <?= Html::a('เพิ่มข้อมูล', ['create'], ['class' => 'btn btn-success']) ?>
-        <?= Html::button('ยืนยันข้อมูล', ['id' => 'binfo', 'class' => 'btn btn-info pull-right']) ?>
+        <?= Html::button('ยืนยันข้อมูล', ['id' => 'binfo', 'class' => 'btn btn-info']) ?>
     </div>
-
     <?php ActiveForm::end() ?>
-
 </div>

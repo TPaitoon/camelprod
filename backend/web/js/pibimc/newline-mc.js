@@ -7,15 +7,6 @@ function setLine(value) {
     document.getElementById("cline").innerHTML = value;
 }
 
-function checkValue(value) {
-    var chkloop = document.getElementsByName("empids[]");
-    for (var i = 0; i < chkloop.length; i++) {
-        if (chkloop[i].value === value) {
-            return 0;
-        }
-    }
-    return 1;
-}
 
 $(".pibimccalculator-form").each(function () {
     var fBody = $(this).find(".listemp");

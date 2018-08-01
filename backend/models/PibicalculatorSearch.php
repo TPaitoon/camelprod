@@ -34,7 +34,7 @@ class PibicalculatorSearch extends PIBICalculator
     public function search($params)
     {
         if (empty($this->startdate) && empty($this->enddate)) {
-            $this->startdate && $this->enddate = date('Y-m-d');
+            $this->startdate && $this->enddate = date('d/m/Y');
         }
 
         $this->load($params);
@@ -42,8 +42,8 @@ class PibicalculatorSearch extends PIBICalculator
         $query = PIBICalculator::find()
             ->andFilterWhere(['and',
                 ['like', 'shift', $this->shift],
-                ['>=', 'date', $this->startdate],
-                ['<=', 'date', $this->enddate]])
+                ['>=', 'date', Scripts::ConvertDateDMYtoYMDforSQL($this->startdate)],
+                ['<=', 'date', Scripts::ConvertDateDMYtoYMDforSQL($this->enddate)]])
             ->all();
 
         $chk = new UserDirect();
