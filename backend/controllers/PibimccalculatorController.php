@@ -259,11 +259,11 @@ class PibimccalculatorController extends Controller
             $cal = $_data->rate + $ex;
             return Json::encode($cal);
         } else {
-            $_data = $FindQuery->andFilterWhere(['hour' => $hour - 1, 'refid' => $std])
+            $_data2 = PIBIMCStandardDetail::find()->andWhere(['refid' => $std])
                 ->andFilterWhere(['<=', 'amount', $amount])
-                ->one();
-            if (!empty($_data)) {
-                return Json::encode($_data->rate);
+                ->max('rate');
+            if (!empty($_data2)) {
+                return Json::encode($_data2);
             } else {
                 return Json::encode(0);
             }
@@ -376,7 +376,9 @@ class PibimccalculatorController extends Controller
         $group = $req->post('group');
         $date = $req->post('date');
 
-        $cnt = PIBIMCMaster::find()->where(['shift' => $shift, 'group' => $group, 'date' => date('Y-m-d', strtotime($date))])->count();
+
+
+        $cnt = PIBIMCMaster::find()->where(['shift' => $shift, 'group' => $group, 'date' => Scripts::ConvertDateDMYtoYMDforSQL($date)])->count();
         return $cnt;
     }
 }

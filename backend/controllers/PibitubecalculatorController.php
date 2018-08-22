@@ -49,7 +49,7 @@ class PibitubecalculatorController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $mst = new PIBITubeMaster();
             $mst->shift = $model->shift;
-            $mst->date = $model->date;
+            $mst->date = Scripts::ConvertDateDMYtoYMDforSQL($model->date);
             $mst->status = 0;
 
             if ($mst->save(false)) {
@@ -395,7 +395,7 @@ class PibitubecalculatorController extends Controller
             $shift = $req->post("shift");
             $date = $req->post("date");
 
-            $cnt = PIBITubeMaster::find()->where(['shift' => $shift, 'date' => $date])->count();
+            $cnt = PIBITubeMaster::find()->where(['shift' => $shift, 'date' => Scripts::ConvertDateDMYtoYMDforSQL($date)])->count();
 
             if ($cnt > 0) {
                 return 1;

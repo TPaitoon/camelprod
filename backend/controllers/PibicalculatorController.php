@@ -250,46 +250,39 @@ class PibicalculatorController extends Controller
             $amount = $app->post('amount');
             $std = $app->post('std');
 
-            if ($hour === '12') {
-                return $this->calculator($amount, $hour, $std);
-            } elseif ($hour === '11') {
-                return $this->calculator($amount, $hour, $std);
-            } elseif ($hour === '10') {
-                return $this->calculator($amount, $hour, $std);
-            } elseif ($hour === '9') {
-                return $this->calculator($amount, $hour, $std);
-            } elseif ($hour === '8') {
-                $FindQuery = PIBIStandardDetail::find();
-                $data = $FindQuery->andWhere(['hour' => $hour, 'refid' => $std])
-                    ->andFilterWhere(['<=', 'amount', $amount])
-                    ->one();
-                if (!empty($data)) {
-                    $ex = ((int)$amount - $data->amount) * 0.2917;
-                    $cal = $data->rate + $ex;
-                    return Json::encode($cal);
-                } else {
-                    return Json::encode(0);
-                }
-            }
+            return $this->calculator($amount, $hour, $std);
         }
     }
 
     public function calculator($amount, $hour, $std)
     {
         $FindQuery = PIBIStandardDetail::find();
-        $data = $FindQuery->andWhere(['hour' => $hour, 'refid' => $std])
-            ->andFilterWhere(['<=', 'amount', $amount])
-            ->one();
-        if (!empty($data)) {
-            $ex = ((int)$amount - $data->amount) * 0.2917;
-            $cal = $data->rate + $ex;
-            return Json::encode($cal);
-        } else {
-            $data = $FindQuery->andWhere(['hour' => $hour - 1, 'refid' => $std])
+        if ((int)$hour > 8) {
+            $data = $FindQuery->andWhere(['hour' => $hour, 'refid' => $std])
                 ->andFilterWhere(['<=', 'amount', $amount])
                 ->one();
             if (!empty($data)) {
-                return Json::encode($data->rate);
+                $ex = ((int)$amount - $data->amount) * 0.2917;
+                $cal = $data->rate + $ex;
+                return Json::encode($cal);
+            } else {
+                $data2 = PIBIStandardDetail::find()->andWhere(['refid' => $std])
+                    ->andFilterWhere(['<=', 'amount', $amount])
+                    ->one();
+                if (!empty($data2)) {
+                    return Json::encode($data2->rate);
+                } else {
+                    return Json::encode(0);
+                }
+            }
+        } elseif ((int)$hour == 8) {
+            $data = PIBIStandardDetail::find()->andWhere(['hour' => $hour, 'refid' => $std])
+                ->andFilterWhere(['<=', 'amount', $amount])
+                ->one();
+            if (!empty($data)) {
+                $ex = ((int)$amount - $data->amount) * 0.2917;
+                $cal = $data->rate + $ex;
+                return Json::encode($cal);
             } else {
                 return Json::encode(0);
             }
@@ -323,7 +316,7 @@ class PibicalculatorController extends Controller
             $id = $req->post("id");
             if (!empty($id)) {
                 try {
-                    PIBIMaster::updateAll(["status" => 1],["id" => $id]);
+                    PIBIMaster::updateAll(["status" => 1], ["id" => $id]);
                 } catch (Exception $exception) {
                     return 0;
                 }

@@ -25,7 +25,7 @@ $_tempmaster = PIBIMCStandardMaster::find()->all();
                 ->label('มาตรฐาน')
             ?>
         </div>
-        <div class="col-lg-1">
+        <div class="col-lg-2">
             <?= $form->field($model, 'hour')
                 ->textInput(['id' => 'hour', 'autocomplete' => 'off', 'onkeypress' => 'return chknumber(event);'])
                 ->label('ชั่วโมง')

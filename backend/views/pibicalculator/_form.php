@@ -131,6 +131,7 @@ for ($i = 1; $i <= 15; $i++) {
                                 ->label('วันที่') ?>
                         </div>
                         <div class="col-lg-3">
+                            <?php $model->isNewRecord ? $model->Hour = 12 : $model->Hour ?>
                             <?= $form->field($model, 'Hour')
                                 ->dropDownList(ArrayHelper::map($hourlist, 'values', 'hour'), ['id' => 'hour'])
                                 ->label('ชั่วโมงงาน') ?>

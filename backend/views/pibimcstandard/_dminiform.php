@@ -1,14 +1,17 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: paitoon.j
- * Date: 31/07/2018
- * Time: 15:16
+ * Date: 16/08/2018
+ * Time: 16:11
  */
+
+/* @var $this \yii\web\View */
 ?>
     <div class="row">
         <div class="col-lg-12">
-            <form action="index.php?r=pibistandard/createdetail" id="dlist" method="post">
+            <form action="?r=pibimcstandard/createdetail" id="dlist" method="post">
                 <table class="table table-bordered dlistt">
                     <thead>
                     <tr>
@@ -17,9 +20,9 @@
                         <td>Hour</td>
                         <td>Amount</td>
                         <td>Rate</td>
+                        <td class="text-center">#</td>
                     </tr>
                     </thead>
-                    <tbody>
                     <tr>
                         <td><input type="text" readonly name="stdx[]" class="form-control stds"></td>
                         <td><input type="text" readonly name="stdxx[]" class="form-control stdxs"></td>
@@ -27,11 +30,9 @@
                         <td><input type="text" name="amountx[]" class="form-control amounts"></td>
                         <td><input type="text" name="ratex[]" class="form-control rates"></td>
                         <td class="text-center">
-                            <button type="button" class="btn btn-danger" onclick="removeline($(this))"><i
-                                        class="fa fa-minus"></i></button>
+                            <button type="button" class="btn btn-danger btn-lg fa fa-minus" onclick="removeline($(this))"></button>
                         </td>
                     </tr>
-                    </tbody>
                 </table>
             </form>
         </div>
@@ -41,7 +42,7 @@
                 <button id="btnsave" class="btn btn-success">บันทึกข้อมูล</button>
             </div>
             <div class="pull-right">
-                <?= \yii\helpers\Html::a('<i class="fa fa-home"></i>', ['index'], ['class' => 'btn btn-info']) ?>
+                <?= \yii\helpers\Html::a("<i class='fa fa-home'></i>", ["index"], ["class" => "btn btn-info"]) ?>
                 <?= \yii\helpers\Html::a('<i class="fa fa-undo"></i>', Yii::$app->request->referrer, ['class' => 'btn btn-danger']) ?>
             </div>
         </div>

@@ -60,7 +60,7 @@ class PibitubecalculatorSearch extends PIBITubeMaster
                 'id' => $item->id,
                 'date' => $item->date,
                 'shift' => $item->shift,
-                'cnt' => count($data) / $cnt,
+//                'cnt' => count($data) / $cnt,
                 'status' => $item->status,
                 'role' => $this->role
             ]);
@@ -97,7 +97,7 @@ class PibitubecalculatorSearch extends PIBITubeMaster
                 'id' => $item->id,
                 'date' => $item->date,
                 'shift' => $item->shift,
-                'cnt' => count($data) / $cnt,
+//                'cnt' => count($data) / $cnt,
                 'status' => $item->status,
                 'role' => $this->role
             ]);

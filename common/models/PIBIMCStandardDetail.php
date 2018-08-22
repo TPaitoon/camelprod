@@ -15,6 +15,8 @@ use Yii;
  */
 class PIBIMCStandardDetail extends \yii\db\ActiveRecord
 {
+    public $upload;
+
     /**
      * @inheritdoc
      */
@@ -30,6 +32,7 @@ class PIBIMCStandardDetail extends \yii\db\ActiveRecord
     {
         return [
             [['refid', 'hour', 'amount', 'rate'], 'integer'],
+            [['upload'], 'file', 'skipOnEmpty' => false],
         ];
     }
 

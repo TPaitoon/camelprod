@@ -2,22 +2,18 @@
 
 namespace backend\controllers;
 
-use backend\models\UserDirect;
-use common\models\PIBIStandardDetail;
 use Yii;
-use common\models\PIBIStandard;
-use backend\models\PibistandardSearch;
+use common\models\PIBITIRECUTSTANDARD;
+use backend\models\PibitirecutstandardSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * PibistandardController implements the CRUD actions for PIBIStandard model.
+ * PibitirecutstandardController implements the CRUD actions for PIBITIRECUTSTANDARD model.
  */
-class PibistandardController extends Controller
+class PibitirecutstandardController extends Controller
 {
-    public $enableCsrfValidation = false;
-
     /**
      * @inheritdoc
      */
@@ -34,15 +30,12 @@ class PibistandardController extends Controller
     }
 
     /**
-     * Lists all PIBIStandard models.
+     * Lists all PIBITIRECUTSTANDARD models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $chk = new UserDirect();
-        $chk->ChkusrForAdmin();
-
-        $searchModel = new PibistandardSearch();
+        $searchModel = new PibitirecutstandardSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -52,7 +45,7 @@ class PibistandardController extends Controller
     }
 
     /**
-     * Displays a single PIBIStandard model.
+     * Displays a single PIBITIRECUTSTANDARD model.
      * @param integer $id
      * @return mixed
      */
@@ -64,16 +57,16 @@ class PibistandardController extends Controller
     }
 
     /**
-     * Creates a new PIBIStandard model.
+     * Creates a new PIBITIRECUTSTANDARD model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new PIBIStandard();
+        $model = new PIBITIRECUTSTANDARD();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            //return $this->redirect(['index']);
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -81,16 +74,8 @@ class PibistandardController extends Controller
         }
     }
 
-    public function actionDcreate()
-    {
-        $model = new PIBIStandardDetail();
-        return $this->render('dcreate', [
-            'model' => $model
-        ]);
-    }
-
     /**
-     * Updates an existing PIBIStandard model.
+     * Updates an existing PIBITIRECUTSTANDARD model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -109,7 +94,7 @@ class PibistandardController extends Controller
     }
 
     /**
-     * Deletes an existing PIBIStandard model.
+     * Deletes an existing PIBITIRECUTSTANDARD model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -121,52 +106,16 @@ class PibistandardController extends Controller
         return $this->redirect(['index']);
     }
 
-    public function actionCreatemaster()
-    {
-        $Req = Yii::$app->request;
-        $Name = $Req->post("namex");
-        $Ref = $Req->post("refx");
-
-        for ($i = 0; $i < count($Name); $i++) {
-            $c = new PIBIStandard();
-            $c->name = $Name[$i];
-            $c->refid = $Ref[$i];
-            $c->save();
-        }
-
-        return $this->redirect(['index']);
-    }
-
-    public function actionCreatedetail()
-    {
-        $Req = Yii::$app->request;
-        $Std = $Req->post("stdx");
-        $Hour = $Req->post("hourx");
-        $Amount = $Req->post("amountx");
-        $Rate = $Req->post("ratex");
-
-        for ($i = 0; $i < count($Std); $i++) {
-            $model = new PIBIStandardDetail();
-            $model->refid = $Std[$i];
-            $model->hour = $Hour[$i];
-            $model->amount = $Amount[$i];
-            $model->rate = $Rate[$i];
-            $model->save();
-        }
-
-        return $this->redirect(['index']);
-    }
-
     /**
-     * Finds the PIBIStandard model based on its primary key value.
+     * Finds the PIBITIRECUTSTANDARD model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return PIBIStandard the loaded model
+     * @return PIBITIRECUTSTANDARD the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = PIBIStandard::findOne($id)) !== null) {
+        if (($model = PIBITIRECUTSTANDARD::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

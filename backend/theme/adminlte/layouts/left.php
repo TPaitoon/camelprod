@@ -113,6 +113,13 @@
                                             ['label' => 'ค่าพิเศษ', 'icon' => 'btc', 'url' => ['/pibimccalculator']],
                                         ],
                                 ],
+                                ['label' => 'ประกอบยางในดำ', 'url' => '#', 'icon' => 'chevron-circle-right',
+                                    'items' =>
+                                        [
+                                            ['label' => 'ค่ามาตรฐาน', 'icon' => 'cog', 'url' => ['/pibitirecutstandard']],
+                                            ['label' => 'ค่าพิเศษ', 'icon' => 'btc', 'url' => ['/pibitirecutdetail']],
+                                        ],
+                                ],
                             ],
                     ],
                     ['label' => 'ผู้ดูแลระบบ', 'url' => '#', 'icon' => 'lock', 'visible' => $it,

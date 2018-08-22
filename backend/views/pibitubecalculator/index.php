@@ -73,22 +73,23 @@ $res = Yii::$app->session->getFlash('res');
                                 'class' => 'text-center'
                             ],
                             'value' => function ($model) {
-                                return '<i class="fa fa-calendar">' . ' ' . date('d/m/Y', strtotime(ArrayHelper::getValue($model, 'date')));
+                                $q = \backend\models\Scripts::ConvertDateYMDtoDMYforForm(ArrayHelper::getValue($model, 'date'));
+                                return $q;
                             },
                             'label' => 'วันที่'
                         ],
-                        [
-                            'attribute' => 'cnt',
-                            'format' => 'raw',
-                            'headerOptions' => [
-                                'style' => 'width:10%',
-                                'class' => 'text-center'
-                            ],
-                            'contentOptions' => [
-                                'class' => 'text-center'
-                            ],
-                            'label' => 'จำนวณคน'
-                        ],
+//                        [
+//                            'attribute' => 'cnt',
+//                            'format' => 'raw',
+//                            'headerOptions' => [
+//                                'style' => 'width:10%',
+//                                'class' => 'text-center'
+//                            ],
+//                            'contentOptions' => [
+//                                'class' => 'text-center'
+//                            ],
+//                            'label' => 'จำนวณคน'
+//                        ],
                         [
                             'attribute' => 'shift',
                             'format' => 'raw',

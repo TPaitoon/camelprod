@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="panel">
             <div class="panel panel-heading">
                 <?= Html::a('เพิ่มข้อมูลมาตรฐาน', ['createmaster'], ['class' => 'btn btn-success']) ?>
-                <?= Html::a('เพิ่มข้อมูลรายละเอียด', ['create'], ['class' => 'btn btn-success']) ?>
+                <?= Html::a('เพิ่มข้อมูลรายละเอียด', ['dcreate'], ['class' => 'btn btn-success']) ?>
             </div>
             <div class="panel panel-body">
                 <?= GridView::widget([
