@@ -2,16 +2,20 @@
 
 namespace backend\models;
 
+use common\models\PIBITIRECUTSTANDARD;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\PIBITIRECUTDETAIL;
+use yii\debug\models\timeline\DataProvider;
 
 /**
  * PibitirecutdetailSearch represents the model behind the search form about `common\models\PIBITIRECUTDETAIL`.
  */
 class PibitirecutdetailSearch extends PIBITIRECUTDETAIL
 {
+    public $startdate, $enddate, $role;
+
     /**
      * @inheritdoc
      */
@@ -41,31 +45,33 @@ class PibitirecutdetailSearch extends PIBITIRECUTDETAIL
      */
     public function search($params)
     {
-        $query = PIBITIRECUTDETAIL::find();
-
-        // add conditions that should always apply here
-
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
+        empty($this->startdate) && empty($this->enddate) ? $this->startdate && $this->enddate = date("d/m/Y") : "";
 
         $this->load($params);
+        $chk = new UserDirect();
+        $usr = $chk->ChkusrForPI();
+        $usr == 'IT' || $usr == 'PS' ? $this->role = 1 : $this->role = 0;
 
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
-            return $dataProvider;
-        }
+        $obj = PIBITIRECUTDETAIL::find()->andFilterWhere(['like', 'empno', $this->empno])->andFilterWhere(['and', ['>=', 'date', Scripts::ConvertDateDMYtoYMDforSQL($this->startdate)], ['<=', 'date', Scripts::ConvertDateDMYtoYMDforSQL($this->enddate)]]);
 
-        // grid filtering conditions
-        $query->andFilterWhere([
-            'id' => $this->id,
-            'date' => $this->date,
-            'stdid' => $this->stdid,
+        $dataProvider = new ActiveDataProvider([
+            'query' => $obj
         ]);
 
-        $query->andFilterWhere(['like', 'empno', $this->empno])
-            ->andFilterWhere(['like', 'empname', $this->empname]);
+        return $dataProvider;
+    }
+
+    public function searchcreated()
+    {
+        $chk = new UserDirect();
+        $usr = $chk->ChkusrForPI();
+        $usr == 'IT' || $usr == 'PS' ? $this->role = 1 : $this->role = 0;
+
+        $query = PIBITIRECUTDETAIL::find()->where(['status' => 0]);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query
+        ]);
 
         return $dataProvider;
     }

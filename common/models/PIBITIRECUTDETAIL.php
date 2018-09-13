@@ -12,6 +12,7 @@ use Yii;
  * @property string $empname
  * @property string $date
  * @property integer $stdid
+ * @property integer $status
  */
 class PIBITIRECUTDETAIL extends \yii\db\ActiveRecord
 {
@@ -32,7 +33,7 @@ class PIBITIRECUTDETAIL extends \yii\db\ActiveRecord
             [['empno', 'empname', 'date', 'stdid'], 'required'],
             [['empno', 'empname'], 'string'],
             [['date'], 'safe'],
-            [['stdid'], 'integer'],
+            [['stdid', 'status'], 'integer'],
         ];
     }
 
@@ -47,6 +48,7 @@ class PIBITIRECUTDETAIL extends \yii\db\ActiveRecord
             'empname' => 'Empname',
             'date' => 'Date',
             'stdid' => 'Stdid',
+            'status' => 'Status',
         ];
     }
 }

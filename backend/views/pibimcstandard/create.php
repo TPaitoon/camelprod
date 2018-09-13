@@ -1,7 +1,5 @@
 <?php
 
-use
-
 /* @var $this yii\web\View */
 /* @var $model common\models\PIBIMCStandardDetail */
 

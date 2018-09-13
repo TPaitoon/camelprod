@@ -7,30 +7,45 @@ use yii\grid\GridView;
 /* @var $searchModel backend\models\PibitirecutdetailSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Pibitirecutdetails';
+$this->title = 'ค่าพิเศษประกอบยางในดำ';
 $this->params['breadcrumbs'][] = $this->title;
+$res = Yii::$app->session->getFlash('res');
 ?>
 <div class="pibitirecutdetail-index">
+    <input hidden class="role" value="<?= $role ?>">
+    <div class="panel">
+        <div class="panel-heading">
+            <?= $this->render("_search", ["model" => $searchModel]) ?>
+        </div>
+        <div class="panel-body">
+            <?= GridView::widget([
+                'dataProvider' => $dataProvider,
+//                'filterModel' => $searchModel,
+                'pager' => [
+                    'firstPageLabel' => '<i class="fa fa-angle-double-left" aria-hidden="true"></i>',
+                    'nextPageLabel' => '<i class="fa fa-angle-right" aria-hidden="true"></i>',
+                    'lastPageLabel' => '<i class="fa fa-angle-double-right" aria-hidden="true"></i>',
+                    'prevPageLabel' => '<i class="fa fa-angle-left" aria-hidden="true"></i>',
+                ],
+                'options' => [
+                    'id' => 'grid'
+                ],
+                'rowOptions' => function ($model) {
+                    return ['id' => ArrayHelper::getValue($model, 'status')];
+                },
+                'columns' => [
+                    ['class' => 'yii\grid\SerialColumn'],
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+//                    'id',
+                    'empno:raw:รหัสพนักงาน',
+                    'empname:raw:ชื่อ - นามสกุล',
+                    'date:raw:วันที่',
+                    'stdid:raw:ตำแหน่ง',
+                    'status:raw:สถานะ',
 
-    <p>
-        <?= Html::a('Create Pibitirecutdetail', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'empno',
-            'empname',
-            'date',
-            'stdid',
-
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
+                    ['class' => 'yii\grid\ActionColumn'],
+                ],
+            ]); ?>
+        </div>
+    </div>
 </div>

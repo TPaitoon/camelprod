@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\UserDirect;
 use Yii;
 use common\models\PIBITIRECUTDETAIL;
 use backend\models\PibitirecutdetailSearch;
@@ -14,6 +15,8 @@ use yii\filters\VerbFilter;
  */
 class PibitirecutdetailController extends Controller
 {
+    public $enableCsrfValidation = false;
+
     /**
      * @inheritdoc
      */
@@ -35,12 +38,22 @@ class PibitirecutdetailController extends Controller
      */
     public function actionIndex()
     {
+        $chk = new UserDirect();
+        $usr = $chk->ChkusrForPI();
+        $usr == "IT" || $usr == "PS" ? $role = 1 : $role = 0;
+
+        $req = Yii::$app->request;
         $searchModel = new PibitirecutdetailSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        if ($req->isGet && isset($req->queryParams['PibitirecutdetailSearch']['startdate']))
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        else
+            $dataProvider = $searchModel->searchcreated();
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'role' => $role
         ]);
     }
 

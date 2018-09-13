@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\UserDirect;
 use Yii;
 use common\models\PIBITIRECUTSTANDARD;
 use backend\models\PibitirecutstandardSearch;
@@ -14,6 +15,7 @@ use yii\filters\VerbFilter;
  */
 class PibitirecutstandardController extends Controller
 {
+    public $enableCsrfValidation = false;
     /**
      * @inheritdoc
      */
@@ -35,6 +37,9 @@ class PibitirecutstandardController extends Controller
      */
     public function actionIndex()
     {
+        $chk = new UserDirect();
+        $chk->ChkusrForAdmin();
+
         $searchModel = new PibitirecutstandardSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -120,5 +125,21 @@ class PibitirecutstandardController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    public function actionCreatemasterlist()
+    {
+        $Req = Yii::$app->request;
+        $Name = $Req->post("namex");
+        $Rate = $Req->post("ratex");
+
+        for ($i = 0; $i < count($Name); $i++) {
+            $ms = new PIBITIRECUTSTANDARD();
+            $ms->name = $Name[$i];
+            $ms->rate = $Rate[$i];
+            $ms->save();
+        }
+
+        return $this->redirect(["index"]);
     }
 }

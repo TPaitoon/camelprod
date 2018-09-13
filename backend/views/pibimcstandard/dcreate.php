@@ -28,9 +28,9 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <!--div class="panel">
         <div class="panel-body">
-            <?= $this->render('_uploadform', [
-                'model' => $model
-            ]) ?>
+            <!--?= //$this->render('_uploadform', [
+                //'model' => $model
+            //]) ?>
         </div>
     </div-->
 </div>
